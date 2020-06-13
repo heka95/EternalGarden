@@ -4,7 +4,6 @@
 
 #include "Types/GameTypes.hpp"
 #include "GraphicWindow.hpp"
-#include "Renderer.hpp"
 #include "World.hpp"
 
 class GameEngine
@@ -19,7 +18,7 @@ public:
     void release();
     bool isRunning() const;
     GraphicWindow getGraphicWindow() const;
-    Renderer getRenderer() const;
+    SDL_Renderer* getRenderer();
     void setWorld(const World &world);
 
 private:
@@ -28,7 +27,7 @@ private:
     GameEngine& operator=(const GameEngine& object) = delete;
     static std::unique_ptr<GameEngine> m_instance;
     GraphicWindow m_graphicWindow;
-    Renderer m_renderer;
+    SDL_Renderer* m_renderer;
     bool m_isRunning;
     SDL_Event m_event;
     World m_currentWorld;

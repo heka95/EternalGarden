@@ -3,5 +3,6 @@
 
 #include "Size.hpp"
 #include "Configuration.hpp"
+#include "Vector2.hpp"
 
 #endif

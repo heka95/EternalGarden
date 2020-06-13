@@ -1,11 +1,14 @@
 #include <iostream>
 #include <algorithm>
-#include "GameEngine.hpp"
-#include "Component/TransformerComponent.hpp"
 #include <SDL2/SDL_ttf.h>
+#include "GameEngine.hpp"
+#include "TextureManager.hpp"
+#include "Component/TransformerComponent.hpp"
+
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
+    m_renderer = nullptr;
 }
 
 GraphicWindow GameEngine::getGraphicWindow() const
@@ -13,7 +16,7 @@ GraphicWindow GameEngine::getGraphicWindow() const
     return m_graphicWindow;
 }
 
-Renderer GameEngine::getRenderer() const
+SDL_Renderer* GameEngine::getRenderer()
 {
     return m_renderer;
 }
@@ -40,11 +43,19 @@ void GameEngine::setWorld(const World &world)
 
 void GameEngine::configureAndInit(Garden::Configuration &configuration)
 {
-    if (m_graphicWindow.createContext(configuration) &&
-        m_renderer.create(&m_graphicWindow))
+    if (m_graphicWindow.createContext(configuration))
     {
-        m_isRunning = true;
+        m_renderer = SDL_CreateRenderer(m_graphicWindow.getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        if(m_renderer != nullptr)
+        {
+            m_isRunning = true;
+        }
     }
+
+    std::string texturePath = configuration.executionPath + "/assets/eagle.png";
+
+    // test loading texture
+    TextureManager::getInstance().load("eagle", texturePath);
 }
 
 void GameEngine::doUpdate()
@@ -53,7 +64,12 @@ void GameEngine::doUpdate()
 
 void GameEngine::doDraw()
 {
-    m_renderer.clear();
+    SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
+    SDL_RenderClear(m_renderer);
+
+    TextureManager::getInstance().draw("eagle", Garden::Vector2D{100,100}, Garden::Size{40,41});
+
+    /*
     for (const auto *layer : m_currentWorld.getLayers())
     {
         for (const auto *entity : layer->getEntities())
@@ -69,7 +85,8 @@ void GameEngine::doDraw()
         }
     }
     //renderer.draw(textures...)
-    m_renderer.flip();
+    */
+    SDL_RenderPresent(m_renderer);
 }
 
 void GameEngine::release()

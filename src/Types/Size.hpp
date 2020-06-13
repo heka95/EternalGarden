@@ -1,5 +1,4 @@
-#if !defined(__SIZE__)
-#define __SIZE__
+#pragma once
 
 #include <iostream>
 
@@ -18,5 +17,3 @@ namespace Garden
     }
 
 } // namespace Garden
-
-#endif

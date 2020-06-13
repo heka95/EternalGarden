@@ -51,6 +51,8 @@
         "numeric": "cpp",
         "ratio": "cpp",
         "valarray": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "condition_variable": "cpp",
+        "thread": "cpp"
     }
 }
