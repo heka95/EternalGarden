@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "build",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-m64",
+                "-g",
+                "-fPIC",
+                "-Wall",
+                "${workspaceFolder}\\src\\*.cpp",
+                "${workspaceFolder}\\src\\Component\\*.cpp",
+				"-I","${workspaceFolder}/include",
+                "-L","${workspaceFolder}/lib",
+                "-lmingw32",
+                "-lSDL2main",
+                "-lSDL2",
+                "-lSDL2_image",
+                "-lSDL2_ttf",
+                "-llua53",
+                "-o",
+                "${workspaceFolder}\\bin\\game.exe"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
