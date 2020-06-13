@@ -40,3 +40,18 @@ void TextureManager::draw(std::string id, Garden::Vector2D position, Garden::Siz
     SDL_Rect destinationRest = {position.x, position.y, size.width, size.height};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRest, 0, nullptr, SDL_FLIP_NONE);
 }
+
+void TextureManager::unload(std::string id)
+{
+    SDL_DestroyTexture(m_textures[id]);
+    m_textures.erase(id);
+}
+
+void TextureManager::release()
+{
+    for (const auto& [key, value] : m_textures)
+    {
+        SDL_DestroyTexture(value);
+    }
+    m_textures.clear();
+}

@@ -71,3 +71,8 @@ bool GraphicWindow::createContext(Garden::Configuration &configuration)
     std::cout << "Window has been created with success" << std::endl;
     return true;
 }
+
+void GraphicWindow::release()
+{
+    SDL_DestroyWindow(m_sdlWindowPtr);
+}

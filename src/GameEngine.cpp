@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 #include "GameEngine.hpp"
 #include "TextureManager.hpp"
 #include "Component/TransformerComponent.hpp"
@@ -91,6 +92,11 @@ void GameEngine::doDraw()
 
 void GameEngine::release()
 {
+    TextureManager::getInstance().release();
+    SDL_DestroyRenderer(m_renderer);
+    m_graphicWindow.release();
+    IMG_Quit();
+    SDL_Quit();
 }
 
 void GameEngine::doEvents()
