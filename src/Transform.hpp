@@ -9,9 +9,8 @@ public:
     float Y;
     Transform(float x = 0, float y = 0) : X(x), Y(y) {}
 
-private:
     inline void TranslateX(float x) { X += x; }
-    inline void TranslateY(float x) { X += x; }
+    inline void TranslateY(float y) { Y += y; }
     inline void Translate(Garden::Vector2F vector)
     {
         X += vector.X;

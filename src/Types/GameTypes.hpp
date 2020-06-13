@@ -7,5 +7,6 @@
 #include "Vector2F.hpp"
 #include "Flip.hpp"
 #include "ObjectMetaData.hpp"
+#include "RigidBody.hpp"
 
 #endif

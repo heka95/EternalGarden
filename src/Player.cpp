@@ -5,6 +5,7 @@
 
 Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
 {
+    m_rigidBody = new Garden::RigidBody();
     m_Animation = new Animation();
     m_Animation->setMetaData(metaData->TextureId, 1, 10, 40);
 }
@@ -16,6 +17,10 @@ void Player::draw()
 
 void Player::update(float deltaTime)
 {
+    m_rigidBody->update(0.2);
+    m_rigidBody->setForceX(2);
+    m_transform->TranslateX(m_rigidBody->getPosition().X);
+    m_transform->TranslateY(m_rigidBody->getPosition().Y);
     m_Animation->update();
 }
 

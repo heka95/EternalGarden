@@ -13,4 +13,5 @@ public:
 
 private:
     Animation *m_Animation;
+    Garden::RigidBody *m_rigidBody;
 };
