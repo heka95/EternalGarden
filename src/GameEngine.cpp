@@ -5,7 +5,9 @@
 #include "GameEngine.hpp"
 #include "TextureManager.hpp"
 #include "Component/TransformerComponent.hpp"
+#include "Player.hpp"
 
+Player *player = nullptr;
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -17,7 +19,7 @@ GraphicWindow GameEngine::getGraphicWindow() const
     return m_graphicWindow;
 }
 
-SDL_Renderer* GameEngine::getRenderer()
+SDL_Renderer *GameEngine::getRenderer()
 {
     return m_renderer;
 }
@@ -28,7 +30,7 @@ bool GameEngine::isRunning() const
 }
 
 std::unique_ptr<GameEngine> GameEngine::m_instance;
-GameEngine& GameEngine::getInstance()
+GameEngine &GameEngine::getInstance()
 {
     if (m_instance == nullptr)
     {
@@ -47,20 +49,22 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     if (m_graphicWindow.createContext(configuration))
     {
         m_renderer = SDL_CreateRenderer(m_graphicWindow.getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        if(m_renderer != nullptr)
+        if (m_renderer != nullptr)
         {
             m_isRunning = true;
         }
     }
 
-    std::string texturePath = configuration.executionPath + "/assets/eagle.png";
+    std::string texturePath = configuration.executionPath + "/assets/cat_idle.png";
 
     // test loading texture
-    TextureManager::getInstance().load("eagle", texturePath);
+    TextureManager::getInstance().load("player", texturePath);
+    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{100, 200}, Garden::Size{64, 55}));
 }
 
 void GameEngine::doUpdate()
 {
+    player->update(0);
 }
 
 void GameEngine::doDraw()
@@ -68,7 +72,8 @@ void GameEngine::doDraw()
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
 
-    TextureManager::getInstance().draw("eagle", Garden::Vector2D{100,100}, Garden::Size{40,41});
+    //TextureManager::getInstance().draw("eagle", Garden::Vector2I{100,100}, Garden::Size{40,41});
+    player->draw();
 
     /*
     for (const auto *layer : m_currentWorld.getLayers())

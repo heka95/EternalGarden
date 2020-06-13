@@ -34,11 +34,18 @@ bool TextureManager::load(std::string id, std::string fileName)
     return true;
 }
 
-void TextureManager::draw(std::string id, Garden::Vector2D position, Garden::Size size)
+void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Flip renderFlip)
 {
     SDL_Rect sourceRect = {0, 0, size.width, size.height};
-    SDL_Rect destinationRest = {position.x, position.y, size.width, size.height};
-    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRest, 0, nullptr, SDL_FLIP_NONE);
+    SDL_Rect destinationRest = {position.X, position.Y, size.width, size.height};
+    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRest, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
+}
+
+void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip)
+{
+    SDL_Rect sourceRect = {size.width * frame, size.height * (row - 1), size.width, size.height};
+    SDL_Rect destinationRest = {position.X, position.Y, size.width, size.height};
+    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRest, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
 void TextureManager::unload(std::string id)
@@ -49,7 +56,7 @@ void TextureManager::unload(std::string id)
 
 void TextureManager::release()
 {
-    for (const auto& [key, value] : m_textures)
+    for (const auto &[key, value] : m_textures)
     {
         SDL_DestroyTexture(value);
     }

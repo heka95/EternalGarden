@@ -14,7 +14,8 @@ public:
     bool load(std::string id, std::string fileName);
     void unload(std::string id);
     void release();
-    void draw(std::string id, Garden::Vector2D position, Garden::Size size);
+    void draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Flip renderFlip = Garden::Flip::NONE);
+    void drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip = Garden::Flip::NONE);
 
 private:
     TextureManager() = default;

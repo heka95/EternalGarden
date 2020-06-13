@@ -3,6 +3,9 @@
 
 #include "Size.hpp"
 #include "Configuration.hpp"
-#include "Vector2.hpp"
+#include "Vector2I.hpp"
+#include "Vector2F.hpp"
+#include "Flip.hpp"
+#include "ObjectMetaData.hpp"
 
 #endif
