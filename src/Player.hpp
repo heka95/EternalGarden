@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Character.hpp"
+#include "Animation.hpp"
 
 class Player : public Character
 {
@@ -11,8 +12,5 @@ public:
     virtual void release();
 
 private:
-    int m_row;
-    int m_frame;
-    int m_frameCount;
-    int m_animationSpeed;
+    Animation *m_Animation;
 };
