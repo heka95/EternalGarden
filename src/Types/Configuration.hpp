@@ -10,6 +10,7 @@ namespace Garden
     {
         Size windowSize;
         std::string luaDirectory;
+        std::string executionPath;
     };
 } // namespace Garden
 

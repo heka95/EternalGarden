@@ -23,6 +23,7 @@ Garden::Configuration ConfigurationLoader::getConfiguration(std::string workingD
     configuration.windowSize.width = jsonData["window"]["width"];
     configuration.windowSize.height = jsonData["window"]["height"];
     configuration.luaDirectory = directoryNameof(workingDirectory) + "\\scripts\\";
+    configuration.executionPath = directoryNameof(workingDirectory);
 
     return configuration;
 }

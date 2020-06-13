@@ -11,7 +11,7 @@ class GraphicWindow
     public:
         GraphicWindow();
         ~GraphicWindow();
-        void createContext(Garden::Configuration &configuration);
+        bool createContext(Garden::Configuration &configuration);
         
         Garden::Size getWindowSize() const;
         Garden::Size getDisplaySize() const;

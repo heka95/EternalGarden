@@ -50,6 +50,7 @@
         "map": "cpp",
         "numeric": "cpp",
         "ratio": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "mutex": "cpp"
     }
 }

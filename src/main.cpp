@@ -1,7 +1,7 @@
 #include <iostream>
 #include "ConfigurationLoader.hpp"
 #include "Types/GameTypes.hpp"
-#include "WorkingPlatform.hpp"
+#include "GameEngine.hpp"
 #include "LuaScript.hpp"
 #include "Layer.hpp"
 #include "Component/TransformerComponent.hpp"
@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
     {
         std::string appPath{argv[0]};
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
-        WorkingPlatform platform;
-        platform.load(configuration);
+        GameEngine::getInstance().configureAndInit(configuration);
 
         World world;
         Layer layer;
@@ -25,9 +24,17 @@ int main(int argc, char *argv[])
         entity.addComponent(&component);
         layer.addEntity(&entity);
         world.addLayer(&layer);
-        platform.setWorld(world);
+        GameEngine::getInstance().setWorld(world);
 
-        platform.run();
+        while(GameEngine::getInstance().isRunning())
+        {
+            GameEngine::getInstance().doEvents();
+            GameEngine::getInstance().doUpdate();
+            GameEngine::getInstance().doDraw();
+        }
+
+        GameEngine::getInstance().release();
+
         return EXIT_SUCCESS;
     }
     catch (const std::exception &e)

@@ -12,10 +12,11 @@ Renderer::~Renderer()
     }
 }
 
-void Renderer::create(GraphicWindow *graphicWindow)
+bool Renderer::create(GraphicWindow *graphicWindow)
 {
     this->graphicWindow = graphicWindow;
-    sdlRenderer = SDL_CreateRenderer(graphicWindow->getWindow(), -1, SDL_RENDERER_PRESENTVSYNC);
+    sdlRenderer = SDL_CreateRenderer(graphicWindow->getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    return (sdlRenderer != nullptr);
 }
 
 void Renderer::draw(SDL_Texture *texture)
