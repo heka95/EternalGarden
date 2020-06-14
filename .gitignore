@@ -26,3 +26,6 @@
 
 #ignore assets
 /bin/assets/**/*.*
+
+#ignore spikes
+/spike/**/*.*

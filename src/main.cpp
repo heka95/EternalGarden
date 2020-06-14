@@ -4,8 +4,8 @@
 #include "GameEngine.hpp"
 #include "LuaScript.hpp"
 #include "Layer.hpp"
-#include "Component/TransformerComponent.hpp"
 #include "Timer.hpp"
+#include "MapLoader.hpp"
 
 using namespace std;
 
@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
         std::string appPath{argv[0]};
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
         GameEngine::getInstance().configureAndInit(configuration);
-
+        
+        /*
         World world;
         Layer layer;
         Entity entity(1);
@@ -26,8 +27,8 @@ int main(int argc, char *argv[])
         layer.addEntity(&entity);
         world.addLayer(&layer);
         GameEngine::getInstance().setWorld(world);
-
-        while(GameEngine::getInstance().isRunning())
+*/
+        while (GameEngine::getInstance().isRunning())
         {
             GameEngine::getInstance().doEvents();
             GameEngine::getInstance().doUpdate();

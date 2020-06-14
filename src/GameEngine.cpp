@@ -4,10 +4,10 @@
 #include <SDL2/SDL_image.h>
 #include "GameEngine.hpp"
 #include "TextureManager.hpp"
-#include "Component/TransformerComponent.hpp"
 #include "Player.hpp"
 #include "Input.hpp"
 #include "Timer.hpp"
+#include "MapLoader.hpp"
 
 Player *player = nullptr;
 
@@ -47,11 +47,6 @@ GameEngine &GameEngine::getInstance()
     return *m_instance.get();
 }
 
-void GameEngine::setWorld(const World &world)
-{
-    m_currentWorld = world;
-}
-
 void GameEngine::configureAndInit(Garden::Configuration &configuration)
 {
     if (m_graphicWindow.createContext(configuration))
@@ -62,6 +57,13 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
             m_isRunning = true;
         }
     }
+
+    if (!MapLoader::getInstance().load("level1", "assets/maps/test_map.json"))
+    {
+        std::cout << "Failed to load map" << std::endl;
+    }
+
+    m_world = MapLoader::getInstance().getWorld("level1");
 
     std::string texturePath = configuration.executionPath + "/assets/cat_idle.png";
     std::string textureRunPath = configuration.executionPath + "/assets/cat_run.png";
@@ -75,6 +77,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 void GameEngine::doUpdate()
 {
     auto deltaTime = Timer::getInstance().getDeltaTime();
+    m_world->update();
     player->update(deltaTime);
 }
 
@@ -82,6 +85,7 @@ void GameEngine::doDraw()
 {
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
+    m_world->render();
 
     //TextureManager::getInstance().draw("eagle", Garden::Vector2I{100,100}, Garden::Size{40,41});
     player->draw();

@@ -1,19 +1,8 @@
-#if !defined(__ENTITY_COLLECTION__)
-#define __ENTITY_COLLECTION__
-
-#include <vector>
-#include "Entity.hpp"
+#pragma once
 
 class Layer
 {
 public:
-    Layer();
-    void addEntity(Entity *entity);
-    std::vector<Entity*> getEntities() const;
-
-private:
-    unsigned long m_counter;
-    std::vector<Entity*> m_entityList;
+    virtual void render() = 0;
+    virtual void update() = 0;
 };
-
-#endif

@@ -6,11 +6,12 @@
 class World
 {
 public:
-    World();
-    std::vector<Layer*> getLayers() const;
-    void addLayer(Layer *layer);
+    World() = default;
+    void render();
+    void update();
+    std::vector<Layer *> getLayers();
 
 private:
-    std::vector<Layer*> m_layers;
-    unsigned int m_layerCounter;
+    friend class MapLoader;
+    std::vector<Layer *> m_layers;
 };

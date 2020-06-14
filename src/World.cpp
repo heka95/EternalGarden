@@ -1,17 +1,22 @@
 #include "World.hpp"
 
-World::World() : m_layerCounter(0)
+void World::render()
 {
-    m_layers = {};
+    for (auto *layer : m_layers)
+    {
+        layer->render();
+    }
 }
 
-std::vector<Layer*> World::getLayers() const
+void World::update()
+{
+    for (auto *layer : m_layers)
+    {
+        layer->update();
+    }
+}
+
+std::vector<Layer *> World::getLayers()
 {
     return m_layers;
-}
-
-void World::addLayer(Layer *layer)
-{
-    m_layers.push_back(layer);
-    m_layerCounter++;
 }

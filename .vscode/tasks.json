@@ -12,7 +12,6 @@
                 "-fPIC",
                 "-Wall",
                 "${workspaceFolder}\\src\\*.cpp",
-                "${workspaceFolder}\\src\\Component\\*.cpp",
 				"-I","${workspaceFolder}/include",
                 "-L","${workspaceFolder}/lib",
                 "-lmingw32",

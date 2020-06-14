@@ -16,11 +16,12 @@ public:
     void release();
     void draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Flip renderFlip = Garden::Flip::NONE);
     void drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip = Garden::Flip::NONE);
+    void drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip = Garden::Flip::NONE);
 
 private:
     TextureManager() = default;
     TextureManager(const TextureManager &object) = delete;
     TextureManager &operator=(const TextureManager &object) = delete;
     static std::unique_ptr<TextureManager> m_instance;
-    std::map<std::string, SDL_Texture*> m_textures;
+    std::map<std::string, SDL_Texture *> m_textures;
 };

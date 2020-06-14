@@ -1,7 +1,6 @@
 #pragma once
 
 #include <memory>
-
 #include "Types/GameTypes.hpp"
 #include "GraphicWindow.hpp"
 #include "World.hpp"
@@ -20,7 +19,6 @@ public:
     bool isRunning() const;
     GraphicWindow getGraphicWindow() const;
     SDL_Renderer* getRenderer();
-    void setWorld(const World &world);
 
 private:
     GameEngine();
@@ -30,6 +28,5 @@ private:
     GraphicWindow m_graphicWindow;
     SDL_Renderer* m_renderer;
     bool m_isRunning;
-    SDL_Event m_event;
-    World m_currentWorld;
+    World* m_world;    
 };
