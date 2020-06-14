@@ -15,6 +15,7 @@ public:
     void doEvents();
     void doUpdate();
     void doDraw();
+    void stopRunning();
     void release();
     bool isRunning() const;
     GraphicWindow getGraphicWindow() const;

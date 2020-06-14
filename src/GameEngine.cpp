@@ -6,6 +6,7 @@
 #include "TextureManager.hpp"
 #include "Component/TransformerComponent.hpp"
 #include "Player.hpp"
+#include "Input.hpp"
 
 Player *player = nullptr;
 
@@ -27,6 +28,12 @@ SDL_Renderer *GameEngine::getRenderer()
 bool GameEngine::isRunning() const
 {
     return m_isRunning;
+}
+
+void GameEngine::stopRunning()
+{
+    m_isRunning = false;
+    std::cout << "Engine stop asked !" << std::endl;
 }
 
 std::unique_ptr<GameEngine> GameEngine::m_instance;
@@ -64,6 +71,10 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
 void GameEngine::doUpdate()
 {
+    if(Input::getInstance().getKeyDown(SDL_SCANCODE_A))
+    {
+        std::cout << "Key A pressed !" << std::endl;
+    }
     player->update(0);
 }
 
@@ -106,11 +117,5 @@ void GameEngine::release()
 
 void GameEngine::doEvents()
 {
-    while (SDL_PollEvent(&m_event))
-    {
-        if (m_event.type == SDL_QUIT)
-        {
-            m_isRunning = false;
-        }
-    }
+    Input::getInstance().listen();
 }
