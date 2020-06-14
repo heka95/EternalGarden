@@ -7,6 +7,7 @@
 #include "Component/TransformerComponent.hpp"
 #include "Player.hpp"
 #include "Input.hpp"
+#include "Timer.hpp"
 
 Player *player = nullptr;
 
@@ -63,19 +64,18 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     }
 
     std::string texturePath = configuration.executionPath + "/assets/cat_idle.png";
+    std::string textureRunPath = configuration.executionPath + "/assets/cat_run.png";
 
     // test loading texture
     TextureManager::getInstance().load("player", texturePath);
-    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{100, 200}, Garden::Size{64, 55}));
+    TextureManager::getInstance().load("player_run", textureRunPath);
+    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{100, 200}, Garden::Size{64, 56}));
 }
 
 void GameEngine::doUpdate()
 {
-    if(Input::getInstance().getKeyDown(SDL_SCANCODE_A))
-    {
-        std::cout << "Key A pressed !" << std::endl;
-    }
-    player->update(0);
+    auto deltaTime = Timer::getInstance().getDeltaTime();
+    player->update(deltaTime);
 }
 
 void GameEngine::doDraw()

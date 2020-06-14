@@ -5,6 +5,7 @@
 #include "LuaScript.hpp"
 #include "Layer.hpp"
 #include "Component/TransformerComponent.hpp"
+#include "Timer.hpp"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ int main(int argc, char *argv[])
             GameEngine::getInstance().doEvents();
             GameEngine::getInstance().doUpdate();
             GameEngine::getInstance().doDraw();
+            Timer::getInstance().tick();
         }
 
         GameEngine::getInstance().release();
