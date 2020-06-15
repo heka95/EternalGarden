@@ -70,7 +70,7 @@ TileLayer *MapLoader::parseTileLayer(nlohmann::json &tileLayer, std::vector<Tile
         }
     }
 
-    return (new TileLayer(tileSize, rows, columns, tilemap, tileSets));
+    return (new TileLayer(tileSize, rows, columns, tilemap, tileSets, tileLayer["name"]));
 }
 
 bool MapLoader::load(std::string id, std::string file)

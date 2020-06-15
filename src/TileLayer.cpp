@@ -1,9 +1,10 @@
 #include "TileLayer.hpp"
 #include "TextureManager.hpp"
 
-TileLayer::TileLayer(int tileSize, int rows, int columns, std::vector<std::vector<int>> tileMap, std::vector<TileSet> tileSets)
+TileLayer::TileLayer(int tileSize, int rows, int columns, std::vector<std::vector<int>> tileMap, std::vector<TileSet> tileSets, std::string name)
     : m_tileSize(tileSize), m_rows(rows), m_columns(columns), m_tileMap(tileMap), m_tileSets(tileSets)
 {
+    m_name = name;
     for (unsigned int i = 0; i < m_tileSets.size(); i++)
     {
         TextureManager::getInstance().load(m_tileSets[i].Name, "assets/maps/" + m_tileSets[i].Source);

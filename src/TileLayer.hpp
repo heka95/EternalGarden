@@ -19,7 +19,7 @@ struct TileSet
 class TileLayer : public Layer
 {
 public:
-    TileLayer(int tileSize, int rows, int columns, std::vector<std::vector<int>> tileMap, std::vector<TileSet> tileSets);
+    TileLayer(int tileSize, int rows, int columns, std::vector<std::vector<int>> tileMap, std::vector<TileSet> tileSets, std::string name);
     virtual void render();
     virtual void update();
     std::vector<std::vector<int>> getTileMap();
@@ -28,6 +28,7 @@ private:
     int m_tileSize;
     int m_rows;
     int m_columns;
+    std::string m_name;
     std::vector<std::vector<int>> m_tileMap;
     std::vector<TileSet> m_tileSets;
     const int NO_GRAPHIC_TILE = 0;

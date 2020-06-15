@@ -19,6 +19,7 @@ public:
     bool isRunning() const;
     GraphicWindow* getGraphicWindow();
     SDL_Renderer* getRenderer();
+    World* getWorld();
 
 private:
     GameEngine();
