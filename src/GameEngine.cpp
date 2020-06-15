@@ -8,17 +8,19 @@
 #include "Input.hpp"
 #include "Timer.hpp"
 #include "MapLoader.hpp"
+#include "Camera.hpp"
 
 Player *player = nullptr;
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
     m_renderer = nullptr;
+    m_graphicWindow.reset(new GraphicWindow());
 }
 
-GraphicWindow GameEngine::getGraphicWindow() const
+GraphicWindow *GameEngine::getGraphicWindow()
 {
-    return m_graphicWindow;
+    return m_graphicWindow.get();
 }
 
 SDL_Renderer *GameEngine::getRenderer()
@@ -49,9 +51,9 @@ GameEngine &GameEngine::getInstance()
 
 void GameEngine::configureAndInit(Garden::Configuration &configuration)
 {
-    if (m_graphicWindow.createContext(configuration))
+    if (m_graphicWindow->createContext(configuration))
     {
-        m_renderer = SDL_CreateRenderer(m_graphicWindow.getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        m_renderer = SDL_CreateRenderer(m_graphicWindow->getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (m_renderer != nullptr)
         {
             m_isRunning = true;
@@ -71,20 +73,27 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     // test loading texture
     TextureManager::getInstance().load("player", texturePath);
     TextureManager::getInstance().load("player_run", textureRunPath);
+    
+    TextureManager::getInstance().load("background", "assets/bg_forest.png");
+    
     player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{100, 200}, Garden::Size{64, 56}));
+    Camera::getInstance().setTarget(player->getOrigin());
 }
 
 void GameEngine::doUpdate()
 {
     auto deltaTime = Timer::getInstance().getDeltaTime();
-    m_world->update();
     player->update(deltaTime);
+    m_world->update();
+    Camera::getInstance().update(deltaTime);
 }
 
 void GameEngine::doDraw()
 {
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
+    TextureManager::getInstance().draw("background", Garden::Vector2I{0,0}, Garden::Size{1280,720});
+
     m_world->render();
 
     //TextureManager::getInstance().draw("eagle", Garden::Vector2I{100,100}, Garden::Size{40,41});

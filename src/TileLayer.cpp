@@ -37,7 +37,6 @@ void TileLayer::render()
                 tileColumn = tileSet.Columns - 1;
             }
 
-            //TextureManager::getInstance().drawTile(tileSet.Name, tileSet.Tilesize, j*tileSet.Tilesize - cam.X, i*tileSet.Tilesize - cam.Y, tileRow, tileColumn);
             TextureManager::getInstance().drawTile(tileSet.Name, tileSet.Tilesize, Garden::Vector2I{j * tileSet.Tilesize, i * tileSet.Tilesize}, tileRow, tileColumn);
         }
     }

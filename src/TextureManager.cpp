@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SDL2/SDL_image.h>
 #include "GameEngine.hpp"
+#include "Camera.hpp"
 
 std::unique_ptr<TextureManager> TextureManager::m_instance;
 TextureManager &TextureManager::getInstance()
@@ -36,22 +37,25 @@ bool TextureManager::load(std::string id, std::string fileName)
 
 void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Flip renderFlip)
 {
+    auto cameraPosition = Camera::getInstance().getPosition() * 0.2f;
     SDL_Rect sourceRect = {0, 0, size.width, size.height};
-    SDL_Rect destinationRect = {position.X, position.Y, size.width, size.height};
+    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, size.width, size.height};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
 void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip)
 {
+    auto cameraPosition = Camera::getInstance().getPosition();
     SDL_Rect sourceRect = {size.width * frame, size.height * (row - 1), size.width, size.height};
-    SDL_Rect destinationRect = {position.X, position.Y, size.width, size.height};
+    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, size.width, size.height};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
 void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip)
 {
+    auto cameraPosition = Camera::getInstance().getPosition();
     SDL_Rect sourceRect = {tileSize * frame, tileSize * row, tileSize, tileSize};
-    SDL_Rect destinationRect = {position.X, position.Y, tileSize, tileSize};
+    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSize, tileSize};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[tileSetId], &sourceRect, &destinationRect, 0, 0, static_cast<SDL_RendererFlip>(renderFlip));
 }
 

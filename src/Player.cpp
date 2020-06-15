@@ -36,6 +36,8 @@ void Player::update(float deltaTime)
     m_rigidBody->update(deltaTime);
     m_transform->TranslateX(m_rigidBody->getPosition().X);
     //m_transform->TranslateY(m_rigidBody->getPosition().Y);
+    m_origin->X = m_transform->X + m_size.width / 2;
+    m_origin->Y = m_transform->Y + m_size.height / 2;
     m_Animation->update();
 }
 

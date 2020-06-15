@@ -22,6 +22,22 @@ namespace Garden
         {
             return Vector2I(X * scalarElement, Y * scalarElement);
         }
+        inline Vector2I operator*(const float scalarElement) const
+        {
+            return Vector2I(X * scalarElement, Y * scalarElement);
+        }
+        inline friend Vector2I operator-=(Vector2I &v1, const Vector2I &v2)
+        {
+            v1.X -= v2.X;
+            v1.Y -= v2.Y;
+            return v1;
+        }
+        inline friend Vector2I operator+=(Vector2I &v1, const Vector2I &v2)
+        {
+            v1.X += v2.X;
+            v1.Y += v2.Y;
+            return v1;
+        }
     };
 
     inline std::ostream &operator<<(std::ostream &os, const Vector2I &vector)

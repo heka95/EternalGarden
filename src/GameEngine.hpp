@@ -17,7 +17,7 @@ public:
     void stopRunning();
     void release();
     bool isRunning() const;
-    GraphicWindow getGraphicWindow() const;
+    GraphicWindow* getGraphicWindow();
     SDL_Renderer* getRenderer();
 
 private:
@@ -25,7 +25,7 @@ private:
     GameEngine(const GameEngine& object) = delete;
     GameEngine& operator=(const GameEngine& object) = delete;
     static std::unique_ptr<GameEngine> m_instance;
-    GraphicWindow m_graphicWindow;
+    std::unique_ptr<GraphicWindow> m_graphicWindow;
     SDL_Renderer* m_renderer;
     bool m_isRunning;
     World* m_world;    
