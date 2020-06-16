@@ -21,7 +21,7 @@ Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
     m_attackTime = ATTACK_TIME;
 
     m_collider = new Collider();
-    m_collider->SetBuffer(0, 0, 0, 0);
+    m_collider->SetBuffer(0, 10, 0, 0);
 
     m_rigidBody = new Garden::RigidBody();
     m_rigidBody->setGravity(3.0f);
@@ -108,7 +108,7 @@ void Player::update(float deltaTime)
     m_rigidBody->update(deltaTime);
     m_lastSafePosition.X = m_transform->X;
     m_transform->X += m_rigidBody->getPosition().X;
-    m_collider->set(m_transform->X, m_transform->Y, 56, 64);
+    m_collider->set(m_transform->X, m_transform->Y, 58, 64);
 
     if (CollisionHandler::getInstance().worldCollision(m_collider->get()))
     {
@@ -118,7 +118,7 @@ void Player::update(float deltaTime)
     m_rigidBody->update(deltaTime);
     m_lastSafePosition.Y = m_transform->Y;
     m_transform->Y += m_rigidBody->getPosition().Y;
-    m_collider->set(m_transform->X, m_transform->Y, 56, 64);
+    m_collider->set(m_transform->X, m_transform->Y, 58, 64);
 
     if (CollisionHandler::getInstance().worldCollision(m_collider->get()))
     {
@@ -138,7 +138,7 @@ void Player::update(float deltaTime)
 
 void Player::animationState()
 {
-    m_Animation->setMetaData("player", 1, 10, 100);
+    m_Animation->setMetaData("player", 1, 12, 100);
 
     if (m_isRunning)
     {
@@ -146,7 +146,7 @@ void Player::animationState()
     }
     if (m_isCrouching)
     {
-        m_Animation->setMetaData("player_crouch", 1, 10, 100);
+        m_Animation->setMetaData("player_crouch", 1, 8, 100);
     }
     if (m_isJumping)
     {
@@ -154,11 +154,11 @@ void Player::animationState()
     }
     if (m_isFalling)
     {
-        m_Animation->setMetaData("player_fall", 1, 7, 100);
+        m_Animation->setMetaData("player_fall", 1, 8, 100);
     }
     if (m_isAttacking)
     {
-        m_Animation->setMetaData("player_attack", 1, 10, 100);
+        m_Animation->setMetaData("player_attack", 1, 8, 100);
     }
 }
 

@@ -62,7 +62,7 @@ bool GraphicWindow::createContext(Garden::Configuration &configuration)
     std::cout << "Game window size: " << m_windowSize << std::endl;
 
     m_sdlWindowPtr = SDL_CreateWindow(m_windowName.c_str(), SDL_WINDOWPOS_CENTERED_DISPLAY(0), SDL_WINDOWPOS_CENTERED_DISPLAY(0),
-                                      m_windowSize.width, m_windowSize.height, SDL_WINDOW_SHOWN);
+                                      m_windowSize.width, m_windowSize.height, SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
     if (m_sdlWindowPtr == nullptr)
     {
         std::cout << "Could not create window: " << SDL_GetError() << std::endl;

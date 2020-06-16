@@ -1,0 +1,32 @@
+{
+    "textures": [
+        {
+            "id": "player",
+            "file": "assets/player/idle.png"
+        },
+        {
+            "id": "player_run",
+            "file": "assets/player/walk.png"
+        },
+        {
+            "id": "player_jump",
+            "file": "assets/player/jump.png"
+        },
+        {
+            "id": "player_attack",
+            "file": "assets/player/attack.png"
+        },
+        {
+            "id": "player_crouch",
+            "file": "assets/player/slide.png"
+        },
+        {
+            "id": "player_fall",
+            "file": "assets/player/fall.png"
+        },
+        {
+            "id": "background",
+            "file": "assets/bg_forest.png"
+        }
+    ]
+}

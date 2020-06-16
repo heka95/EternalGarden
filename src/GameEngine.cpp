@@ -72,17 +72,9 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
     m_world = MapLoader::getInstance().getWorld("level1");
 
-    // test loading texture
-    TextureManager::getInstance().load("player", "assets/cat_idle.png");
-    TextureManager::getInstance().load("player_run", "assets/cat_run.png");
-    TextureManager::getInstance().load("player_jump", "assets/cat_jump.png");
-    TextureManager::getInstance().load("player_attack", "assets/cat_attack.png");
-    TextureManager::getInstance().load("player_crouch", "assets/cat_crouch.png");
-    TextureManager::getInstance().load("player_fall", "assets/cat_fall.png");
+    TextureManager::getInstance().parseTextures("level1.json");
 
-    TextureManager::getInstance().load("background", "assets/bg_forest.png");
-
-    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{10, 500}, Garden::Size{64, 56}));
+    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{10, 500}, Garden::Size{64, 58}));
     Camera::getInstance().setTarget(player->getOrigin());
 }
 
@@ -98,7 +90,7 @@ void GameEngine::doDraw()
 {
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
-    TextureManager::getInstance().draw("background", Garden::Vector2I{0, 0}, Garden::Size{1280, 720});
+    TextureManager::getInstance().draw("background", Garden::Vector2I{0, 0}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
     m_world->render();
     player->draw();
     SDL_RenderPresent(m_renderer);

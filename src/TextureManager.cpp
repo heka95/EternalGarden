@@ -1,8 +1,11 @@
 #include "TextureManager.hpp"
 #include <iostream>
+#include <fstream>
+#include <iostream>
 #include <SDL2/SDL_image.h>
 #include "GameEngine.hpp"
 #include "Camera.hpp"
+#include "json.hpp"
 
 std::unique_ptr<TextureManager> TextureManager::m_instance;
 TextureManager &TextureManager::getInstance()
@@ -31,15 +34,39 @@ bool TextureManager::load(std::string id, std::string fileName)
     }
 
     m_textures[id] = texture;
-    std::cout << "Texture ID:" << id << " | " << fileName << " Generated" << std::endl;
+    std::cout << "Load Texture ID:" << id << " | " << fileName << " Generated" << std::endl;
     return true;
 }
 
-void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Flip renderFlip)
+bool TextureManager::parseTextures(std::string sourcePath)
 {
-    auto cameraPosition = Camera::getInstance().getPosition() * 0.2f;
+    std::ifstream file_input(sourcePath.c_str(), std::ios::in);
+    if (file_input.fail())
+    {
+        std::cout << "Can't load the file " << sourcePath << std::endl;
+        return false;
+    }
+    nlohmann::json jsonData{};
+    file_input >> jsonData;
+
+    for (auto &texture : jsonData["textures"])
+    {
+        if (!load(texture["id"], texture["file"]))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Vector2F scale, float scrollFactor, Garden::Flip renderFlip)
+{
+    auto cameraPosition = Camera::getInstance().getPosition() * scrollFactor;
+    auto xRect = size.width * scale.X;
+    auto yRect = size.height * scale.Y;
     SDL_Rect sourceRect = {0, 0, size.width, size.height};
-    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, size.width, size.height};
+    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, (int)xRect, (int)yRect};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
@@ -56,11 +83,12 @@ void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vecto
     auto cameraPosition = Camera::getInstance().getPosition();
     SDL_Rect sourceRect = {tileSize * frame, tileSize * row, tileSize, tileSize};
     SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSize, tileSize};
-    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[tileSetId], &sourceRect, &destinationRect, 0, 0, static_cast<SDL_RendererFlip>(renderFlip));
+    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[tileSetId], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
 void TextureManager::unload(std::string id)
 {
+    std::cout << "Delete Texture ID:" << id << std::endl;
     SDL_DestroyTexture(m_textures[id]);
     m_textures.erase(id);
 }
@@ -69,6 +97,7 @@ void TextureManager::release()
 {
     for (const auto &[key, value] : m_textures)
     {
+        std::cout << "Delete Texture ID:" << key << std::endl;
         SDL_DestroyTexture(value);
     }
     m_textures.clear();
