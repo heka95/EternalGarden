@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Character.hpp"
-#include "Animation.hpp"
+#include "SpriteAnimation.hpp"
 #include "Collider.hpp"
 
 #define JUMP_TIME 15.0f
@@ -19,7 +19,7 @@ public:
 
 private:
     void animationState();
-    Animation *m_Animation;
+    SpriteAnimation *m_Animation;
     Garden::RigidBody *m_rigidBody;
     bool m_isJumping;
     bool m_isGrounded;

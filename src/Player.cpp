@@ -24,15 +24,15 @@ Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
     m_collider->SetBuffer(0, 10, 0, 0);
 
     m_rigidBody = new Garden::RigidBody();
-    m_rigidBody->setGravity(3.0f);
+    m_rigidBody->setGravity(3.5f);
 
-    m_Animation = new Animation();
+    m_Animation = new SpriteAnimation();
     m_Animation->setMetaData(metaData->TextureId, 1, 8, 100);
 }
 
 void Player::draw()
 {
-    m_Animation->draw(Garden::Vector2I{(int)m_transform->X, (int)m_transform->Y}, m_size, m_renderFlip);
+    m_Animation->draw(Garden::Vector2I{(int)m_transform->X, (int)m_transform->Y}, m_size, 1.0f, 1.0f, m_renderFlip);
 
     /* draw collider
     auto cameraPosition = Camera::getInstance().getPosition();
@@ -95,7 +95,7 @@ void Player::update(float deltaTime)
 
     m_isFalling = (m_rigidBody->getVelocity().Y > 0 && !m_isGrounded);
 
-    if(m_isAttacking && m_attackTime > 0)
+    if (m_isAttacking && m_attackTime > 0)
     {
         m_attackTime -= deltaTime;
     }
@@ -133,7 +133,8 @@ void Player::update(float deltaTime)
     m_origin->X = m_transform->X + m_size.width / 2;
     m_origin->Y = m_transform->Y + m_size.height / 2;
     animationState();
-    m_Animation->update();
+    m_Animation->update(deltaTime);
+    std::cout << "[X=" << m_origin->X << ";Y=" << m_origin->Y << "]" << std::endl;
 }
 
 void Player::animationState()

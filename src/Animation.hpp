@@ -1,19 +1,14 @@
 #pragma once
 
-#include "Types/GameTypes.hpp"
-
 class Animation
 {
 public:
-    Animation();
-    void update();
-    void draw(Garden::Vector2I position, Garden::Size spriteSize, Garden::Flip flip = Garden::Flip::NONE);
-    void setMetaData(std::string textureId, int row, int frameCount, int animationSpeed);
+    Animation(bool repeat = true) : m_repeat(repeat) { m_isEnded = false; }
+    virtual void update(float deltaTime) = 0;
+    inline bool isEndend() { return m_isEnded; }
 
-private:
-    int m_row;
-    int m_frame;
-    int m_frameCount;
-    int m_animationSpeed;
-    std::string m_textureId;
+protected:
+    bool m_repeat;
+    bool m_isEnded;
+    int m_currentFrame;
 };

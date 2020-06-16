@@ -9,8 +9,7 @@
 #include "Timer.hpp"
 #include "MapLoader.hpp"
 #include "Camera.hpp"
-
-Player *player = nullptr;
+#include "Ennemy.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -74,15 +73,24 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
     TextureManager::getInstance().parseTextures("level1.json");
 
-    player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{10, 500}, Garden::Size{64, 58}));
+    auto player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{10, 550}, Garden::Size{64, 58}));
+    auto skull = new Ennemy(new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 550}, Garden::Size{557, 468}));
+    m_gameObjects.push_back(player);
+    m_gameObjects.push_back(skull);
+
     Camera::getInstance().setTarget(player->getOrigin());
 }
 
 void GameEngine::doUpdate()
 {
     auto deltaTime = Timer::getInstance().getDeltaTime();
-    player->update(deltaTime);
     m_world->update();
+
+    for (auto &object : m_gameObjects)
+    {
+        object->update(deltaTime);
+    }
+
     Camera::getInstance().update(deltaTime);
 }
 
@@ -92,12 +100,20 @@ void GameEngine::doDraw()
     SDL_RenderClear(m_renderer);
     TextureManager::getInstance().draw("background", Garden::Vector2I{0, 0}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
     m_world->render();
-    player->draw();
+    for (auto &object : m_gameObjects)
+    {
+        object->draw();
+    }
     SDL_RenderPresent(m_renderer);
 }
 
 void GameEngine::release()
 {
+    for (auto &object : m_gameObjects)
+    {
+        object->release();
+    }
+
     TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();

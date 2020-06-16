@@ -25,8 +25,88 @@
             "file": "assets/player/fall.png"
         },
         {
-            "id": "background",
+            "id": "ID:background",
             "file": "assets/bg_forest.png"
+        },
+        {
+            "id": "skull-appear-01",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_007.png"
+        },
+        {
+            "id": "skull-appear-02",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_006.png"
+        },
+        {
+            "id": "skull-appear-03",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_005.png"
+        },
+        {
+            "id": "skull-appear-04",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_004.png"
+        },
+        {
+            "id": "skull-appear-05",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_003.png"
+        },
+        {
+            "id": "skull-appear-06",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_002.png"
+        },
+        {
+            "id": "skull-appear-07",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_001.png"
+        },
+        {
+            "id": "skull-appear-08",
+            "file": "assets/ennemis/skull/07-Die/__Skeleton02_Die_000.png"
+        },
+        {
+            "id": "skull-idle-01",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_000.png"
+        },
+        {
+            "id": "skull-idle-02",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_001.png"
+        },
+        {
+            "id": "skull-idle-03",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_002.png"
+        },
+        {
+            "id": "skull-idle-04",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_003.png"
+        },
+        {
+            "id": "skull-idle-05",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_004.png"
+        },
+        {
+            "id": "skull-idle-06",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_005.png"
+        },
+        {
+            "id": "skull-idle-07",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_006.png"
+        },
+        {
+            "id": "skull-idle-08",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_007.png"
+        },
+        {
+            "id": "skull-idle-09",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_008.png"
+        },
+        {
+            "id": "skull-idle-10",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_009.png"
+        },
+        {
+            "id": "skull-idle-11",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_010.png"
+        },
+        {
+            "id": "skull-idle-12",
+            "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_011.png"
         }
     ]
 }
