@@ -33,14 +33,7 @@ Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
 void Player::draw()
 {
     m_Animation->draw(Garden::Vector2I{(int)m_transform->X, (int)m_transform->Y}, m_size, 1.0f, 1.0f, m_renderFlip);
-
-    /* draw collider
-    auto cameraPosition = Camera::getInstance().getPosition();
-    SDL_Rect colliderBox = m_collider->get();
-    colliderBox.x -= cameraPosition.X;
-    colliderBox.y -= cameraPosition.Y;
-    SDL_RenderDrawRect(GameEngine::getInstance().getRenderer(), &colliderBox);
-    */
+    m_collider->draw();
 }
 
 void Player::update(float deltaTime)

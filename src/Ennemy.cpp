@@ -16,12 +16,7 @@ Ennemy::Ennemy(Garden::ObjectMetaData *metaData) : Character(metaData)
 void Ennemy::draw()
 {
     m_animation->drawFrame(Garden::Vector2I{(int)m_transform->X, (int)m_transform->Y}, Garden::Vector2F{0.2f, 0.2f}, m_renderFlip);
-    auto cameraPosition = Camera::getInstance().getPosition();
-    SDL_Rect colliderBox = m_collider->get();
-    colliderBox.x -= cameraPosition.X;
-    colliderBox.y -= cameraPosition.Y;
-    SDL_SetRenderDrawColor(GameEngine::getInstance().getRenderer(), 255, 0, 0, 255);
-    SDL_RenderDrawRect(GameEngine::getInstance().getRenderer(), &colliderBox);
+    m_collider->draw();
 }
 
 void Ennemy::update(float deltaTime)
