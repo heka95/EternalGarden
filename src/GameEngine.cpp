@@ -98,7 +98,7 @@ void GameEngine::doDraw()
 {
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
-    TextureManager::getInstance().draw("background", Garden::Vector2I{0, 0}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
+    TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
     m_world->render();
     for (auto &object : m_gameObjects)
     {

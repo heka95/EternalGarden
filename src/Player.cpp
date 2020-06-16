@@ -134,7 +134,7 @@ void Player::update(float deltaTime)
     m_origin->Y = m_transform->Y + m_size.height / 2;
     animationState();
     m_Animation->update(deltaTime);
-    std::cout << "[X=" << m_origin->X << ";Y=" << m_origin->Y << "]" << std::endl;
+    //std::cout << "[X=" << m_origin->X << ";Y=" << m_origin->Y << "]" << std::endl;
 }
 
 void Player::animationState()
