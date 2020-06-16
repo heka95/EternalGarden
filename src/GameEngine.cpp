@@ -76,6 +76,9 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     TextureManager::getInstance().load("player", "assets/cat_idle.png");
     TextureManager::getInstance().load("player_run", "assets/cat_run.png");
     TextureManager::getInstance().load("player_jump", "assets/cat_jump.png");
+    TextureManager::getInstance().load("player_attack", "assets/cat_attack.png");
+    TextureManager::getInstance().load("player_crouch", "assets/cat_crouch.png");
+    TextureManager::getInstance().load("player_fall", "assets/cat_fall.png");
 
     TextureManager::getInstance().load("background", "assets/bg_forest.png");
 

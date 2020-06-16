@@ -3,6 +3,15 @@
 #include <memory>
 #include <SDL2/SDL.h>
 
+enum Axis 
+{
+    HORIZONTAL,
+    VERTICAL
+};
+
+#define BACKWARD = -1;
+#define FORWARD = 1;
+
 class Input
 {
     public:
@@ -10,6 +19,7 @@ class Input
     static Input &getInstance();
     void listen();
     bool getKeyDown(SDL_Scancode key);
+    int getAxisKey(Axis axis);
 
     private:
     Input();

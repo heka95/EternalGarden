@@ -36,6 +36,30 @@ void Input::listen()
     }
 }
 
+int Input::getAxisKey(Axis axis)
+{
+    switch (axis)
+    {
+    case HORIZONTAL:
+        if (getKeyDown(SDL_SCANCODE_D) || getKeyDown(SDL_SCANCODE_RIGHT))
+            return 1;
+        if (getKeyDown(SDL_SCANCODE_A) || getKeyDown(SDL_SCANCODE_LEFT))
+            return -1;
+        break;
+
+    case VERTICAL:
+        if (getKeyDown(SDL_SCANCODE_W) || getKeyDown(SDL_SCANCODE_UP))
+            return 1;
+        if (getKeyDown(SDL_SCANCODE_S) || getKeyDown(SDL_SCANCODE_DOWN))
+            return -1;
+        break;
+
+    default:
+        return 0;
+    }
+    return 0;
+}
+
 bool Input::getKeyDown(SDL_Scancode key)
 {
     return (m_keyStates[key] == 1);

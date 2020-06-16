@@ -7,8 +7,8 @@ class Animation
 public:
     Animation();
     void update();
-    void draw(Garden::Vector2I position, Garden::Size spriteSize);
-    void setMetaData(std::string textureId, int row, int frameCount, int animationSpeed, Garden::Flip flip = Garden::Flip::NONE);
+    void draw(Garden::Vector2I position, Garden::Size spriteSize, Garden::Flip flip = Garden::Flip::NONE);
+    void setMetaData(std::string textureId, int row, int frameCount, int animationSpeed);
 
 private:
     int m_row;
@@ -16,5 +16,4 @@ private:
     int m_frameCount;
     int m_animationSpeed;
     std::string m_textureId;
-    Garden::Flip m_flip;
 };
