@@ -5,6 +5,10 @@
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "CollisionHandler.hpp"
+#include "ObjectFactory.hpp"
+
+// Register type to factory
+static Registrar<Player> registrar("PLAYER");
 
 Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
 {

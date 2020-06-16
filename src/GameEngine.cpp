@@ -10,6 +10,7 @@
 #include "MapLoader.hpp"
 #include "Camera.hpp"
 #include "Ennemy.hpp"
+#include "ObjectFactory.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -73,8 +74,11 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
     TextureManager::getInstance().parseTextures("level1.json");
 
-    auto player = new Player(new Garden::ObjectMetaData("player", Garden::Vector2I{10, 550}, Garden::Size{64, 58}));
-    auto skull = new Ennemy(new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 550}, Garden::Size{557, 468}));
+    auto playerMetadata = new Garden::ObjectMetaData("player", Garden::Vector2I{10, 550}, Garden::Size{64, 58});
+    auto skullMetaData = new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 550}, Garden::Size{557, 468});
+
+    auto player = ObjectFactory::getInstance().createNew("PLAYER", playerMetadata);
+    auto skull = ObjectFactory::getInstance().createNew("ENNEMY", skullMetaData);
     m_gameObjects.push_back(player);
     m_gameObjects.push_back(skull);
 

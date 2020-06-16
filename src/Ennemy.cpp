@@ -1,6 +1,10 @@
 #include "Ennemy.hpp"
 #include "CollisionHandler.hpp"
 #include "Camera.hpp"
+#include "ObjectFactory.hpp"
+
+// Register type to factory
+static Registrar<Ennemy> registrar("ENNEMY");
 
 Ennemy::Ennemy(Garden::ObjectMetaData *metaData) : Character(metaData)
 {
