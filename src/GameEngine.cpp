@@ -54,6 +54,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
         {
             m_isRunning = true;
         }
+        SDL_RenderSetLogicalSize(m_renderer, 800, 600);
     }
     auto game = new Game();
     if (game->initialize())

@@ -28,5 +28,6 @@ class Input
     static std::unique_ptr<Input> m_instance;
     void keyUp();
     void keyDown();
+    void windowEvents(SDL_Event event);
     const Uint8* m_keyStates;
 };

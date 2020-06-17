@@ -22,8 +22,10 @@ public:
     GraphicWindow *getGraphicWindow();
     SDL_Renderer *getRenderer();
     void popState();
-    void pushState(GameState* current);
-    void changeState(GameState* target);
+    void pushState(GameState *current);
+    void changeState(GameState *target);
+    void setWindowSize(SDL_Rect windowSize) { m_windowSize = windowSize; }
+    SDL_Rect getWindowSize() { return m_windowSize; }
 
 private:
     GameEngine();
@@ -34,4 +36,5 @@ private:
     SDL_Renderer *m_renderer;
     bool m_isRunning;
     std::vector<GameState *> m_states;
+    SDL_Rect m_windowSize;
 };

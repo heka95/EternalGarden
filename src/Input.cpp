@@ -1,5 +1,6 @@
 #include "Input.hpp"
 #include "GameEngine.hpp"
+#include "Camera.hpp"
 
 Input::Input()
 {
@@ -21,6 +22,7 @@ void Input::listen()
     SDL_Event event;
     while (SDL_PollEvent(&event))
     {
+        windowEvents(event);
         switch (event.type)
         {
         case SDL_QUIT:
@@ -33,6 +35,18 @@ void Input::listen()
             keyUp();
             break;
         }
+    }
+}
+
+void Input::windowEvents(SDL_Event event)
+{
+    if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+    {
+        auto width = event.window.data1;
+        auto height = event.window.data2;
+        const SDL_Rect window{0, 0, width, height};
+        GameEngine::getInstance().setWindowSize(window);
+        //Camera::getInstance().setSceneSize(window.w, window.h);
     }
 }
 

@@ -10,6 +10,8 @@
 #include "Input.hpp"
 #include "Menu.hpp"
 #include "ObjectFactory.hpp"
+#include "Ennemy.hpp"
+#include <Lua/lua.hpp>
 
 Game::Game()
 {
@@ -63,12 +65,23 @@ bool Game::initialize()
     return true;
 }
 
+ImageLayer *ImageLayer_new(lua_State *L)
+{
+    std::string textureId = luaL_checkstring(L, 1);
+    int x = luaL_checknumber(L, 2);
+    int y = luaL_checknumber(L, 3);
+    float scrollRatio = luaL_checknumber(L, 4);
+    float scaleX = luaL_checknumber(L, 5);
+    float scaleY = luaL_checknumber(L, 6);
+    return new ImageLayer(textureId, x, y, scrollRatio, scaleX, scaleY);
+}
+
 void Game::doDraw()
 {
     SDL_SetRenderDrawColor(m_renderContext, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderContext);
 
-    for(auto imageLayer : m_backgroundParralax)
+    for (auto imageLayer : m_backgroundParralax)
     {
         imageLayer->render();
     }
@@ -99,7 +112,7 @@ void Game::doUpdate()
     if (!m_editMode)
     {
         auto deltaTime = Timer::getInstance().getDeltaTime();
-        for (auto &object : m_gameObjects)
+        for (auto object : m_gameObjects)
         {
             object->update(deltaTime);
         }

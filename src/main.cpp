@@ -1,8 +1,9 @@
+#define SOL_ALL_SAFETIES_ON 1
+
 #include <iostream>
 #include "ConfigurationLoader.hpp"
 #include "Types/GameTypes.hpp"
 #include "GameEngine.hpp"
-#include "LuaScript.hpp"
 #include "Layer.hpp"
 #include "Timer.hpp"
 #include "MapLoader.hpp"
@@ -16,18 +17,7 @@ int main(int argc, char *argv[])
         std::string appPath{argv[0]};
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
         GameEngine::getInstance().configureAndInit(configuration);
-        
-        /*
-        World world;
-        Layer layer;
-        Entity entity(1);
-        TransformerComponent component;
 
-        entity.addComponent(&component);
-        layer.addEntity(&entity);
-        world.addLayer(&layer);
-        GameEngine::getInstance().setWorld(world);
-*/
         while (GameEngine::getInstance().isRunning())
         {
             GameEngine::getInstance().doEvents();
@@ -45,20 +35,4 @@ int main(int argc, char *argv[])
         std::cerr << e.what() << '\n';
     }
     return EXIT_FAILURE;
-}
-
-void testing()
-{
-    //std::string luaFile = configuration.luaDirectory + "hello.lua";
-    //LuaScript script(luaFile.c_str());
-    //script.execute();
-    /*
-        
-        lua_State *lua = luaL_newstate();
-        luaL_openlibs(lua);
-        luaL_dofile(lua, luaFile.c_str());
-        lua_getglobal(lua, "hello world");
-        lua_call(lua, 0,0);
-        lua_close(lua);
-*/
 }
