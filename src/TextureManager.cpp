@@ -60,27 +60,32 @@ bool TextureManager::parseTextures(std::string sourcePath)
     return true;
 }
 
-void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Vector2F scale, float scrollFactor, Garden::Flip renderFlip)
+void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Vector2F scale, Garden::Flip renderFlip, float speedRatio, float rotation)
 {
-    auto cameraPosition = Camera::getInstance().getPosition() * scrollFactor;
+    SDL_Rect sourceRect = {0, 0, size.width, size.height};
+
+    auto cameraPosition = Camera::getInstance().getPosition() * speedRatio;
     auto xRect = size.width * scale.X;
     auto yRect = size.height * scale.Y;
-    SDL_Rect sourceRect = {0, 0, size.width, size.height};
     SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, (int)xRect, (int)yRect};
-    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
+
+    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, rotation, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
-void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip)
+void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip, Garden::Vector2F scale, float speedRatio, float rotation)
 {
-    auto cameraPosition = Camera::getInstance().getPosition();
     SDL_Rect sourceRect = {size.width * frame, size.height * (row - 1), size.width, size.height};
-    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, size.width, size.height};
-    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
+
+    auto cameraPosition = Camera::getInstance().getPosition() * speedRatio;
+    auto xRect = size.width * scale.X;
+    auto yRect = size.height * scale.Y;
+    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, (int)xRect, (int)yRect};
+    SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, rotation, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
-void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip)
+void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip, float speedRatio)
 {
-    auto cameraPosition = Camera::getInstance().getPosition();
+    auto cameraPosition = Camera::getInstance().getPosition() * speedRatio;
     SDL_Rect sourceRect = {tileSize * frame, tileSize * row, tileSize, tileSize};
     SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSize, tileSize};
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[tileSetId], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));

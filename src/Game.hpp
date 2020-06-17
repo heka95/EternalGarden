@@ -3,6 +3,7 @@
 #include "GameState.hpp"
 #include "World.hpp"
 #include "GameObject.hpp"
+#include "ImageLayer.hpp"
 
 class Game : public GameState
 {
@@ -21,4 +22,5 @@ private:
     bool m_editMode;
     World *m_world;
     std::vector<GameObject *> m_gameObjects;
+    std::vector<ImageLayer *> m_backgroundParralax;
 };

@@ -30,6 +30,17 @@ bool Game::initialize()
     m_world = MapLoader::getInstance().getWorld("level1");
     TileLayer *collisionLayer = (TileLayer *)m_world->getLayers().front();
 
+    /* loading parallax */
+    m_backgroundParralax.push_back(new ImageLayer("parallax-sky", 0, -320, 0.1));
+    m_backgroundParralax.push_back(new ImageLayer("parallax-sun", 0, -320, 0.1));
+    //m_backgroundParralax.push_back(new ImageLayer("parallax-city-shadow3", 0, -320, 0.2));
+    //m_backgroundParralax.push_back(new ImageLayer("parallax-city-shadow2", 0, -320, 0.2));
+    //m_backgroundParralax.push_back(new ImageLayer("parallax-city-shadow", 0, -320, 0.2));
+    m_backgroundParralax.push_back(new ImageLayer("parallax-city", 0, -320, 0.3));
+    m_backgroundParralax.push_back(new ImageLayer("parallax-grass", 0, -320, 0.4));
+    m_backgroundParralax.push_back(new ImageLayer("parallax-ground", 0, -320, 0.5));
+    /* ---------------- */
+
     auto tileSize = collisionLayer->getTileSize();
     auto width = collisionLayer->getWidth() * tileSize;
     auto height = collisionLayer->getHeight() * tileSize;
@@ -57,7 +68,12 @@ void Game::doDraw()
     SDL_SetRenderDrawColor(m_renderContext, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderContext);
 
-    TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
+    for(auto imageLayer : m_backgroundParralax)
+    {
+        imageLayer->render();
+    }
+
+    //TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, Garden::Flip::NONE, 0.2f);
     m_world->render();
     for (auto &object : m_gameObjects)
     {

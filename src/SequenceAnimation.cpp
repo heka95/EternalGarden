@@ -9,7 +9,7 @@ SequenceAnimation::SequenceAnimation(bool repeat) : Animation(repeat)
 
 void SequenceAnimation::drawFrame(Garden::Vector2I position, Garden::Vector2F scale, Garden::Flip flip)
 {
-    TextureManager::getInstance().draw(m_sequence.TextureIds[m_currentFrame], position, Garden::Size{m_sequence.Width, m_sequence.Height}, scale, 1.0f, flip);
+    TextureManager::getInstance().draw(m_sequence.TextureIds[m_currentFrame], position, Garden::Size{m_sequence.Width, m_sequence.Height}, scale, flip);
 }
 
 void SequenceAnimation::update(float deltaTime)

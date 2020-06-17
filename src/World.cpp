@@ -23,5 +23,9 @@ std::vector<Layer *> World::getLayers()
 
 void World::release()
 {
-    // do after
+    for (auto layer : m_layers)
+    {
+        delete layer;
+    }
+    m_layers.clear();
 }

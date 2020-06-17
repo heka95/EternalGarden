@@ -107,6 +107,38 @@
         {
             "id": "skull-idle-12",
             "file": "assets/ennemis/skull/01-Idle/__Skeleton02_Idle_011.png"
+        },
+        {
+            "id": "parallax-ground",
+            "file": "assets/parallax/layer_01_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-grass",
+            "file": "assets/parallax/layer_02_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-city",
+            "file": "assets/parallax/layer_03_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-city-shadow",
+            "file": "assets/parallax/layer_04_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-city-shadow2",
+            "file": "assets/parallax/layer_05_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-city-shadow3",
+            "file": "assets/parallax/layer_06_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-sun",
+            "file": "assets/parallax/layer_07_1920 x 1080.png"
+        },
+        {
+            "id": "parallax-sky",
+            "file": "assets/parallax/layer_08_1920 x 1080.png"
         }
     ]
 }
