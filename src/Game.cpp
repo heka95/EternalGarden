@@ -47,7 +47,6 @@ bool Game::initialize()
     auto skull = ObjectFactory::getInstance().createNew("ENNEMY", skullMetaData);
     m_gameObjects.push_back(skull);
 
-
     //Gui::getInstance().initialize(); // no gui
     std::cout << "Game is initialized" << std::endl;
     return true;
@@ -58,6 +57,7 @@ void Game::doDraw()
     SDL_SetRenderDrawColor(m_renderContext, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderContext);
 
+    TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
     m_world->render();
     for (auto &object : m_gameObjects)
     {

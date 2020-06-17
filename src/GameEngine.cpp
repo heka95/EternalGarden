@@ -4,13 +4,8 @@
 #include <SDL2/SDL_image.h>
 #include "GameEngine.hpp"
 #include "TextureManager.hpp"
-#include "Player.hpp"
 #include "Input.hpp"
-#include "Timer.hpp"
-#include "MapLoader.hpp"
 #include "Camera.hpp"
-#include "Ennemy.hpp"
-#include "ObjectFactory.hpp"
 #include "Game.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
@@ -60,28 +55,6 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
             m_isRunning = true;
         }
     }
-
-    /*
-    if (!MapLoader::getInstance().load("level1", "assets/maps/test_map.json"))
-    {
-        std::cout << "Failed to load map" << std::endl;
-    }
-
-    m_world = MapLoader::getInstance().getWorld("level1");
-
-    TextureManager::getInstance().parseTextures("level1.json");
-
-    auto playerMetadata = new Garden::ObjectMetaData("player", Garden::Vector2I{10, 550}, Garden::Size{64, 58});
-    auto skullMetaData = new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 550}, Garden::Size{557, 468});
-
-    auto player = ObjectFactory::getInstance().createNew("PLAYER", playerMetadata);
-    auto skull = ObjectFactory::getInstance().createNew("ENNEMY", skullMetaData);
-    m_gameObjects.push_back(player);
-    m_gameObjects.push_back(skull);
-
-    Camera::getInstance().setTarget(player->getOrigin());
-    */
-
     auto game = new Game();
     if (game->initialize())
     {
@@ -91,19 +64,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
 void GameEngine::doUpdate()
 {
-    //auto deltaTime = Timer::getInstance().getDeltaTime();
-
     m_states.back()->doUpdate();
-    /*
-    m_world->update();
-
-    for (auto &object : m_gameObjects)
-    {
-        object->update(deltaTime);
-    }
-
-    Camera::getInstance().update(deltaTime);
-    */
 }
 
 void GameEngine::popState()
@@ -121,29 +82,11 @@ void GameEngine::changeState(GameState *target)
 void GameEngine::doDraw()
 {
     m_states.back()->doDraw();
-    /*
-    SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
-    SDL_RenderClear(m_renderer);
-    TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
-    m_world->render();
-    for (auto &object : m_gameObjects)
-    {
-        object->draw();
-    }
-    SDL_RenderPresent(m_renderer);
-    */
 }
 
 void GameEngine::release()
 {
     m_states.back()->release();
-    /*
-    for (auto &object : m_gameObjects)
-    {
-        object->release();
-    }
-    */
-
     TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();
