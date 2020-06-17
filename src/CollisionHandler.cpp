@@ -10,10 +10,12 @@ CollisionHandler &CollisionHandler::getInstance()
     return *m_instance.get();
 }
 
-CollisionHandler::CollisionHandler()
+void CollisionHandler::setCollisionMap(std::vector<std::vector<int>> tileMap, int tileSize)
 {
-    m_collisionLayer = (TileLayer *)GameEngine::getInstance().getWorld()->getLayers().front();
-    m_layerTileMap = m_collisionLayer->getTileMap();
+    m_layerTileMap = tileMap;
+    m_tileSize = tileSize;
+    m_tileHeight = tileMap.size();
+    m_tileWidth = tileMap[0].size();
 }
 
 bool CollisionHandler::checkCollision(SDL_Rect a, SDL_Rect b)
@@ -25,23 +27,19 @@ bool CollisionHandler::checkCollision(SDL_Rect a, SDL_Rect b)
 
 bool CollisionHandler::worldCollision(SDL_Rect a)
 {
-    int tileSize = 128;
-    int rows = 7;
-    int columns = 18;
-
-    int left_tile = a.x / tileSize;
-    int right_tile = (a.x + a.w) / tileSize;
-    int top_tile = a.y / tileSize;
-    int bottom_tile = (a.y + a.h) / tileSize;
+    int left_tile = a.x / m_tileSize;
+    int right_tile = (a.x + a.w) / m_tileSize;
+    int top_tile = a.y / m_tileSize;
+    int bottom_tile = (a.y + a.h) / m_tileSize;
 
     if (left_tile < 0)
         left_tile = 0;
-    if (right_tile > columns)
-        right_tile = columns;
+    if (right_tile > m_tileWidth)
+        right_tile = m_tileWidth;
     if (top_tile < 0)
         top_tile = 0;
-    if (bottom_tile > rows)
-        bottom_tile = rows;
+    if (bottom_tile > m_tileHeight)
+        bottom_tile = m_tileHeight;
 
     for (int i = left_tile; i <= right_tile; ++i)
     {

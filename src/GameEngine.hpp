@@ -5,6 +5,7 @@
 #include "GraphicWindow.hpp"
 #include "World.hpp"
 #include "GameObject.hpp"
+#include "GameState.hpp"
 
 class GameEngine
 {
@@ -20,7 +21,9 @@ public:
     bool isRunning() const;
     GraphicWindow *getGraphicWindow();
     SDL_Renderer *getRenderer();
-    World *getWorld();
+    void popState();
+    void pushState(GameState* current);
+    void changeState(GameState* target);
 
 private:
     GameEngine();
@@ -30,6 +33,5 @@ private:
     std::unique_ptr<GraphicWindow> m_graphicWindow;
     SDL_Renderer *m_renderer;
     bool m_isRunning;
-    World *m_world;
-    std::vector<GameObject *> m_gameObjects;
+    std::vector<GameState *> m_states;
 };

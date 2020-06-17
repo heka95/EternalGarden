@@ -23,6 +23,9 @@ public:
     virtual void render();
     virtual void update();
     std::vector<std::vector<int>> getTileMap();
+    inline int getTileSize() { return m_tileSize; }
+    inline int getWidth() { return m_columns; }
+    inline int getHeight() { return m_rows; }
 
 private:
     int m_tileSize;

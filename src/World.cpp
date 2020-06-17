@@ -20,3 +20,8 @@ std::vector<Layer *> World::getLayers()
 {
     return m_layers;
 }
+
+void World::release()
+{
+    // do after
+}

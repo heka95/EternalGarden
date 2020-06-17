@@ -11,6 +11,7 @@
 #include "Camera.hpp"
 #include "Ennemy.hpp"
 #include "ObjectFactory.hpp"
+#include "Game.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -31,11 +32,6 @@ SDL_Renderer *GameEngine::getRenderer()
 bool GameEngine::isRunning() const
 {
     return m_isRunning;
-}
-
-World *GameEngine::getWorld()
-{
-    return m_world;
 }
 
 void GameEngine::stopRunning()
@@ -65,6 +61,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
         }
     }
 
+    /*
     if (!MapLoader::getInstance().load("level1", "assets/maps/test_map.json"))
     {
         std::cout << "Failed to load map" << std::endl;
@@ -83,11 +80,21 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     m_gameObjects.push_back(skull);
 
     Camera::getInstance().setTarget(player->getOrigin());
+    */
+
+    auto game = new Game();
+    if (game->initialize())
+    {
+        m_states.push_back(game);
+    }
 }
 
 void GameEngine::doUpdate()
 {
-    auto deltaTime = Timer::getInstance().getDeltaTime();
+    //auto deltaTime = Timer::getInstance().getDeltaTime();
+
+    m_states.back()->doUpdate();
+    /*
     m_world->update();
 
     for (auto &object : m_gameObjects)
@@ -96,10 +103,25 @@ void GameEngine::doUpdate()
     }
 
     Camera::getInstance().update(deltaTime);
+    */
+}
+
+void GameEngine::popState()
+{
+}
+
+void GameEngine::pushState(GameState *current)
+{
+}
+
+void GameEngine::changeState(GameState *target)
+{
 }
 
 void GameEngine::doDraw()
 {
+    m_states.back()->doDraw();
+    /*
     SDL_SetRenderDrawColor(m_renderer, 0x2B, 0x84, 0xAB, 0xFF);
     SDL_RenderClear(m_renderer);
     TextureManager::getInstance().draw("background", Garden::Vector2I{0, -128}, Garden::Size{1280, 720}, Garden::Vector2F{1.0f, 1.0f}, 0.2f);
@@ -109,14 +131,18 @@ void GameEngine::doDraw()
         object->draw();
     }
     SDL_RenderPresent(m_renderer);
+    */
 }
 
 void GameEngine::release()
 {
+    m_states.back()->release();
+    /*
     for (auto &object : m_gameObjects)
     {
         object->release();
     }
+    */
 
     TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);

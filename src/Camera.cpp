@@ -23,7 +23,7 @@ void Camera::setTarget(Garden::Vector2I *target)
     m_target = target;
 }
 
-void Camera::update(float deltaTime)
+void Camera::update()
 {
     auto windowSize = GameEngine::getInstance().getGraphicWindow()->getWindowSize();
 
@@ -42,16 +42,14 @@ void Camera::update(float deltaTime)
             m_viewBox.y = 0;
         }
 
-        if (m_viewBox.x > (2 * windowSize.width - m_viewBox.w))
+        if (m_viewBox.x > (m_sceneWidth - m_viewBox.w))
         {
-            m_viewBox.x = (2 * windowSize.width - m_viewBox.w);
+            m_viewBox.x = (m_sceneWidth - m_viewBox.w);
         }
-/* CHECK...
-        if (m_viewBox.y > (windowSize.height - m_viewBox.h))
+        if (m_viewBox.y > (m_sceneHeight - m_viewBox.h))
         {
-            m_viewBox.y = (windowSize.height - m_viewBox.h);
+            m_viewBox.y = (m_sceneHeight - m_viewBox.h);
         }
-*/
         m_position = Garden::Vector2I(m_viewBox.x, m_viewBox.y);
     }
 }

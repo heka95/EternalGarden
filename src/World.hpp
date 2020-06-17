@@ -9,6 +9,7 @@ public:
     World() = default;
     void render();
     void update();
+    void release();
     std::vector<Layer *> getLayers();
 
 private:

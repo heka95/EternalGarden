@@ -14,12 +14,15 @@ public:
     static CollisionHandler &getInstance();
     bool checkCollision(SDL_Rect a, SDL_Rect b);
     bool worldCollision(SDL_Rect a);
+    void setCollisionMap(std::vector<std::vector<int>> tileMap, int tileSize);
 
 private:
-    CollisionHandler();
+    CollisionHandler() = default;
     CollisionHandler(const CollisionHandler &object) = delete;
     CollisionHandler &operator=(const CollisionHandler &object) = delete;
     static std::unique_ptr<CollisionHandler> m_instance;
     std::vector<std::vector<int>> m_layerTileMap;
-    TileLayer* m_collisionLayer;
+    int m_tileSize;
+    int m_tileHeight;
+    int m_tileWidth;
 };
