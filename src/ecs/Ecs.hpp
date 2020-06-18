@@ -25,7 +25,7 @@ inline ComponentID getComponentTypeID() noexcept
     return typeID;
 }
 
-constexpr std::size_t maxComponents = 32;
+constexpr std::size_t MaxComponents = 32;
 
 using ComponentBitSet = std::bitset<maxComponents>;
 using ComponentArray = std::array<Component *, maxComponents>;
@@ -53,8 +53,8 @@ public:
         for (auto &c : components)
             c->draw();
     }
-    bool isActive() const { return active; }
-    void destroy() { active = false; }
+    bool isActive() const { return m_isActive; }
+    void destroy() { m_isActive = false; }
 
     template <typename T>
     bool hasComponent() const
@@ -83,7 +83,7 @@ public:
     }
 
 private:
-    bool active = true;
+    bool m_isActive = true;
     std::vector<std::unique_ptr<Component>> components;
     ComponentArray componentArray;
     ComponentBitSet componentBitSet;
@@ -113,10 +113,10 @@ public:
 
     Entity &addEntity()
     {
-        Entity *e = new Entity();
-        std::unique_ptr<Entity> uPtr{e};
+        Entity *entity = new Entity();
+        std::unique_ptr<Entity> uPtr{entity};
         entitites.emplace_back(std::move(uPtr));
-        return *e;
+        return *entity;
     }
 
 private:
