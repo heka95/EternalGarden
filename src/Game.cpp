@@ -50,13 +50,13 @@ bool Game::initialize()
     Camera::getInstance().setSceneSize(width, height);
     CollisionHandler::getInstance().setCollisionMap(collisionLayer->getTileMap(), tileSize);
 
-    auto playerMetadata = new Garden::ObjectMetaData("player", Garden::Vector2I{10, 550}, Garden::Size{64, 58});
+    auto playerMetadata = new Garden::ObjectMetaData("player", Garden::Vector2I{10, 100}, Garden::Size{64, 58});
     Player *player = new Player(playerMetadata);
     Camera::getInstance().setTarget(player->getOrigin());
     m_gameObjects.push_back(player);
 
     // load ennemi
-    auto skullMetaData = new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 550}, Garden::Size{557, 468});
+    auto skullMetaData = new Garden::ObjectMetaData("skull", Garden::Vector2I{100, 100}, Garden::Size{557, 468});
     auto skull = ObjectFactory::getInstance().createNew("ENNEMY", skullMetaData);
     m_gameObjects.push_back(skull);
 

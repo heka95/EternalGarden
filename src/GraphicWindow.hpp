@@ -1,5 +1,4 @@
-#if !defined(__GRAPHICWINDOW__)
-#define __GRAPHICWINDOW__
+#pragma once
 
 #include <string>
 #include <memory>
@@ -23,8 +22,4 @@ class GraphicWindow
         Garden::Size m_displaySize;
         SDL_Window *m_sdlWindowPtr;
         const int m_defaultDisplayIndex;
-        std::string m_windowName;
-        void configureOpenGL();
 };
-
-#endif

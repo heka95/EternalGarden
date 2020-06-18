@@ -11,13 +11,11 @@ Garden::Configuration ConfigurationLoader::getConfiguration(std::string workingD
 {
     sol::state lua;
     lua.open_libraries(sol::lib::base);
-    lua.script_file("scripts/Configuration.lua");
+    lua.script_file("configuration.lua");
     Garden::Configuration configuration;
     configuration.windowSize.width = lua["config"]["resolution"]["width"].get_or(800);
     configuration.windowSize.height = lua["config"]["resolution"]["height"].get_or(600);
-    configuration.luaDirectory = directoryNameof(workingDirectory) + "\\scripts\\";
-    configuration.executionPath = directoryNameof(workingDirectory);
-    lua.collect_garbage();
+    configuration.windowName = lua["config"]["windowName"];
     return configuration;
 }
 

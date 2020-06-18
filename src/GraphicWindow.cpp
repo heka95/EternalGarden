@@ -5,8 +5,7 @@
 #include <SDL2/SDL_image.h>
 
 GraphicWindow::GraphicWindow() : m_sdlWindowPtr(nullptr),
-                                 m_defaultDisplayIndex(0),
-                                 m_windowName("Eternal Garden")
+                                 m_defaultDisplayIndex(0)
 {
     m_windowSize.height = 0;
     m_windowSize.width = 0;
@@ -61,7 +60,7 @@ bool GraphicWindow::createContext(Garden::Configuration &configuration)
     std::cout << "Main screen resolution: " << m_displaySize << std::endl;
     std::cout << "Game window size: " << m_windowSize << std::endl;
 
-    m_sdlWindowPtr = SDL_CreateWindow(m_windowName.c_str(), SDL_WINDOWPOS_CENTERED_DISPLAY(0), SDL_WINDOWPOS_CENTERED_DISPLAY(0),
+    m_sdlWindowPtr = SDL_CreateWindow(configuration.windowName.c_str(), SDL_WINDOWPOS_CENTERED_DISPLAY(0), SDL_WINDOWPOS_CENTERED_DISPLAY(0),
                                       m_windowSize.width, m_windowSize.height, SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
     if (m_sdlWindowPtr == nullptr)
     {

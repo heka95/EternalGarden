@@ -1,5 +1,4 @@
-#if !defined(__CONFIGURATION__)
-#define __CONFIGURATION__
+#pragma once
 
 #include <string>
 #include "GameTypes.hpp"
@@ -9,9 +8,6 @@ namespace Garden
     struct Configuration
     {
         Size windowSize;
-        std::string luaDirectory;
-        std::string executionPath;
+        std::string windowName;
     };
 } // namespace Garden
-
-#endif
