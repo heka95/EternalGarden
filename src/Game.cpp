@@ -13,6 +13,12 @@
 #include "Ennemy.hpp"
 #include <Lua/lua.hpp>
 
+#include "ecs/ecs.hpp"
+#include "ecs/Components.hpp"
+
+Manager m_manager;
+auto &newPlayer(m_manager.addEntity());
+
 Game::Game()
 {
 }
@@ -62,6 +68,9 @@ bool Game::initialize()
 
     //Gui::getInstance().initialize(); // no gui
     std::cout << "Game is initialized" << std::endl;
+
+    newPlayer.addComponent<PositionComponent>();
+
     return true;
 }
 
@@ -119,6 +128,9 @@ void Game::doUpdate()
         Camera::getInstance().update();
         m_world->update();
     }
+    newPlayer.update();
+    std::cout << "[x=" << newPlayer.getComponent<PositionComponent>().x();
+    std::cout << "|y=" << newPlayer.getComponent<PositionComponent>().x() << "]" << std::endl;
 }
 
 void Game::events()
