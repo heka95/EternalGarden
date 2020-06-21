@@ -1,4 +1,5 @@
 #include "Manager.hpp"
+#include <iostream>
 
 namespace Garden
 {

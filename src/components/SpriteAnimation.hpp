@@ -1,11 +1,12 @@
 #pragma once
+#include "ComponentTypes.hpp"
 
 namespace Garden::Components
 {
     class SpriteAnimation : public Garden::Component
     {
     public:
-        static const ComponentType type = 3;
+        static const ComponentType type = Types::SpriteAnimationType;
         SpriteAnimation(int width, int height, int rowCount, int frameCount, int speed, bool repeat)
             : m_width(width), m_height(height), m_rowCount(rowCount), m_frameCount(frameCount), m_speed(speed), m_repeat(repeat)
         {
@@ -19,10 +20,10 @@ namespace Garden::Components
         int getHeight() const { return m_height; }
 
     private:
-        int m_speed;
+        int m_width, m_height;
         int m_rowCount;
         int m_frameCount;
-        int m_width, m_height;
+        int m_speed;
         bool m_repeat;
     };
 } // namespace Garden::Components

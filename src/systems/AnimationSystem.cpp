@@ -1,5 +1,4 @@
 #include "AnimatorSystem.hpp"
-#include "../components/Components.hpp"
 
 namespace Garden::Systems
 {

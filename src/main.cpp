@@ -12,6 +12,7 @@
 #include "components/Components.hpp"
 #include "systems/Render.hpp"
 #include "systems/AnimatorSystem.hpp"
+#include "systems/InputSystem.hpp"
 
 using namespace std;
 
@@ -29,8 +30,10 @@ int main(int argc, char *argv[])
         manager.createStoreFor(Garden::Components::Transform::type);
         manager.createStoreFor(Garden::Components::SpriteRenderer::type);
         manager.createStoreFor(Garden::Components::SpriteAnimation::type);
+        manager.createStoreFor(Garden::Components::PlayerCommand::type);
 
         auto SDLRenderer = GameEngine::getInstance().getRenderer();
+        manager.addSystem<Garden::Systems::InputSystem>(&manager);
         manager.addSystem<Garden::Systems::Render>(&manager, SDLRenderer);
         manager.addSystem<Garden::Systems::AnimatorSystem>(&manager);
         manager.initSystems();
@@ -40,11 +43,11 @@ int main(int argc, char *argv[])
         manager.addComponent(simpleSprite, new Garden::Components::Transform(Garden::Vector2D::zero()));
         manager.addComponent(simpleSprite, new Garden::Components::SpriteRenderer(768, 58, Garden::Vector2D{1, 1}, "player", SDL_RendererFlip::SDL_FLIP_NONE));
         manager.addComponent(simpleSprite, new Garden::Components::SpriteAnimation(64, 58, 1, 12, 100, true));
+        manager.addComponent(simpleSprite, new Garden::Components::PlayerCommand());
         manager.subscribeEntityToSystems(simpleSprite);
 
         while (GameEngine::getInstance().isRunning())
         {
-            GameEngine::getInstance().doEvents();
             manager.updateSystems(Timer::getInstance().getDeltaTime());
             Timer::getInstance().tick();
         }

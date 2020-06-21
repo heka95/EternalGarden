@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "ComponentTypes.hpp"
 #include "../core/Core.hpp"
 
 namespace Garden::Components
@@ -8,7 +9,7 @@ namespace Garden::Components
     class SpriteRenderer : public Garden::Component
     {
     public:
-        static const ComponentType type = 2;
+        static const ComponentType type = Types::SpriteRendererType;
         SpriteRenderer(int width, int height, Garden::Vector2D scale, std::string textureId, SDL_RendererFlip flip)
             : m_width(width), m_height(height), m_scale(scale), m_textureId(textureId), m_flip(flip)
         {

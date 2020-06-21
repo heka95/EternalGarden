@@ -1,5 +1,4 @@
 #include "Render.hpp"
-#include "../components/Components.hpp"
 #include "../TextureManager.hpp"
 
 namespace Garden::Systems

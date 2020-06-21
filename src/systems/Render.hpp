@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 #include "../core/Core.hpp"
+#include "../components/Components.hpp"
 
 namespace Garden::Systems
 {
@@ -9,7 +10,7 @@ namespace Garden::Systems
     {
     public:
         Render(Manager *manager, SDL_Renderer *renderer)
-            : System(4, {1, 2}, manager)
+            : System(4, {Garden::Components::TransformationType, Garden::Components::SpriteRendererType}, manager)
         {
             m_renderer = renderer;
         }
