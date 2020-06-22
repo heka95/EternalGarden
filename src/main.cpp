@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         auto manager = GameEngine::getInstance().getManager();
 
         sol::state lua;
-        lua.open_libraries(sol::lib::base);
+        lua.open_libraries(sol::lib::base, sol::lib::package);
 
         // Create binding to access manager without creation
         lua.new_usertype<Garden::Entity>("entity");
@@ -70,7 +70,9 @@ int main(int argc, char *argv[])
                                                                                sol::base_classes, sol::bases<Garden::Component>());
         anim_type["type"] = &Garden::Components::SpriteAnimation::getType;
 
-        lua.script_file("content/scripts/player_script.lua");
+        const std::string package_path = lua["package"]["path"];
+        lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";
+        lua.script_file("content/scripts/main.lua");
 
         // test personnal ECS
 
