@@ -19,6 +19,7 @@ namespace Garden::Components
             m_drawWidth = width;
             m_drawOffset.X = 0;
             m_drawOffset.Y = 0;
+            m_type = type;
         }
 
         int getTextureWidth() const { return m_width; }

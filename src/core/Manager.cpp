@@ -68,6 +68,11 @@ namespace Garden
         return store->getComponent(e);
     }
 
+    bool Manager::luaAddComponent(Entity e, ComponentType ct, Component *c)
+    {
+        return addComponent(e, ct, c);
+    }
+
     bool Manager::addComponent(Entity e, ComponentType ct, Component *c)
     {
         if (e == INVALID_TYPE || ct == INVALID_TYPE)
@@ -153,7 +158,7 @@ namespace Garden
         return n;
     }
 
-    int Manager::subscribeEntityToSystems(Entity e)
+    int Manager::subscribeEntity(Entity e)
     {
         auto it = m_entities.find(e);
 

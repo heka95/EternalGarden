@@ -12,6 +12,7 @@ namespace Garden::Components
         static const ComponentType type = Types::PlayerCommandType;
         PlayerCommand() 
         {
+            m_type = type;
             reset();
         }
         bool isKeyMoveRight;

@@ -9,7 +9,7 @@ namespace Garden::Components
     public:
         static const ComponentType type = Types::TransformationType;
         Transform(Garden::Vector2D position) : m_position(position)
-        { }
+        { m_type = type;}
         Garden::Vector2D getPosition() const { return m_position; }
         void setPosition(Garden::Vector2D &position) { m_position = position; }
 

@@ -6,6 +6,7 @@
 #include "World.hpp"
 #include "GameObject.hpp"
 #include "GameState.hpp"
+#include "core/Core.hpp"
 
 class GameEngine
 {
@@ -26,6 +27,7 @@ public:
     void changeState(GameState *target);
     void setWindowSize(SDL_Rect windowSize) { m_windowSize = windowSize; }
     SDL_Rect getWindowSize() { return m_windowSize; }
+    Garden::Manager* getManager() {return m_manager;}
 
 private:
     GameEngine();
@@ -37,4 +39,5 @@ private:
     bool m_isRunning;
     std::vector<GameState *> m_states;
     SDL_Rect m_windowSize;
+    Garden::Manager* m_manager;
 };

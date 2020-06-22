@@ -7,6 +7,11 @@
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
+#include "core/Core.hpp"
+#include "components/Components.hpp"
+#include "systems/Render.hpp"
+#include "systems/AnimatorSystem.hpp"
+#include "systems/InputSystem.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -61,6 +66,18 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     {
         m_states.push_back(game);
     }
+
+    // Create ECS
+    m_manager = new Garden::Manager();
+    m_manager->createStoreFor(Garden::Components::Transform::type);
+    m_manager->createStoreFor(Garden::Components::SpriteRenderer::type);
+    m_manager->createStoreFor(Garden::Components::SpriteAnimation::type);
+    m_manager->createStoreFor(Garden::Components::PlayerCommand::type);
+
+    m_manager->addSystem<Garden::Systems::InputSystem>(m_manager);
+    m_manager->addSystem<Garden::Systems::Render>(m_manager, m_renderer);
+    m_manager->addSystem<Garden::Systems::AnimatorSystem>(m_manager);
+    m_manager->initSystems();
 }
 
 void GameEngine::doUpdate()

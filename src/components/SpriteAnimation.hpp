@@ -10,6 +10,7 @@ namespace Garden::Components
         SpriteAnimation(int width, int height, int rowCount, int frameCount, int speed, bool repeat)
             : m_width(width), m_height(height), m_rowCount(rowCount), m_frameCount(frameCount), m_speed(speed), m_repeat(repeat)
         {
+            m_type = type;
         }
 
         int getSpeed() const { return m_speed; }

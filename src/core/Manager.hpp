@@ -36,6 +36,7 @@ namespace Garden
             static_assert(C::type != INVALID_TYPE, "C must define its type");
             return static_cast<C *>(getComponent(e, C::type));
         }
+        bool luaAddComponent(Entity e, ComponentType ct, Component *c);
         bool addComponent(Entity e, ComponentType ct, Component *c);
         template <typename C>
         bool addComponent(Entity e, C *c)
@@ -53,7 +54,7 @@ namespace Garden
             return static_cast<C *>(extractComponent(e, C::type));
         }
         int subscribeEntityToSystems(Entity e, std::set<ComponentType> components);
-        int subscribeEntityToSystems(Entity e);
+        int subscribeEntity(Entity e);
         bool addSystem(std::shared_ptr<System> sys);
         template <typename S, typename... Args>
         bool addSystem(Args &&... args)
