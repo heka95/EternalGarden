@@ -13,6 +13,7 @@
 #include "systems/Render.hpp"
 #include "systems/AnimatorSystem.hpp"
 #include "systems/InputSystem.hpp"
+#include "systems/PhysicSystem.hpp"
 
 using namespace std;
 
@@ -55,8 +56,7 @@ int main(int argc, char *argv[])
         auto transform_type = lua.new_usertype<Garden::Components::Transform>("Transform",
                                                                               sol::constructors<Garden::Components::Transform(Garden::Vector2D)>(),
                                                                               sol::base_classes, sol::bases<Garden::Component>());
-        transform_type["getPosition"] = &Garden::Components::Transform::getPosition;
-        transform_type["setPosition"] = &Garden::Components::Transform::setPosition;
+        transform_type["Position"] = &Garden::Components::Transform::Position;
         transform_type["type"] = &Garden::Components::Transform::getType;
 
         auto sprite_type = lua.new_usertype<Garden::Components::SpriteRenderer>("SpriteRenderer",
@@ -69,6 +69,24 @@ int main(int argc, char *argv[])
                                                                                sol::constructors<Garden::Components::SpriteAnimation(int, int, int, int, int, bool)>(),
                                                                                sol::base_classes, sol::bases<Garden::Component>());
         anim_type["type"] = &Garden::Components::SpriteAnimation::getType;
+
+        auto command_type = lua.new_usertype<Garden::Components::PlayerCommand>("PlayerCommand",
+                                                                                sol::constructors<Garden::Components::PlayerCommand()>(),
+                                                                                sol::base_classes, sol::bases<Garden::Component>());
+        command_type["type"] = &Garden::Components::PlayerCommand::getType;
+
+        auto rigidBody_type = lua.new_usertype<Garden::Components::RigidBody>("RigidBody",
+                                                                               sol::constructors<Garden::Components::RigidBody()>(),
+                                                                               sol::base_classes, sol::bases<Garden::Component>());
+        rigidBody_type["type"] = &Garden::Components::RigidBody::getType;
+        rigidBody_type["mass"] = &Garden::Components::RigidBody::mass;
+        rigidBody_type["gravity"] = &Garden::Components::RigidBody::gravity;
+        rigidBody_type["force"] = &Garden::Components::RigidBody::force;
+        rigidBody_type["friction"] = &Garden::Components::RigidBody::friction;
+        rigidBody_type["position"] = &Garden::Components::RigidBody::position;
+        rigidBody_type["velocity"] = &Garden::Components::RigidBody::velocity;
+        rigidBody_type["acceleration"] = &Garden::Components::RigidBody::acceleration;
+
 
         const std::string package_path = lua["package"]["path"];
         lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";

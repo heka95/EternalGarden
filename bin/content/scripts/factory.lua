@@ -22,5 +22,10 @@ function Factory:createPlayer(Player)
                                           Player.Animation.Loop)
     currentManager:addComponent(entity, animation:type(), animation)
 
+    local rigidBody = RigidBody.new()
+    rigidBody.mass = Player.RigidBody.Mass
+    rigidBody.gravity = Player.RigidBody.Gravity
+    currentManager:addComponent(entity, rigidBody:type(), rigidBody)
+
     currentManager:registerEntity(entity)
 end

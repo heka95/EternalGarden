@@ -12,6 +12,7 @@
 #include "systems/Render.hpp"
 #include "systems/AnimatorSystem.hpp"
 #include "systems/InputSystem.hpp"
+#include "systems/PhysicSystem.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -73,10 +74,12 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     m_manager->createStoreFor(Garden::Components::SpriteRenderer::type);
     m_manager->createStoreFor(Garden::Components::SpriteAnimation::type);
     m_manager->createStoreFor(Garden::Components::PlayerCommand::type);
+    m_manager->createStoreFor(Garden::Components::RigidBody::type);
 
     m_manager->addSystem<Garden::Systems::InputSystem>(m_manager);
     m_manager->addSystem<Garden::Systems::Render>(m_manager, m_renderer);
     m_manager->addSystem<Garden::Systems::AnimatorSystem>(m_manager);
+    m_manager->addSystem<Garden::Systems::PhysicSystem>(m_manager);
     m_manager->initSystems();
 }
 

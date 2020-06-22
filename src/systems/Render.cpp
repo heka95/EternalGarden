@@ -17,7 +17,7 @@ namespace Garden::Systems
     void Render::updateEntity(float deltaTime, Entity e)
     {
         auto cTransform = getManager()->getComponent<Garden::Components::Transform>(e);
-        auto position = cTransform->getPosition();
+        auto position = cTransform->Position;
         auto cRenderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
 
         SDL_Rect sourceRect = {(int)cRenderer->getDrawOffset().X, (int)cRenderer->getDrawOffset().Y, cRenderer->getDrawWidth(), cRenderer->getDrawHeight()};

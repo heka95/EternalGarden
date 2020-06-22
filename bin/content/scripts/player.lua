@@ -18,6 +18,10 @@ data:extend({
             FrameCount = 12,
             Speed = 85,
             Loop = true
+        },
+        RigidBody = {
+            Mass = 1.0,
+            Gravity = 3.5
         }
     }
 })

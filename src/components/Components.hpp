@@ -5,3 +5,4 @@
 #include "SpriteRenderer.hpp"
 #include "SpriteAnimation.hpp"
 #include "PlayerCommand.hpp"
+#include "RigidBody.hpp"

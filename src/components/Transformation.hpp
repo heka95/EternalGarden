@@ -8,12 +8,11 @@ namespace Garden::Components
     {
     public:
         static const ComponentType type = Types::TransformationType;
-        Transform(Garden::Vector2D position) : m_position(position)
-        { m_type = type;}
-        Garden::Vector2D getPosition() const { return m_position; }
-        void setPosition(Garden::Vector2D &position) { m_position = position; }
-
-    private:
-        Garden::Vector2D m_position;
+        Transform(Garden::Vector2D position)
+        {
+            Position = position;
+            m_type = type;
+        }
+        Garden::Vector2D Position;
     };
 } // namespace Garden::Components
