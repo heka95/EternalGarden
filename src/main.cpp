@@ -9,6 +9,7 @@
 #include "Timer.hpp"
 #include "MapLoader.hpp"
 #include "Types/GameTypes.hpp"
+#include "components/ComponentTypes.hpp"
 #include "components/Components.hpp"
 #include "systems/Render.hpp"
 #include "systems/AnimatorSystem.hpp"
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
         auto manager = GameEngine::getInstance().getManager();
 
         sol::state lua;
-        lua.open_libraries(sol::lib::base, sol::lib::package);
+        lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::debug, sol::lib::math, sol::lib::table);
 
         // Create binding to access manager without creation
         lua.new_usertype<Garden::Entity>("entity");
@@ -76,8 +77,8 @@ int main(int argc, char *argv[])
         command_type["type"] = &Garden::Components::PlayerCommand::getType;
 
         auto rigidBody_type = lua.new_usertype<Garden::Components::RigidBody>("RigidBody",
-                                                                               sol::constructors<Garden::Components::RigidBody()>(),
-                                                                               sol::base_classes, sol::bases<Garden::Component>());
+                                                                              sol::constructors<Garden::Components::RigidBody()>(),
+                                                                              sol::base_classes, sol::bases<Garden::Component>());
         rigidBody_type["type"] = &Garden::Components::RigidBody::getType;
         rigidBody_type["mass"] = &Garden::Components::RigidBody::mass;
         rigidBody_type["gravity"] = &Garden::Components::RigidBody::gravity;
@@ -87,6 +88,22 @@ int main(int argc, char *argv[])
         rigidBody_type["velocity"] = &Garden::Components::RigidBody::velocity;
         rigidBody_type["acceleration"] = &Garden::Components::RigidBody::acceleration;
 
+        sol::usertype<Garden::Components::TileSet> tileset_type = lua.new_usertype<Garden::Components::TileSet>("TileSet", sol::constructors<Garden::Components::TileSet()>());
+        tileset_type["FirstId"] = &Garden::Components::TileSet::FirstId;
+        tileset_type["LastId"] = &Garden::Components::TileSet::LastId;
+        tileset_type["Rows"] = &Garden::Components::TileSet::Rows;
+        tileset_type["Columns"] = &Garden::Components::TileSet::Columns;
+        tileset_type["TileCount"] = &Garden::Components::TileSet::TileCount;
+        tileset_type["TileSize"] = &Garden::Components::TileSet::TileSize;
+        tileset_type["Name"] = &Garden::Components::TileSet::Name;
+        tileset_type["Source"] = &Garden::Components::TileSet::Source;
+
+        auto world_type = lua.new_usertype<Garden::Components::World>("World",
+                                                                      sol::constructors<Garden::Components::World()>(),
+                                                                      sol::base_classes, sol::bases<Garden::Component>());
+        world_type["type"] = &Garden::Components::World::getType;
+        world_type["addSets"] = &Garden::Components::World::luaAddSets;
+        //world_type["addLayers"] = &Garden::Components::World::luaAddLayers;
 
         const std::string package_path = lua["package"]["path"];
         lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";

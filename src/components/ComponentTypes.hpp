@@ -9,6 +9,7 @@ namespace Garden::Components
         SpriteRendererType = 2,
         SpriteAnimationType = 3,
         PlayerCommandType = 4,
-        RigidBodyType = 5
+        RigidBodyType = 5,
+        WorldType = 6
     };
 }

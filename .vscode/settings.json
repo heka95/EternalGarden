@@ -66,5 +66,15 @@
         "locale": "cpp",
         "queue": "cpp",
         "random": "cpp"
-    }
+    },
+    "Lua.diagnostics.globals": [
+        "currentManager",
+        "Transform",
+        "SpriteRenderer",
+        "RenderFlip",
+        "vector2D",
+        "SpriteAnimation",
+        "RigidBody",
+        "data"
+    ]
 }
