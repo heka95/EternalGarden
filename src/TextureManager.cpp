@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <iostream>
-#include <SDL2/SDL_image.h>
+#include "SDL_image.h"
 #include "GameEngine.hpp"
 #include "Camera.hpp"
 #include "json.hpp"

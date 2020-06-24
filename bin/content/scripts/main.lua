@@ -1,4 +1,5 @@
 print("Lua start !")
+
 require("data-loader")
 require("player")
 require("factory")
@@ -33,7 +34,8 @@ for _, element in ipairs(map["layers"]) do
     layer.data = element["data"]
     table.insert(layers, layer)
 end
-world:addLayers(layers)
+-- after move to avoid file too big
+--world:addLayers(layers)
 
 
 

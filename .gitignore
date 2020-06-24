@@ -29,3 +29,6 @@
 
 #ignore spikes
 /spike/**/*.*
+
+/build
+/external

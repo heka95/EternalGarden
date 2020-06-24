@@ -1,5 +1,5 @@
 #include "Timer.hpp"
-#include <SDL2/SDL.h>
+#include "SDL.h"
 
 std::unique_ptr<Timer> Timer::m_instance;
 Timer &Timer::getInstance()

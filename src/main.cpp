@@ -3,18 +3,17 @@
 #include <iostream>
 #include <sol.hpp>
 #include "ConfigurationLoader.hpp"
-#include "Types/GameTypes.hpp"
 #include "GameEngine.hpp"
 #include "Layer.hpp"
 #include "Timer.hpp"
 #include "MapLoader.hpp"
-#include "Types/GameTypes.hpp"
-#include "components/ComponentTypes.hpp"
-#include "components/Components.hpp"
-#include "systems/Render.hpp"
-#include "systems/AnimatorSystem.hpp"
-#include "systems/InputSystem.hpp"
-#include "systems/PhysicSystem.hpp"
+#include "GameTypes.hpp"
+#include "ComponentTypes.hpp"
+#include "Components.hpp"
+#include "Render.hpp"
+#include "AnimatorSystem.hpp"
+#include "InputSystem.hpp"
+#include "PhysicSystem.hpp"
 
 using namespace std;
 

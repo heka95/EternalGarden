@@ -30,7 +30,7 @@ bool MapLoader::parse(std::string id, std::string file)
         tileSets.push_back(parseTileSet(element));
     }
 
-    auto world = new World();
+    auto world = new OldWorld();
     for (auto &element : jsonData["layers"])
     {
         auto layer = parseTileLayer(element, tileSets, jsonData["tilewidth"], jsonData["height"], jsonData["width"]);
@@ -88,7 +88,7 @@ void MapLoader::release()
     m_worlds.clear();
 }
 
-World *MapLoader::getWorld(std::string id)
+OldWorld *MapLoader::getWorld(std::string id)
 {
     return m_worlds[id];
 }

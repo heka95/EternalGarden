@@ -5,13 +5,13 @@
 #include "Camera.hpp"
 #include "CollisionHandler.hpp"
 #include "Player.hpp"
-#include "Types/GameTypes.hpp"
+#include "GameTypes.hpp"
 #include "Timer.hpp"
 #include "Input.hpp"
 #include "Menu.hpp"
 #include "ObjectFactory.hpp"
 #include "Ennemy.hpp"
-#include <Lua/lua.hpp>
+#include "lua.hpp"
 
 Game::Game()
 {

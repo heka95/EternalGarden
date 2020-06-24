@@ -8,7 +8,7 @@ static Registrar<Ennemy> registrar("ENNEMY");
 
 Ennemy::Ennemy(Garden::ObjectMetaData *metaData) : Character(metaData)
 {
-    m_rigidBody = new Garden::RigidBody();
+    m_rigidBody = new Garden::OldRigidBody();
     m_rigidBody->setGravity(3.5f);
     m_collider = new Collider();
     m_collider->SetBuffer(-20,0,0,0);

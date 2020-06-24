@@ -1,7 +1,7 @@
 #include "Player.hpp"
 #include "TextureManager.hpp"
-#include <SDL2/SDL.h>
-#include "Types/GameTypes.hpp"
+#include "SDL.h"
+#include "GameTypes.hpp"
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "CollisionHandler.hpp"
@@ -27,10 +27,10 @@ Player::Player(Garden::ObjectMetaData *metaData) : Character(metaData)
     m_collider = new Collider();
     m_collider->SetBuffer(0, 10, 0, 0);
 
-    m_rigidBody = new Garden::RigidBody();
+    m_rigidBody = new Garden::OldRigidBody();
     m_rigidBody->setGravity(3.5f);
 
-    m_Animation = new SpriteAnimation();
+    m_Animation = new OldSpriteAnimation();
     m_Animation->setMetaData(metaData->TextureId, 1, 8, 100);
 }
 

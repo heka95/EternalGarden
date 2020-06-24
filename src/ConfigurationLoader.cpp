@@ -1,7 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include "ConfigurationLoader.hpp"
-#include <sol.hpp>
+#include "sol.hpp"
 
 ConfigurationLoader::ConfigurationLoader()
 {

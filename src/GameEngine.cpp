@@ -1,18 +1,18 @@
 #include <iostream>
 #include <algorithm>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+#include "SDL_ttf.h"
+#include "SDL_image.h"
 #include "GameEngine.hpp"
 #include "TextureManager.hpp"
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
-#include "core/Core.hpp"
-#include "components/Components.hpp"
-#include "systems/Render.hpp"
-#include "systems/AnimatorSystem.hpp"
-#include "systems/InputSystem.hpp"
-#include "systems/PhysicSystem.hpp"
+#include "Core.hpp"
+#include "Components.hpp"
+#include "Render.hpp"
+#include "AnimatorSystem.hpp"
+#include "InputSystem.hpp"
+#include "PhysicSystem.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {

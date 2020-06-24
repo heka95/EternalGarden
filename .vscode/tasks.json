@@ -1,37 +1,19 @@
 {
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
     "version": "2.0.0",
+    "options": {
+        "cwd": "${workspaceRoot}/build"
+    },
     "tasks": [
         {
-            "type": "shell",
             "label": "build",
-            "command": "g++",
-            "args": [
-                "-std=c++17",
-                "-m64",
-                "-g",
-                "-fPIC",
-                "-Wall",
-                "${workspaceFolder}\\src\\*.cpp",
-                "${workspaceFolder}\\src\\core\\*.cpp",
-                "${workspaceFolder}\\src\\systems\\*.cpp",
-                "-I","${workspaceFolder}/include",
-                "-L","${workspaceFolder}/lib",
-                "-lmingw32",
-                "-lSDL2main",
-                "-lSDL2",
-                "-lSDL2_image",
-                "-lSDL2_ttf",
-                "-llua53",
-                "-o",
-                "${workspaceFolder}\\bin\\game.exe"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "command": "cmake",
+            "args": ["--build", "."],
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
         }
     ]
 }
