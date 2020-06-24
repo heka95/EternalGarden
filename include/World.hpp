@@ -4,7 +4,7 @@
 #include <map>
 #include "sol.hpp"
 #include "core/ECSTypes.hpp"
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 
 namespace Garden::Components
 {
@@ -22,7 +22,7 @@ namespace Garden::Components
         std::string Source = "";
     };
 
-    class World : public Garden::Component
+    class World : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Types::WorldType;

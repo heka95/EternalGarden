@@ -51,7 +51,7 @@ namespace Garden
         return ret.second;
     }
 
-    Component *Manager::getComponent(Entity e, ComponentType ct)
+    BaseComponent *Manager::getComponent(Entity e, ComponentType ct)
     {
         if (e == INVALID_TYPE || ct == INVALID_TYPE)
         {
@@ -68,12 +68,12 @@ namespace Garden
         return store->getComponent(e);
     }
 
-    bool Manager::luaAddComponent(Entity e, ComponentType ct, Component *c)
+    bool Manager::luaAddComponent(Entity e, ComponentType ct, BaseComponent *c)
     {
         return addComponent(e, ct, c);
     }
 
-    bool Manager::addComponent(Entity e, ComponentType ct, Component *c)
+    bool Manager::addComponent(Entity e, ComponentType ct, BaseComponent *c)
     {
         if (e == INVALID_TYPE || ct == INVALID_TYPE)
         {
@@ -102,7 +102,7 @@ namespace Garden
         return store->add(e, c);
     }
 
-    Component *Manager::extractComponent(Entity e, ComponentType ct)
+    BaseComponent *Manager::extractComponent(Entity e, ComponentType ct)
     {
         if (e == INVALID_TYPE || ct == INVALID_TYPE)
         {
@@ -127,7 +127,7 @@ namespace Garden
         }
         it->second.erase(ct);
 
-        Component *c = store->getComponent(e);
+        BaseComponent *c = store->getComponent(e);
         store->remove(e);
         return c;
     }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "SDL.h"
-#include "Components.hpp"
 #include "SpriteAnimation.hpp"
 #include "System.hpp"
 

@@ -1,9 +1,9 @@
 #pragma once
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 
 namespace Garden::Components
 {
-    class SpriteAnimation : public Garden::Component
+    class SpriteAnimation : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Garden::Types::SpriteAnimationType;

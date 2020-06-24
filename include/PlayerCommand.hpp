@@ -1,11 +1,11 @@
 #pragma once
 #include <map>
 #include "SDL.h"
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 
 namespace Garden::Components
 {
-    class PlayerCommand : public Garden::Component
+    class PlayerCommand : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Types::PlayerCommandType;

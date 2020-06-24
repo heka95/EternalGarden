@@ -2,8 +2,7 @@
 
 #include <memory>
 #include "SDL.h"
-#include "Components.hpp"
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 #include "PlayerCommand.hpp"
 #include "System.hpp"
 

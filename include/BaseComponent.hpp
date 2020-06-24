@@ -3,7 +3,7 @@
 
 namespace Garden
 {
-    class Component
+    class BaseComponent
     {
     public:
         ComponentType getType() const { return m_type; }

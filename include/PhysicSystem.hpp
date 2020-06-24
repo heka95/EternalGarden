@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Components.hpp"
 #include "RigidBody.hpp"
 #include "System.hpp"
 

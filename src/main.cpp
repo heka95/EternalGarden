@@ -8,7 +8,6 @@
 #include "Timer.hpp"
 #include "MapLoader.hpp"
 #include "GameTypes.hpp"
-#include "Components.hpp"
 #include "Render.hpp"
 #include "AnimatorSystem.hpp"
 #include "InputSystem.hpp"
@@ -31,7 +30,7 @@ int main(int argc, char *argv[])
         // Create binding to access manager without creation
         lua.new_usertype<Garden::Entity>("entity");
         lua.new_usertype<Garden::ComponentType>("componentType");
-        lua.new_usertype<Garden::Component>("component");
+        lua.new_usertype<Garden::BaseComponent>("component");
         sol::usertype<Garden::Manager> manager_type = lua.new_usertype<Garden::Manager>("manager", sol::constructors<void>());
         manager_type["createEntity"] = &Garden::Manager::createEntity;
         manager_type["addComponent"] = &Garden::Manager::luaAddComponent;
@@ -50,33 +49,33 @@ int main(int argc, char *argv[])
             "horizontal", SDL_RendererFlip::SDL_FLIP_HORIZONTAL,
             "vertical", SDL_RendererFlip::SDL_FLIP_VERTICAL);
 
-        lua.new_usertype<Garden::Component>("Component");
+        lua.new_usertype<Garden::BaseComponent>("Component");
 
         auto transform_type = lua.new_usertype<Garden::Components::Transform>("Transform",
                                                                               sol::constructors<Garden::Components::Transform(Garden::Vector2D)>(),
-                                                                              sol::base_classes, sol::bases<Garden::Component>());
+                                                                              sol::base_classes, sol::bases<Garden::BaseComponent>());
         transform_type["Position"] = &Garden::Components::Transform::Position;
         transform_type["type"] = &Garden::Components::Transform::getType;
 
         auto sprite_type = lua.new_usertype<Garden::Components::SpriteRenderer>("SpriteRenderer",
                                                                                 sol::constructors<Garden::Components::SpriteRenderer(int, int, Garden::Vector2D, std::string, SDL_RendererFlip)>(),
-                                                                                sol::base_classes, sol::bases<Garden::Component>());
+                                                                                sol::base_classes, sol::bases<Garden::BaseComponent>());
         sprite_type["type"] = &Garden::Components::SpriteRenderer::getType;
         sprite_type["getFlip"] = &Garden::Components::SpriteRenderer::getFlip;
 
         auto anim_type = lua.new_usertype<Garden::Components::SpriteAnimation>("SpriteAnimation",
                                                                                sol::constructors<Garden::Components::SpriteAnimation(int, int, int, int, int, bool)>(),
-                                                                               sol::base_classes, sol::bases<Garden::Component>());
+                                                                               sol::base_classes, sol::bases<Garden::BaseComponent>());
         anim_type["type"] = &Garden::Components::SpriteAnimation::getType;
 
         auto command_type = lua.new_usertype<Garden::Components::PlayerCommand>("PlayerCommand",
                                                                                 sol::constructors<Garden::Components::PlayerCommand()>(),
-                                                                                sol::base_classes, sol::bases<Garden::Component>());
+                                                                                sol::base_classes, sol::bases<Garden::BaseComponent>());
         command_type["type"] = &Garden::Components::PlayerCommand::getType;
 
         auto rigidBody_type = lua.new_usertype<Garden::Components::RigidBody>("RigidBody",
                                                                               sol::constructors<Garden::Components::RigidBody()>(),
-                                                                              sol::base_classes, sol::bases<Garden::Component>());
+                                                                              sol::base_classes, sol::bases<Garden::BaseComponent>());
         rigidBody_type["type"] = &Garden::Components::RigidBody::getType;
         rigidBody_type["mass"] = &Garden::Components::RigidBody::mass;
         rigidBody_type["gravity"] = &Garden::Components::RigidBody::gravity;
@@ -98,7 +97,7 @@ int main(int argc, char *argv[])
 
         auto world_type = lua.new_usertype<Garden::Components::World>("World",
                                                                       sol::constructors<Garden::Components::World()>(),
-                                                                      sol::base_classes, sol::bases<Garden::Component>());
+                                                                      sol::base_classes, sol::bases<Garden::BaseComponent>());
         world_type["type"] = &Garden::Components::World::getType;
         world_type["addSets"] = &Garden::Components::World::luaAddSets;
         //world_type["addLayers"] = &Garden::Components::World::luaAddLayers;

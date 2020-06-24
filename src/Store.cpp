@@ -8,13 +8,13 @@ namespace Garden
         return it != m_store.end();
     }
 
-    Component *Store::getComponent(Entity e)
+    BaseComponent *Store::getComponent(Entity e)
     {
         auto it = m_store.find(e);
         return (it == m_store.end() ? nullptr : it->second);
     }
 
-    bool Store::add(Entity e, Component *c)
+    bool Store::add(Entity e, BaseComponent *c)
     {
         auto ret = m_store.insert(std::make_pair(e, c));
         return ret.second;

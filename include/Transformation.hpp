@@ -1,11 +1,11 @@
 #pragma once
 #include "core/ECSTypes.hpp"
 #include "Vector2D.hpp"
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 
 namespace Garden::Components
 {
-    class Transform : public Garden::Component
+    class Transform : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Garden::Types::TransformationType;

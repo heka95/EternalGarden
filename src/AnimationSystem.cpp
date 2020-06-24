@@ -1,5 +1,8 @@
 #include "AnimatorSystem.hpp"
 #include "Manager.hpp"
+#include "SpriteAnimation.hpp"
+#include "Vector2D.hpp"
+#include "SpriteRenderer.hpp"
 
 namespace Garden::Systems
 {

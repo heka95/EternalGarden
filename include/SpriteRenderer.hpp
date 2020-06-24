@@ -1,12 +1,12 @@
 #pragma once
 #include <iostream>
 #include "SDL.h"
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 #include "Vector2D.hpp"
 
 namespace Garden::Components
 {
-    class SpriteRenderer : public Garden::Component
+    class SpriteRenderer : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Garden::Types::SpriteRendererType;

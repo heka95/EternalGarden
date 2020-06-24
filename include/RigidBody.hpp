@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Component.hpp"
+#include "BaseComponent.hpp"
 #include "Vector2D.hpp"
 
 namespace Garden::Components
 {
-    class RigidBody : public Garden::Component
+    class RigidBody : public Garden::BaseComponent
     {
     public:
         static const ComponentType type = Garden::Types::RigidBodyType;

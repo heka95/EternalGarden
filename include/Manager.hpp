@@ -24,32 +24,32 @@ namespace Garden
         template <typename C>
         bool createStoreFor()
         {
-            static_assert(std::is_base_of<Component, C>::value, "C must be a Component");
+            static_assert(std::is_base_of<BaseComponent, C>::value, "C must be a Component");
             static_assert(C::type != INVALID_TYPE, "C must define its type");
             return createStoreFor(C::type);
         }
-        Component *getComponent(Entity e, ComponentType ct);
+        BaseComponent *getComponent(Entity e, ComponentType ct);
         template <typename C>
         C *getComponent(Entity e)
         {
-            static_assert(std::is_base_of<Component, C>::value, "C must be a Component");
+            static_assert(std::is_base_of<BaseComponent, C>::value, "C must be a Component");
             static_assert(C::type != INVALID_TYPE, "C must define its type");
             return static_cast<C *>(getComponent(e, C::type));
         }
-        bool luaAddComponent(Entity e, ComponentType ct, Component *c);
-        bool addComponent(Entity e, ComponentType ct, Component *c);
+        bool luaAddComponent(Entity e, ComponentType ct, BaseComponent *c);
+        bool addComponent(Entity e, ComponentType ct, BaseComponent *c);
         template <typename C>
         bool addComponent(Entity e, C *c)
         {
-            static_assert(std::is_base_of<Component, C>::value, "C must be a Component");
+            static_assert(std::is_base_of<BaseComponent, C>::value, "C must be a Component");
             static_assert(C::type != INVALID_TYPE, "C must define its type");
             return addComponent(e, C::type, c);
         }
-        Component *extractComponent(Entity e, ComponentType ct);
+        BaseComponent *extractComponent(Entity e, ComponentType ct);
         template <typename C>
         C *extractComponent(Entity e)
         {
-            static_assert(std::is_base_of<Component, C>::value, "C must be a Component");
+            static_assert(std::is_base_of<BaseComponent, C>::value, "C must be a Component");
             static_assert(C::type != INVALID_TYPE, "C must define its type");
             return static_cast<C *>(extractComponent(e, C::type));
         }
