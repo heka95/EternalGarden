@@ -31,5 +31,4 @@
 /spike/**/*.*
 
 /build
-/external
 /cMakeFiles
