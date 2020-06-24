@@ -14,4 +14,14 @@ namespace Garden
         KEEP, /**< The handler must be kept */
         DIE,  /**< The handler can be removed */
     };
+
+    enum Types : ComponentType
+    {
+        TransformationType = 1,
+        SpriteRendererType = 2,
+        SpriteAnimationType = 3,
+        PlayerCommandType = 4,
+        RigidBodyType = 5,
+        WorldType = 6
+    };
 } // namespace Garden

@@ -3,7 +3,7 @@
 #include <vector>
 #include <map>
 #include "sol.hpp"
-#include "ComponentTypes.hpp"
+#include "core/ECSTypes.hpp"
 #include "Core.hpp"
 
 namespace Garden::Components

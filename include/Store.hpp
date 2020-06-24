@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <set>
-#include "Types.hpp"
+#include "core/ECSTypes.hpp"
 #include "Component.hpp"
 
 namespace Garden

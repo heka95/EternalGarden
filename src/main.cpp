@@ -8,7 +8,6 @@
 #include "Timer.hpp"
 #include "MapLoader.hpp"
 #include "GameTypes.hpp"
-#include "ComponentTypes.hpp"
 #include "Components.hpp"
 #include "Render.hpp"
 #include "AnimatorSystem.hpp"

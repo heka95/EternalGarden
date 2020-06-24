@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-#include "Types.hpp"
+#include "core/ECSTypes.hpp"
 
 namespace Garden
 {

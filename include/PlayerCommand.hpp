@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include "SDL.h"
-#include "ComponentTypes.hpp"
+#include "core/ECSTypes.hpp"
 #include "Core.hpp"
 
 namespace Garden::Components

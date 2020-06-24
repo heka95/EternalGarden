@@ -1,16 +1,18 @@
 #pragma once
 
-#include "ComponentTypes.hpp"
+#include "core/ECSTypes.hpp"
+#include "Vector2D.hpp"
+#include "Core.hpp"
 
 namespace Garden::Components
 {
     class RigidBody : public Garden::Component
     {
     public:
-        static const ComponentType type = Types::RigidBodyType;
+        static const ComponentType type = Garden::Types::RigidBodyType;
         RigidBody()
         {
-            m_type = Types::RigidBodyType;
+            m_type = type;
         }
 
         float mass = 1.0f;

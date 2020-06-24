@@ -3,6 +3,8 @@
 #include "SDL.h"
 #include "Core.hpp"
 #include "Components.hpp"
+#include "Transformation.hpp"
+#include "SpriteRenderer.hpp"
 
 namespace Garden::Systems
 {
@@ -10,7 +12,7 @@ namespace Garden::Systems
     {
     public:
         Render(Manager *manager, SDL_Renderer *renderer)
-            : System(4, {Garden::Components::TransformationType, Garden::Components::SpriteRendererType}, manager)
+            : System(4, {Garden::Components::Transform::type, Garden::Components::SpriteRenderer::type}, manager)
         {
             m_renderer = renderer;
         }

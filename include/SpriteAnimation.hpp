@@ -1,12 +1,12 @@
 #pragma once
-#include "ComponentTypes.hpp"
+#include "core/ECSTypes.hpp"
 
 namespace Garden::Components
 {
     class SpriteAnimation : public Garden::Component
     {
     public:
-        static const ComponentType type = Types::SpriteAnimationType;
+        static const ComponentType type = Garden::Types::SpriteAnimationType;
         SpriteAnimation(int width, int height, int rowCount, int frameCount, int speed, bool repeat)
             : m_width(width), m_height(height), m_rowCount(rowCount), m_frameCount(frameCount), m_speed(speed), m_repeat(repeat)
         {

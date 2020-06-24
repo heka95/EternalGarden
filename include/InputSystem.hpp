@@ -4,6 +4,8 @@
 #include "SDL.h"
 #include "Core.hpp"
 #include "Components.hpp"
+#include "core/ECSTypes.hpp"
+#include "PlayerCommand.hpp"
 
 namespace Garden::Systems
 {
@@ -19,7 +21,7 @@ namespace Garden::Systems
     class InputSystem : public Garden::System
     {
     public:
-        InputSystem(Manager *manager) : System(1, {Garden::Components::PlayerCommandType}, manager)
+        InputSystem(Manager *manager) : System(1, {Garden::Components::PlayerCommand::type}, manager)
         {
             m_keyStates = SDL_GetKeyboardState(nullptr);
         }

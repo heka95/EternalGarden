@@ -1,5 +1,5 @@
 #pragma once
-#include "ComponentTypes.hpp"
+#include "core/ECSTypes.hpp"
 #include "Core.hpp"
 
 namespace Garden::Components
@@ -7,7 +7,7 @@ namespace Garden::Components
     class Transform : public Garden::Component
     {
     public:
-        static const ComponentType type = Types::TransformationType;
+        static const ComponentType type = Garden::Types::TransformationType;
         Transform(Garden::Vector2D position)
         {
             Position = position;
