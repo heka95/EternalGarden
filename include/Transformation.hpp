@@ -1,6 +1,7 @@
 #pragma once
 #include "core/ECSTypes.hpp"
-#include "Core.hpp"
+#include "Vector2D.hpp"
+#include "Component.hpp"
 
 namespace Garden::Components
 {

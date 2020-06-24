@@ -6,7 +6,7 @@
 #include "World.hpp"
 #include "GameObject.hpp"
 #include "GameState.hpp"
-#include "Core.hpp"
+#include "Manager.hpp"
 
 class GameEngine
 {

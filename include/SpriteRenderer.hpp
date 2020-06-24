@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include "SDL.h"
-#include "core/ECSTypes.hpp"
-#include "Core.hpp"
+#include "Component.hpp"
+#include "Vector2D.hpp"
 
 namespace Garden::Components
 {

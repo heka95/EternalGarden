@@ -2,10 +2,10 @@
 
 #include <memory>
 #include "SDL.h"
-#include "Core.hpp"
 #include "Components.hpp"
-#include "core/ECSTypes.hpp"
+#include "Component.hpp"
 #include "PlayerCommand.hpp"
+#include "System.hpp"
 
 namespace Garden::Systems
 {

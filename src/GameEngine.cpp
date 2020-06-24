@@ -7,7 +7,6 @@
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
-#include "Core.hpp"
 #include "Components.hpp"
 #include "Render.hpp"
 #include "AnimatorSystem.hpp"

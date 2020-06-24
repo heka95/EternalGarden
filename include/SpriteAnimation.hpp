@@ -1,5 +1,5 @@
 #pragma once
-#include "core/ECSTypes.hpp"
+#include "Component.hpp"
 
 namespace Garden::Components
 {

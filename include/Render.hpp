@@ -1,10 +1,10 @@
 #pragma once
 
 #include "SDL.h"
-#include "Core.hpp"
 #include "Components.hpp"
 #include "Transformation.hpp"
 #include "SpriteRenderer.hpp"
+#include "System.hpp"
 
 namespace Garden::Systems
 {

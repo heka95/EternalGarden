@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.hpp"
 #include "Components.hpp"
 #include "RigidBody.hpp"
+#include "System.hpp"
 
 namespace Garden::Systems
 {

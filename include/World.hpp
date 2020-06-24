@@ -4,7 +4,7 @@
 #include <map>
 #include "sol.hpp"
 #include "core/ECSTypes.hpp"
-#include "Core.hpp"
+#include "Component.hpp"
 
 namespace Garden::Components
 {
