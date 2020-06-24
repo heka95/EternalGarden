@@ -21,7 +21,7 @@ data:extend({
         },
         RigidBody = {
             Mass = 1.0,
-            Gravity = 0
+            Gravity = 0.2
         }
     }
 })
