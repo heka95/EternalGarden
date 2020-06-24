@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 {
     try
     {
-        std::string appPath{argv[0]};
+        std::string appPath{argv[0]}; 
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
         GameEngine::getInstance().configureAndInit(configuration);
         auto manager = GameEngine::getInstance().getManager();
