@@ -1,7 +1,7 @@
 #define SOL_ALL_SAFETIES_ON 1
 
 #include <iostream>
-#include <sol.hpp>
+//#include <sol.hpp>
 #include "ConfigurationLoader.hpp"
 #include "GameEngine.hpp"
 #include "Layer.hpp"
@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
         GameEngine::getInstance().configureAndInit(configuration);
         auto manager = GameEngine::getInstance().getManager();
-
+/*
         sol::state lua;
         lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::debug, sol::lib::math, sol::lib::table);
 
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
         const std::string package_path = lua["package"]["path"];
         lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";
         lua.script_file("content/scripts/main.lua");
-
+*/
         // test personnal ECS
 
         // test to create and draw a simple sprite

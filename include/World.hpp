@@ -2,7 +2,7 @@
 
 #include <vector>
 #include <map>
-#include "sol.hpp"
+//#include "sol.hpp"
 #include "core/ECSTypes.hpp"
 #include "BaseComponent.hpp"
 
@@ -38,7 +38,7 @@ namespace Garden::Components
         std::vector<TileSet> tileSets;
         std::map<std::string, std::vector<int>> tileMapLayers;
         std::string physicLayer = "";
-
+/*
         void luaAddSets(sol::as_table_t<std::vector<TileSet>> src)
         {
             const auto &listmap = src.value();
@@ -50,14 +50,15 @@ namespace Garden::Components
         {
             const auto &data = value.value();
             tileMapLayers.emplace(key, data);
-            /*
-            const auto &listmap = src.value();
-            for (const auto &kvp : listmap)
-            {
-                const auto& data = kvp.second.value();
-                tileMapLayers.emplace(kvp.first, data);
-            }
-            */
+            
+            //const auto &listmap = src.value();
+            //for (const auto &kvp : listmap)
+            //{
+            //    const auto& data = kvp.second.value();
+            //    tileMapLayers.emplace(kvp.first, data);
+            //}
+            
         }
+        */
     };
 } // namespace Garden::Components
