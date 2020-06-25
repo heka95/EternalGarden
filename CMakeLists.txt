@@ -13,13 +13,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 # Application paths
 file(GLOB SOURCE_FILES src/*.cpp)
 add_executable (${PROJECT_NAME} ${SOURCE_FILES})
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 
-file(GLOB_RECURSE HEADER_FILES include/*.hpp external/*.hpp external/*.h)
-
-foreach(HEADER_FILE ${HEADER_FILES})
-	get_filename_component(HEADER_DIRECTORY ${HEADER_FILE} DIRECTORY)
-	include_directories(${HEADER_DIRECTORY})
-endforeach(HEADER_FILE)
 
 #target_include_directories(${PROJECT_NAME} PRIVATE include)
 

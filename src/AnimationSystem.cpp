@@ -1,5 +1,5 @@
 #include "AnimatorSystem.hpp"
-#include "Manager.hpp"
+#include "core/Manager.hpp"
 #include "SpriteAnimation.hpp"
 #include "Vector2D.hpp"
 #include "SpriteRenderer.hpp"

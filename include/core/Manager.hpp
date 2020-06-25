@@ -4,7 +4,7 @@
 #include <vector>
 #include <map>
 #include <algorithm>
-#include "core/ECSTypes.hpp"
+#include "ECSTypes.hpp"
 #include "Store.hpp"
 #include "Event.hpp"
 #include "System.hpp"
