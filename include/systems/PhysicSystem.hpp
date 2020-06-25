@@ -1,7 +1,7 @@
 #pragma once
 
-#include "RigidBody.hpp"
-#include "System.hpp"
+#include "components/RigidBody.hpp"
+#include "systems/System.hpp"
 
 namespace Garden::Systems
 {

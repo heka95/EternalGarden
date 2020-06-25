@@ -1,8 +1,8 @@
 #pragma once
 
 #include "SDL.h"
-#include "SpriteAnimation.hpp"
-#include "System.hpp"
+#include "components/SpriteAnimation.hpp"
+#include "systems/System.hpp"
 
 namespace Garden::Systems
 {

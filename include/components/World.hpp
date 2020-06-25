@@ -38,13 +38,13 @@ namespace Garden::Components
         std::vector<TileSet> tileSets;
         std::map<std::string, std::vector<int>> tileMapLayers;
         std::string physicLayer = "";
-/*
+
         void luaAddSets(sol::as_table_t<std::vector<TileSet>> src)
         {
             const auto &listmap = src.value();
             tileSets.insert(tileSets.end(), listmap.begin(), listmap.end());
         }
-
+/*
         //void luaAddLayers(sol::as_table_t<std::map<std::string, sol::as_table_t<std::vector<int>>>> src)
         void luaAddLayers(std::string key, sol::as_table_t<std::vector<int>> value)
         {

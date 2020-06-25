@@ -4,7 +4,6 @@
 #include "SDL.h"
 #include <vector>
 #include "TileLayer.hpp"
-#include "World.hpp"
 #include "GameEngine.hpp"
 
 class CollisionHandler

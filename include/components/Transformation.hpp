@@ -9,9 +9,9 @@ namespace Garden::Components
     {
     public:
         static const ComponentType type = Garden::Types::TransformationType;
-        Transform(Garden::Vector2D position)
+        Transform()
         {
-            Position = position;
+            Position = Garden::Vector2D{0,0};
             m_type = type;
         }
         Garden::Vector2D Position;

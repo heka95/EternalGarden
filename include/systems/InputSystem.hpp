@@ -2,9 +2,9 @@
 
 #include <memory>
 #include "SDL.h"
-#include "BaseComponent.hpp"
-#include "PlayerCommand.hpp"
-#include "System.hpp"
+#include "components/BaseComponent.hpp"
+#include "components/PlayerCommand.hpp"
+#include "systems/System.hpp"
 
 namespace Garden::Systems
 {

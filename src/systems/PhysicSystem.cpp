@@ -1,6 +1,6 @@
-#include "PhysicSystem.hpp"
+#include "systems/PhysicSystem.hpp"
 #include "core/Manager.hpp"
-#include "Transformation.hpp"
+#include "components/Transformation.hpp"
 
 namespace Garden::Systems
 {

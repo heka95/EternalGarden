@@ -1,8 +1,8 @@
 #pragma once
 #include <map>
 #include <set>
-#include "core/ECSTypes.hpp"
-#include "BaseComponent.hpp"
+#include "ECSTypes.hpp"
+#include "components/BaseComponent.hpp"
 
 namespace Garden
 {

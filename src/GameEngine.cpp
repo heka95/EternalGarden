@@ -7,10 +7,10 @@
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
-#include "Render.hpp"
-#include "AnimatorSystem.hpp"
-#include "InputSystem.hpp"
-#include "PhysicSystem.hpp"
+#include "systems/Render.hpp"
+#include "systems/AnimatorSystem.hpp"
+#include "systems/InputSystem.hpp"
+#include "systems/PhysicSystem.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {

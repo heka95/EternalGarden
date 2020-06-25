@@ -1,9 +1,9 @@
 #pragma once
 
 #include "SDL.h"
-#include "Transformation.hpp"
-#include "SpriteRenderer.hpp"
-#include "System.hpp"
+#include "components/Transformation.hpp"
+#include "components/SpriteRenderer.hpp"
+#include "systems/System.hpp"
 
 namespace Garden::Systems
 {

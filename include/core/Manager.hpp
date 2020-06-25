@@ -7,7 +7,7 @@
 #include "ECSTypes.hpp"
 #include "Store.hpp"
 #include "Event.hpp"
-#include "System.hpp"
+#include "systems/System.hpp"
 
 namespace Garden
 {

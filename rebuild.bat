@@ -1,2 +1,1 @@
-clean.bat
-build.bat
+clean.bat & build.bat

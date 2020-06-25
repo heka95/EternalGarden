@@ -1,4 +1,4 @@
-#include "InputSystem.hpp"
+#include "systems/InputSystem.hpp"
 #include "GameEngine.hpp"
 
 namespace Garden::Systems

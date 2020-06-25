@@ -1,4 +1,4 @@
-#include "Render.hpp"
+#include "systems/Render.hpp"
 #include "TextureManager.hpp"
 #include "core/Manager.hpp"
 
@@ -21,12 +21,12 @@ namespace Garden::Systems
         auto position = cTransform->Position;
         auto cRenderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
 
-        SDL_Rect sourceRect = {(int)cRenderer->getDrawOffset().X, (int)cRenderer->getDrawOffset().Y, cRenderer->getDrawWidth(), cRenderer->getDrawHeight()};
-        auto renderWidth = cRenderer->getDrawWidth() * cRenderer->getScale().X;
-        auto renderHeight = cRenderer->getDrawHeight() * cRenderer->getScale().Y;
+        SDL_Rect sourceRect = {(int)cRenderer->drawOffset.X, (int)cRenderer->drawOffset.Y, cRenderer->drawWidth, cRenderer->drawHeight};
+        auto renderWidth = cRenderer->drawWidth * cRenderer->scale.X;
+        auto renderHeight = cRenderer->drawHeight * cRenderer->scale.Y;
         SDL_FRect destinationRect = {position.X, position.Y, renderWidth, renderHeight};
-        auto texture = TextureManager::getInstance().getTextureFromId(cRenderer->getTextureId());
-        SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, cRenderer->getRotation(), nullptr, cRenderer->getFlip());
+        auto texture = TextureManager::getInstance().getTextureFromId(cRenderer->textureId);
+        SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, cRenderer->rotation, nullptr, cRenderer->flip);
 
         /* after camera
         auto cameraPosition = Camera::getInstance().getPosition() * speedRatio;

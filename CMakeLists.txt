@@ -4,6 +4,7 @@ project (Eternal_Garden VERSION 0.1)
 
 # Project Configuration
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -11,7 +12,11 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # Application paths
-file(GLOB SOURCE_FILES src/*.cpp)
+file(GLOB SOURCE_FILES 
+    src/*.cpp
+    src/core/*.cpp
+    src/systems/*.cpp
+)
 add_executable (${PROJECT_NAME} ${SOURCE_FILES})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 

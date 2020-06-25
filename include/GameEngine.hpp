@@ -3,7 +3,6 @@
 #include <memory>
 #include "GameTypes.hpp"
 #include "GraphicWindow.hpp"
-#include "World.hpp"
 #include "GameObject.hpp"
 #include "GameState.hpp"
 #include "core/Manager.hpp"

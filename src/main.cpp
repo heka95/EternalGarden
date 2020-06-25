@@ -1,17 +1,19 @@
 #define SOL_ALL_SAFETIES_ON 1
 
 #include <iostream>
-//#include <sol.hpp>
 #include "ConfigurationLoader.hpp"
 #include "GameEngine.hpp"
 #include "Layer.hpp"
 #include "Timer.hpp"
 #include "MapLoader.hpp"
 #include "GameTypes.hpp"
-#include "Render.hpp"
-#include "AnimatorSystem.hpp"
-#include "InputSystem.hpp"
-#include "PhysicSystem.hpp"
+#include "systems/Render.hpp"
+#include "systems/AnimatorSystem.hpp"
+#include "systems/InputSystem.hpp"
+#include "systems/PhysicSystem.hpp"
+#include "core/LuaManager.hpp"
+#include "components/Transformation.hpp"
+#include "components/World.hpp"
 
 using namespace std;
 
@@ -19,93 +21,62 @@ int main(int argc, char *argv[])
 {
     try
     {
-        std::string appPath{argv[0]}; 
+        std::string appPath{argv[0]};
         Garden::Configuration configuration = ConfigurationLoader::getConfiguration(appPath);
         GameEngine::getInstance().configureAndInit(configuration);
         auto manager = GameEngine::getInstance().getManager();
-/*
-        sol::state lua;
-        lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::debug, sol::lib::math, sol::lib::table);
 
-        // Create binding to access manager without creation
-        lua.new_usertype<Garden::Entity>("entity");
-        lua.new_usertype<Garden::ComponentType>("componentType");
-        lua.new_usertype<Garden::BaseComponent>("component");
-        sol::usertype<Garden::Manager> manager_type = lua.new_usertype<Garden::Manager>("manager", sol::constructors<void>());
-        manager_type["createEntity"] = &Garden::Manager::createEntity;
-        manager_type["addComponent"] = &Garden::Manager::luaAddComponent;
-        manager_type["registerEntity"] = &Garden::Manager::subscribeEntity;
+        auto luaManager = Garden::Core::LuaManager(manager);
+        luaManager.registerComponent<Garden::Components::Transform>("Transform",
+                                                                    "Position", &Garden::Components::Transform::Position,
+                                                                    "type", &Garden::Components::Transform::getType);
+        luaManager.registerComponent<Garden::Components::SpriteRenderer>("SpriteRenderer",
+                                                                         "width", &Garden::Components::SpriteRenderer::width,
+                                                                         "height", &Garden::Components::SpriteRenderer::height,
+                                                                         "drawWidth", &Garden::Components::SpriteRenderer::drawWidth,
+                                                                         "drawHeight", &Garden::Components::SpriteRenderer::drawHeight,
+                                                                         "drawOffset", &Garden::Components::SpriteRenderer::drawOffset,
+                                                                         "rotation", &Garden::Components::SpriteRenderer::rotation,
+                                                                         "scale", &Garden::Components::SpriteRenderer::scale,
+                                                                         "origin", &Garden::Components::SpriteRenderer::origin,
+                                                                         "textureId", &Garden::Components::SpriteRenderer::textureId,
+                                                                         "flip", &Garden::Components::SpriteRenderer::flip,
+                                                                         "type", &Garden::Components::SpriteRenderer::getType);
+        luaManager.registerComponent<Garden::Components::SpriteAnimation>("SpriteAnimation",
+                                                                          "width", &Garden::Components::SpriteAnimation::width,
+                                                                          "height", &Garden::Components::SpriteAnimation::height,
+                                                                          "rowCount", &Garden::Components::SpriteAnimation::rowCount,
+                                                                          "frameCount", &Garden::Components::SpriteAnimation::frameCount,
+                                                                          "speed", &Garden::Components::SpriteAnimation::speed,
+                                                                          "loop", &Garden::Components::SpriteAnimation::loop,
+                                                                          "type", &Garden::Components::SpriteAnimation::getType);
+        luaManager.registerComponent<Garden::Components::PlayerCommand>("PlayerCommand",
+                                                                        "type", &Garden::Components::PlayerCommand::getType);
+        luaManager.registerComponent<Garden::Components::RigidBody>("RigidBody",
+                                                                    "mass", &Garden::Components::RigidBody::mass,
+                                                                    "gravity", &Garden::Components::RigidBody::gravity,
+                                                                    "force", &Garden::Components::RigidBody::force,
+                                                                    "friction", &Garden::Components::RigidBody::friction,
+                                                                    "position", &Garden::Components::RigidBody::position,
+                                                                    "velocity", &Garden::Components::RigidBody::velocity,
+                                                                    "acceleration", &Garden::Components::RigidBody::acceleration,
+                                                                    "type", &Garden::Components::RigidBody::getType);
+        luaManager.registerObject<Garden::Components::TileSet>("TileSet",
+                                                               "FirstId", &Garden::Components::TileSet::FirstId,
+                                                               "LastId", &Garden::Components::TileSet::LastId,
+                                                               "Rows", &Garden::Components::TileSet::Rows,
+                                                               "Columns", &Garden::Components::TileSet::Columns,
+                                                               "TileCount", &Garden::Components::TileSet::TileCount,
+                                                               "TileSize", &Garden::Components::TileSet::TileSize,
+                                                               "Name", &Garden::Components::TileSet::Name,
+                                                               "Source", &Garden::Components::TileSet::Source);
 
-        lua["currentManager"] = manager;
+        luaManager.registerComponent<Garden::Components::World>("World",
+                                                                "addSets", &Garden::Components::World::luaAddSets,
+                                                                //"addSets", &Garden::Components::World::luaAddLayers,
+                                                                "type", &Garden::Components::World::getType);
+        luaManager.executeScript("content/scripts/main.lua");
 
-        // Define Components
-        sol::usertype<Garden::Vector2D> vector2D_type = lua.new_usertype<Garden::Vector2D>("vector2D", sol::constructors<Garden::Vector2D(int, int)>());
-        vector2D_type["zero"] = &Garden::Vector2D::zero;
-        vector2D_type["x"] = &Garden::Vector2D::X;
-        vector2D_type["y"] = &Garden::Vector2D::Y;
-
-        lua["RenderFlip"] = lua.create_table_with(
-            "none", SDL_RendererFlip::SDL_FLIP_NONE,
-            "horizontal", SDL_RendererFlip::SDL_FLIP_HORIZONTAL,
-            "vertical", SDL_RendererFlip::SDL_FLIP_VERTICAL);
-
-        lua.new_usertype<Garden::BaseComponent>("Component");
-
-        auto transform_type = lua.new_usertype<Garden::Components::Transform>("Transform",
-                                                                              sol::constructors<Garden::Components::Transform(Garden::Vector2D)>(),
-                                                                              sol::base_classes, sol::bases<Garden::BaseComponent>());
-        transform_type["Position"] = &Garden::Components::Transform::Position;
-        transform_type["type"] = &Garden::Components::Transform::getType;
-
-        auto sprite_type = lua.new_usertype<Garden::Components::SpriteRenderer>("SpriteRenderer",
-                                                                                sol::constructors<Garden::Components::SpriteRenderer(int, int, Garden::Vector2D, std::string, SDL_RendererFlip)>(),
-                                                                                sol::base_classes, sol::bases<Garden::BaseComponent>());
-        sprite_type["type"] = &Garden::Components::SpriteRenderer::getType;
-        sprite_type["getFlip"] = &Garden::Components::SpriteRenderer::getFlip;
-
-        auto anim_type = lua.new_usertype<Garden::Components::SpriteAnimation>("SpriteAnimation",
-                                                                               sol::constructors<Garden::Components::SpriteAnimation(int, int, int, int, int, bool)>(),
-                                                                               sol::base_classes, sol::bases<Garden::BaseComponent>());
-        anim_type["type"] = &Garden::Components::SpriteAnimation::getType;
-
-        auto command_type = lua.new_usertype<Garden::Components::PlayerCommand>("PlayerCommand",
-                                                                                sol::constructors<Garden::Components::PlayerCommand()>(),
-                                                                                sol::base_classes, sol::bases<Garden::BaseComponent>());
-        command_type["type"] = &Garden::Components::PlayerCommand::getType;
-
-        auto rigidBody_type = lua.new_usertype<Garden::Components::RigidBody>("RigidBody",
-                                                                              sol::constructors<Garden::Components::RigidBody()>(),
-                                                                              sol::base_classes, sol::bases<Garden::BaseComponent>());
-        rigidBody_type["type"] = &Garden::Components::RigidBody::getType;
-        rigidBody_type["mass"] = &Garden::Components::RigidBody::mass;
-        rigidBody_type["gravity"] = &Garden::Components::RigidBody::gravity;
-        rigidBody_type["force"] = &Garden::Components::RigidBody::force;
-        rigidBody_type["friction"] = &Garden::Components::RigidBody::friction;
-        rigidBody_type["position"] = &Garden::Components::RigidBody::position;
-        rigidBody_type["velocity"] = &Garden::Components::RigidBody::velocity;
-        rigidBody_type["acceleration"] = &Garden::Components::RigidBody::acceleration;
-
-        sol::usertype<Garden::Components::TileSet> tileset_type = lua.new_usertype<Garden::Components::TileSet>("TileSet", sol::constructors<Garden::Components::TileSet()>());
-        tileset_type["FirstId"] = &Garden::Components::TileSet::FirstId;
-        tileset_type["LastId"] = &Garden::Components::TileSet::LastId;
-        tileset_type["Rows"] = &Garden::Components::TileSet::Rows;
-        tileset_type["Columns"] = &Garden::Components::TileSet::Columns;
-        tileset_type["TileCount"] = &Garden::Components::TileSet::TileCount;
-        tileset_type["TileSize"] = &Garden::Components::TileSet::TileSize;
-        tileset_type["Name"] = &Garden::Components::TileSet::Name;
-        tileset_type["Source"] = &Garden::Components::TileSet::Source;
-
-        auto world_type = lua.new_usertype<Garden::Components::World>("World",
-                                                                      sol::constructors<Garden::Components::World()>(),
-                                                                      sol::base_classes, sol::bases<Garden::BaseComponent>());
-        world_type["type"] = &Garden::Components::World::getType;
-        world_type["addSets"] = &Garden::Components::World::luaAddSets;
-        //world_type["addLayers"] = &Garden::Components::World::luaAddLayers;
-
-        const std::string package_path = lua["package"]["path"];
-        lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";
-        lua.script_file("content/scripts/main.lua");
-*/
         // test personnal ECS
 
         // test to create and draw a simple sprite
