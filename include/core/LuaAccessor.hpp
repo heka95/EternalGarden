@@ -5,11 +5,11 @@
 
 namespace Garden::Core
 {
-    class LuaManager
+    class LuaAccessor
     {
     public:
-        LuaManager(Manager *manager);
-        ~LuaManager();
+        LuaAccessor(Manager *manager);
+        ~LuaAccessor();
         void executeScript(const std::string &fileName);
         template <typename Class, typename... Args>
         void registerComponent(const std::string &name, Args &&... args)

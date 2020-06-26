@@ -11,7 +11,7 @@
 #include "systems/AnimatorSystem.hpp"
 #include "systems/InputSystem.hpp"
 #include "systems/PhysicSystem.hpp"
-#include "core/LuaManager.hpp"
+#include "core/LuaAccessor.hpp"
 #include "components/Transformation.hpp"
 #include "components/World.hpp"
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
         GameEngine::getInstance().configureAndInit(configuration);
         auto manager = GameEngine::getInstance().getManager();
 
-        auto luaManager = Garden::Core::LuaManager(manager);
+        auto luaManager = Garden::Core::LuaAccessor(manager);
 
         /*luaManager.registerComponent<Garden::Components::World>("World",
                                                                 "addSets", &Garden::Components::World::luaAddSets,

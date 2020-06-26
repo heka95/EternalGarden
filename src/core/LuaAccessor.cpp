@@ -1,4 +1,4 @@
-#include "core/LuaManager.hpp"
+#include "core/LuaAccessor.hpp"
 #include <memory>
 #include <type_traits>
 #include <utility>
@@ -15,7 +15,7 @@
 
 namespace Garden::Core
 {
-    LuaManager::LuaManager(Manager *manager)
+    LuaAccessor::LuaAccessor(Manager *manager)
     {
         m_manager = manager;
         m_lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table);
@@ -24,22 +24,22 @@ namespace Garden::Core
         registerComponents();
     }
 
-    LuaManager::~LuaManager()
+    LuaAccessor::~LuaAccessor()
     {
     }
 
-    void LuaManager::executeScript(const std::string &fileName)
+    void LuaAccessor::executeScript(const std::string &fileName)
     {
         m_lua.script_file(fileName);
     }
 
-    void LuaManager::addContentPackage()
+    void LuaAccessor::addContentPackage()
     {
         const std::string package_path = m_lua["package"]["path"];
         m_lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";
     }
 
-    void LuaManager::registerComponents()
+    void LuaAccessor::registerComponents()
     {
         registerComponent<Garden::Components::Transform>("Transform",
                                                          "Position", &Garden::Components::Transform::Position,
@@ -88,7 +88,7 @@ namespace Garden::Core
                                                     */
     }
 
-    void LuaManager::registerBaseTypes()
+    void LuaAccessor::registerBaseTypes()
     {
         m_lua.new_usertype<Garden::Entity>("entity");
         m_lua.new_usertype<Garden::ComponentType>("componentType");
