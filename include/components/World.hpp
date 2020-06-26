@@ -2,7 +2,6 @@
 
 #include <vector>
 #include <map>
-//#include "sol.hpp"
 #include "core/ECSTypes.hpp"
 #include "BaseComponent.hpp"
 
@@ -22,15 +21,9 @@ namespace Garden::Components
         std::string Source = "";
     };
 
-    class World : public Garden::BaseComponent
+    class World
     {
     public:
-        static const ComponentType type = Types::WorldType;
-        World()
-        {
-            m_type = Types::WorldType;
-        }
-
         int rows = 0;
         int columns = 0;
         int tileWidth = 0;
@@ -44,7 +37,7 @@ namespace Garden::Components
             const auto &listmap = src.value();
             tileSets.insert(tileSets.end(), listmap.begin(), listmap.end());
         }
-/*
+        /*
         //void luaAddLayers(sol::as_table_t<std::map<std::string, sol::as_table_t<std::vector<int>>>> src)
         void luaAddLayers(std::string key, sol::as_table_t<std::vector<int>> value)
         {

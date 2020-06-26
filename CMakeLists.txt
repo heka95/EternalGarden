@@ -16,6 +16,7 @@ file(GLOB SOURCE_FILES
     src/*.cpp
     src/core/*.cpp
     src/systems/*.cpp
+    src/managers/*.cpp
 )
 add_executable (${PROJECT_NAME} ${SOURCE_FILES})
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)

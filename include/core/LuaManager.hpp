@@ -30,6 +30,7 @@ namespace Garden::Core
 
     private:
         void addContentPackage();
+        void registerComponents();
         void registerBaseTypes();
         sol::state m_lua;
         Manager const *m_manager;

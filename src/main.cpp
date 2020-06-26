@@ -27,54 +27,11 @@ int main(int argc, char *argv[])
         auto manager = GameEngine::getInstance().getManager();
 
         auto luaManager = Garden::Core::LuaManager(manager);
-        luaManager.registerComponent<Garden::Components::Transform>("Transform",
-                                                                    "Position", &Garden::Components::Transform::Position,
-                                                                    "type", &Garden::Components::Transform::getType);
-        luaManager.registerComponent<Garden::Components::SpriteRenderer>("SpriteRenderer",
-                                                                         "width", &Garden::Components::SpriteRenderer::width,
-                                                                         "height", &Garden::Components::SpriteRenderer::height,
-                                                                         "drawWidth", &Garden::Components::SpriteRenderer::drawWidth,
-                                                                         "drawHeight", &Garden::Components::SpriteRenderer::drawHeight,
-                                                                         "drawOffset", &Garden::Components::SpriteRenderer::drawOffset,
-                                                                         "rotation", &Garden::Components::SpriteRenderer::rotation,
-                                                                         "scale", &Garden::Components::SpriteRenderer::scale,
-                                                                         "origin", &Garden::Components::SpriteRenderer::origin,
-                                                                         "textureId", &Garden::Components::SpriteRenderer::textureId,
-                                                                         "flip", &Garden::Components::SpriteRenderer::flip,
-                                                                         "type", &Garden::Components::SpriteRenderer::getType);
-        luaManager.registerComponent<Garden::Components::SpriteAnimation>("SpriteAnimation",
-                                                                          "width", &Garden::Components::SpriteAnimation::width,
-                                                                          "height", &Garden::Components::SpriteAnimation::height,
-                                                                          "rowCount", &Garden::Components::SpriteAnimation::rowCount,
-                                                                          "frameCount", &Garden::Components::SpriteAnimation::frameCount,
-                                                                          "speed", &Garden::Components::SpriteAnimation::speed,
-                                                                          "loop", &Garden::Components::SpriteAnimation::loop,
-                                                                          "type", &Garden::Components::SpriteAnimation::getType);
-        luaManager.registerComponent<Garden::Components::PlayerCommand>("PlayerCommand",
-                                                                        "type", &Garden::Components::PlayerCommand::getType);
-        luaManager.registerComponent<Garden::Components::RigidBody>("RigidBody",
-                                                                    "mass", &Garden::Components::RigidBody::mass,
-                                                                    "gravity", &Garden::Components::RigidBody::gravity,
-                                                                    "force", &Garden::Components::RigidBody::force,
-                                                                    "friction", &Garden::Components::RigidBody::friction,
-                                                                    "position", &Garden::Components::RigidBody::position,
-                                                                    "velocity", &Garden::Components::RigidBody::velocity,
-                                                                    "acceleration", &Garden::Components::RigidBody::acceleration,
-                                                                    "type", &Garden::Components::RigidBody::getType);
-        luaManager.registerObject<Garden::Components::TileSet>("TileSet",
-                                                               "FirstId", &Garden::Components::TileSet::FirstId,
-                                                               "LastId", &Garden::Components::TileSet::LastId,
-                                                               "Rows", &Garden::Components::TileSet::Rows,
-                                                               "Columns", &Garden::Components::TileSet::Columns,
-                                                               "TileCount", &Garden::Components::TileSet::TileCount,
-                                                               "TileSize", &Garden::Components::TileSet::TileSize,
-                                                               "Name", &Garden::Components::TileSet::Name,
-                                                               "Source", &Garden::Components::TileSet::Source);
 
-        luaManager.registerComponent<Garden::Components::World>("World",
+        /*luaManager.registerComponent<Garden::Components::World>("World",
                                                                 "addSets", &Garden::Components::World::luaAddSets,
                                                                 //"addSets", &Garden::Components::World::luaAddLayers,
-                                                                "type", &Garden::Components::World::getType);
+                                                                "type", &Garden::Components::World::getType);*/
         luaManager.executeScript("content/scripts/main.lua");
 
         // test personnal ECS
