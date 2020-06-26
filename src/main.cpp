@@ -27,12 +27,13 @@ int main(int argc, char *argv[])
         auto manager = GameEngine::getInstance().getManager();
 
         auto luaManager = Garden::Core::LuaAccessor(manager);
+        luaManager.createObject("entity", "player");
 
         /*luaManager.registerComponent<Garden::Components::World>("World",
                                                                 "addSets", &Garden::Components::World::luaAddSets,
                                                                 //"addSets", &Garden::Components::World::luaAddLayers,
                                                                 "type", &Garden::Components::World::getType);*/
-        luaManager.executeScript("content/scripts/main.lua");
+        //luaManager.executeScript("content/scripts/main.lua");
 
         // test personnal ECS
 

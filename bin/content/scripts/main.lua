@@ -1,12 +1,21 @@
 print("Lua start !")
 
-require("data-loader")
-require("player")
-require("factory")
+-- Load templates
+require("utils/data-loader")
+require("templates/player")
 
-Factory:createPlayer(data.raw["entity"]["player"])
+function getobject(category, name)
+    local object = data.raw[category][name]
+    return object
+end
 
-local map = require("map-arena")
+-- require("data-loader")
+-- require("player")
+-- require("factory")
+
+-- Factory:createPlayer(data.raw["entity"]["player"])
+
+-- local map = require("map-arena")
 
 -- local world = World.new()
 

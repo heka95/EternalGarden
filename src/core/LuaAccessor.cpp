@@ -3,6 +3,7 @@
 #include <type_traits>
 #include <utility>
 #include <string>
+#include <iostream>
 #include "core/ECSTypes.hpp"
 #include "components/BaseComponent.hpp"
 #include "Vector2D.hpp"
@@ -12,6 +13,8 @@
 #include "components/SpriteAnimation.hpp"
 #include "components/SpriteRenderer.hpp"
 #include "components/Transformation.hpp"
+#include "components/World.hpp"
+#include "scripting/LuaComponentFactory.hpp"
 
 namespace Garden::Core
 {
@@ -19,9 +22,13 @@ namespace Garden::Core
     {
         m_manager = manager;
         m_lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string, sol::lib::math, sol::lib::table);
-        addContentPackage();
+        addContentPackage("content/scripts/");
+        addContentPackage("content/scripts/levels");
+        addContentPackage("content/scripts/templates");
+        addContentPackage("content/scripts/utils");
         registerBaseTypes();
         registerComponents();
+        executeScript("content/scripts/data.lua");
     }
 
     LuaAccessor::~LuaAccessor()
@@ -31,16 +38,29 @@ namespace Garden::Core
     void LuaAccessor::executeScript(const std::string &fileName)
     {
         m_lua.script_file(fileName);
+        m_funcGetObject = m_lua["getobject"];
     }
 
-    void LuaAccessor::addContentPackage()
+    Entity LuaAccessor::createObject(const std::string &category, const std::string &name)
+    {
+        sol::table object = m_funcGetObject(category, name);
+        if (object == sol::nil || !object.valid())
+        {
+            std::cerr << "Object [" << category << "|" << name << "] not exists or registered on lua context !";
+            return INVALID_ENTITY;
+        }
+        return Garden::Scripting::LuaComponentFactory::buildEntity(m_manager, object);
+    }
+
+    void LuaAccessor::addContentPackage(const std::string &folder)
     {
         const std::string package_path = m_lua["package"]["path"];
-        m_lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + "content/scripts/" + "?.lua";
+        m_lua["package"]["path"] = package_path + (!package_path.empty() ? ";" : "") + folder + "?.lua";
     }
 
     void LuaAccessor::registerComponents()
     {
+        /*
         registerComponent<Garden::Components::Transform>("Transform",
                                                          "Position", &Garden::Components::Transform::Position,
                                                          "type", &Garden::Components::Transform::getType);
@@ -75,21 +95,12 @@ namespace Garden::Core
                                                          "velocity", &Garden::Components::RigidBody::velocity,
                                                          "acceleration", &Garden::Components::RigidBody::acceleration,
                                                          "type", &Garden::Components::RigidBody::getType);
-        /* load world from file and no binding to lua
-        registerObject<Garden::Components::TileSet>("TileSet",
-                                                    "FirstId", &Garden::Components::TileSet::FirstId,
-                                                    "LastId", &Garden::Components::TileSet::LastId,
-                                                    "Rows", &Garden::Components::TileSet::Rows,
-                                                    "Columns", &Garden::Components::TileSet::Columns,
-                                                    "TileCount", &Garden::Components::TileSet::TileCount,
-                                                    "TileSize", &Garden::Components::TileSet::TileSize,
-                                                    "Name", &Garden::Components::TileSet::Name,
-                                                    "Source", &Garden::Components::TileSet::Source);
-                                                    */
+                                                         */
     }
 
     void LuaAccessor::registerBaseTypes()
     {
+        /*
         m_lua.new_usertype<Garden::Entity>("entity");
         m_lua.new_usertype<Garden::ComponentType>("componentType");
         m_lua.new_usertype<Garden::BaseComponent>("component");
@@ -106,5 +117,6 @@ namespace Garden::Core
             "vertical", SDL_RendererFlip::SDL_FLIP_VERTICAL);
 
         m_lua["currentManager"] = m_manager;
+        */
     }
 } // namespace Garden::Core

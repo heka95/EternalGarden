@@ -3,11 +3,13 @@
 
 namespace Garden
 {
-#define INVALID_TYPE 0
     typedef int Type;
     typedef Type ComponentType;
     typedef Type Entity;
     typedef Type EventType;
+
+#define INVALID_TYPE 0
+#define INVALID_ENTITY Entity{-1}
 
     enum class EventStatus
     {

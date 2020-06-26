@@ -19,9 +19,6 @@ data:extend({
             Speed = 85,
             Loop = true
         },
-        RigidBody = {
-            Mass = 1.0,
-            Gravity = 0.2
-        }
+        RigidBody = {Mass = 1.0, Gravity = 0.2}
     }
 })
