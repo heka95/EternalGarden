@@ -14,19 +14,19 @@ namespace Garden::Core
         SDL_Surface *surface = IMG_Load(fileName.c_str());
         if (surface == nullptr)
         {
-            std::cout << "Can't load texture: " << fileName << " | " << SDL_GetError() << std::endl;
+            std::cout << "[TEXTURE] [ERROR] can't load texture: " << fileName << " | " << SDL_GetError() << std::endl;
             return false;
         }
 
         SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
         if (texture == nullptr)
         {
-            std::cout << "Can't create texture from surface: " << fileName << " | " << SDL_GetError() << std::endl;
+            std::cout << "[TEXTURE] [ERROR] can't create texture: " << fileName << " | " << SDL_GetError() << std::endl;
             return false;
         }
 
         m_textures[id] = texture;
-        std::cout << "Load Texture ID:" << id << " | " << fileName << " Generated" << std::endl;
+        std::cout << "[TEXTURE] [LOAD]  " << id << "(" << fileName << ")" << std::endl;
         return true;
     }
 
@@ -34,7 +34,7 @@ namespace Garden::Core
     {
         for (const auto &[key, value] : m_textures)
         {
-            std::cout << "Delete Texture ID:" << key << std::endl;
+            std::cout << "[TEXTURE] [UNLOAD]    " << key << std::endl;
             SDL_DestroyTexture(value);
         }
         m_textures.clear();
