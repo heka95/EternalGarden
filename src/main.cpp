@@ -26,9 +26,6 @@ int main(int argc, char *argv[])
         GameEngine::getInstance().configureAndInit(configuration);
         auto manager = GameEngine::getInstance().getManager();
 
-        auto luaManager = Garden::Core::LuaAccessor(manager);
-        luaManager.createObject("entity", "player");
-
         /*luaManager.registerComponent<Garden::Components::World>("World",
                                                                 "addSets", &Garden::Components::World::luaAddSets,
                                                                 //"addSets", &Garden::Components::World::luaAddLayers,
@@ -66,7 +63,7 @@ int main(int argc, char *argv[])
 
         GameEngine::getInstance().release();
 */
-        GameEngine::getInstance().release();
+        //GameEngine::getInstance().release();
         return EXIT_SUCCESS;
     }
     catch (const std::exception &e)

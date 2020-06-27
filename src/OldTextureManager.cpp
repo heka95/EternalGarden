@@ -1,4 +1,4 @@
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 #include <iostream>
 #include <fstream>
 #include <iostream>
@@ -7,17 +7,17 @@
 #include "Camera.hpp"
 #include "json.hpp"
 
-std::unique_ptr<TextureManager> TextureManager::m_instance;
-TextureManager &TextureManager::getInstance()
+std::unique_ptr<OldTextureManager> OldTextureManager::m_instance;
+OldTextureManager &OldTextureManager::getInstance()
 {
     if (m_instance == nullptr)
     {
-        m_instance.reset(new TextureManager());
+        m_instance.reset(new OldTextureManager());
     }
     return *m_instance.get();
 }
 
-bool TextureManager::load(std::string id, std::string fileName)
+bool OldTextureManager::load(std::string id, std::string fileName)
 {
     SDL_Surface *surface = IMG_Load(fileName.c_str());
     if (surface == nullptr)
@@ -38,7 +38,7 @@ bool TextureManager::load(std::string id, std::string fileName)
     return true;
 }
 
-bool TextureManager::parseTextures(std::string sourcePath)
+bool OldTextureManager::parseTextures(std::string sourcePath)
 {
     std::ifstream file_input(sourcePath.c_str(), std::ios::in);
     if (file_input.fail())
@@ -60,7 +60,7 @@ bool TextureManager::parseTextures(std::string sourcePath)
     return true;
 }
 
-void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Vector2F scale, Garden::Flip renderFlip, float speedRatio, float rotation)
+void OldTextureManager::draw(std::string id, Garden::Vector2I position, Garden::Size size, Garden::Vector2F scale, Garden::Flip renderFlip, float speedRatio, float rotation)
 {
     SDL_Rect sourceRect = {0, 0, size.width, size.height};
 
@@ -72,7 +72,7 @@ void TextureManager::draw(std::string id, Garden::Vector2I position, Garden::Siz
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, rotation, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
-void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip, Garden::Vector2F scale, float speedRatio, float rotation)
+void OldTextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden::Size size, int row, int frame, Garden::Flip renderFlip, Garden::Vector2F scale, float speedRatio, float rotation)
 {
     SDL_Rect sourceRect = {size.width * frame, size.height * (row - 1), size.width, size.height};
 
@@ -83,7 +83,7 @@ void TextureManager::drawFrame(std::string id, Garden::Vector2I position, Garden
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[id], &sourceRect, &destinationRect, rotation, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
-void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip, float speedRatio)
+void OldTextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vector2I position, int row, int frame, Garden::Flip renderFlip, float speedRatio)
 {
     auto cameraPosition = Camera::getInstance().getPosition() * speedRatio;
     SDL_Rect sourceRect = {tileSize * frame, tileSize * row, tileSize, tileSize};
@@ -91,14 +91,14 @@ void TextureManager::drawTile(std::string tileSetId, int tileSize, Garden::Vecto
     SDL_RenderCopyEx(GameEngine::getInstance().getRenderer(), m_textures[tileSetId], &sourceRect, &destinationRect, 0, nullptr, static_cast<SDL_RendererFlip>(renderFlip));
 }
 
-void TextureManager::unload(std::string id)
+void OldTextureManager::unload(std::string id)
 {
     std::cout << "Delete Texture ID:" << id << std::endl;
     SDL_DestroyTexture(m_textures[id]);
     m_textures.erase(id);
 }
 
-void TextureManager::release()
+void OldTextureManager::release()
 {
     for (const auto &[key, value] : m_textures)
     {

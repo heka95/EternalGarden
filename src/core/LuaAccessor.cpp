@@ -15,6 +15,7 @@
 #include "components/Transformation.hpp"
 #include "components/World.hpp"
 #include "scripting/LuaComponentFactory.hpp"
+#include "scripting/LuaWorldLoader.hpp"
 
 namespace Garden::Core
 {
@@ -39,6 +40,12 @@ namespace Garden::Core
     {
         m_lua.script_file(fileName);
         m_funcGetObject = m_lua["getobject"];
+    }
+
+    Garden::Components::World *LuaAccessor::loadWorld(const std::string &fileName)
+    {
+        sol::table result = m_lua.script_file(fileName);
+        return Garden::Scripting::LuaWorldLoader::loadWorld(m_manager, result);
     }
 
     Entity LuaAccessor::createObject(const std::string &category, const std::string &name)

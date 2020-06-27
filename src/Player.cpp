@@ -1,5 +1,5 @@
 #include "Player.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 #include "SDL.h"
 #include "GameTypes.hpp"
 #include "Input.hpp"
@@ -162,5 +162,5 @@ void Player::animationState()
 
 void Player::release()
 {
-    TextureManager::getInstance().unload(m_textureId);
+    OldTextureManager::getInstance().unload(m_textureId);
 }

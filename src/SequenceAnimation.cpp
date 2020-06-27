@@ -1,7 +1,7 @@
 #include "SequenceAnimation.hpp"
 #include <fstream>
 #include "json.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 
 SequenceAnimation::SequenceAnimation(bool repeat) : Animation(repeat)
 {
@@ -9,7 +9,7 @@ SequenceAnimation::SequenceAnimation(bool repeat) : Animation(repeat)
 
 void SequenceAnimation::drawFrame(Garden::Vector2I position, Garden::Vector2F scale, Garden::Flip flip)
 {
-    TextureManager::getInstance().draw(m_sequence.TextureIds[m_currentFrame], position, Garden::Size{m_sequence.Width, m_sequence.Height}, scale, flip);
+    OldTextureManager::getInstance().draw(m_sequence.TextureIds[m_currentFrame], position, Garden::Size{m_sequence.Width, m_sequence.Height}, scale, flip);
 }
 
 void SequenceAnimation::update(float deltaTime)

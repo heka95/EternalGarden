@@ -2,6 +2,7 @@
 #include <string>
 #include "sol.hpp"
 #include "core/Manager.hpp"
+#include "components/World.hpp"
 
 namespace Garden::Core
 {
@@ -28,7 +29,7 @@ namespace Garden::Core
             m_lua.new_usertype<Class>(name, sol::constructors<Class()>(), std::forward<Args>(args)...);
         }
         Entity createObject(const std::string &category, const std::string &name);
-
+        Garden::Components::World* loadWorld(const std::string &fileName);
     private:
         void addContentPackage(const std::string &folder);
         void registerComponents();

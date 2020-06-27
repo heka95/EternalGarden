@@ -1,5 +1,5 @@
 #include "TileLayer.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 
 TileLayer::TileLayer(int tileSize, int rows, int columns, std::vector<std::vector<int>> tileMap, std::vector<TileSet> tileSets, std::string name)
     : m_tileSize(tileSize), m_rows(rows), m_columns(columns), m_tileMap(tileMap), m_tileSets(tileSets)
@@ -7,7 +7,7 @@ TileLayer::TileLayer(int tileSize, int rows, int columns, std::vector<std::vecto
     m_name = name;
     for (unsigned int i = 0; i < m_tileSets.size(); i++)
     {
-        TextureManager::getInstance().load(m_tileSets[i].Name, "assets/maps/" + m_tileSets[i].Source);
+        OldTextureManager::getInstance().load(m_tileSets[i].Name, "assets/maps/" + m_tileSets[i].Source);
     }
 }
 
@@ -38,7 +38,7 @@ void TileLayer::render()
                 tileColumn = tileSet.Columns - 1;
             }
 
-            TextureManager::getInstance().drawTile(tileSet.Name, tileSet.Tilesize, Garden::Vector2I{j * tileSet.Tilesize, i * tileSet.Tilesize}, tileRow, tileColumn);
+            OldTextureManager::getInstance().drawTile(tileSet.Name, tileSet.Tilesize, Garden::Vector2I{j * tileSet.Tilesize, i * tileSet.Tilesize}, tileRow, tileColumn);
         }
     }
 }

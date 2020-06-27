@@ -6,11 +6,11 @@
 #include "SDL.h"
 #include "GameTypes.hpp"
 
-class TextureManager
+class OldTextureManager
 {
 public:
-    virtual ~TextureManager() = default;
-    static TextureManager &getInstance();
+    virtual ~OldTextureManager() = default;
+    static OldTextureManager &getInstance();
     bool load(std::string id, std::string fileName);
     bool parseTextures(std::string sourcePath);
     void unload(std::string id);
@@ -21,9 +21,9 @@ public:
     SDL_Texture *getTextureFromId(std::string id) { return m_textures[id]; }
 
 private:
-    TextureManager() = default;
-    TextureManager(const TextureManager &object) = delete;
-    TextureManager &operator=(const TextureManager &object) = delete;
-    static std::unique_ptr<TextureManager> m_instance;
+    OldTextureManager() = default;
+    OldTextureManager(const OldTextureManager &object) = delete;
+    OldTextureManager &operator=(const OldTextureManager &object) = delete;
+    static std::unique_ptr<OldTextureManager> m_instance;
     std::map<std::string, SDL_Texture *> m_textures;
 };

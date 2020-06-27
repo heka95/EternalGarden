@@ -1,5 +1,5 @@
 #include "OldSpriteAnimation.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 
 OldSpriteAnimation::OldSpriteAnimation(bool repeat) : Animation(repeat)
 {
@@ -7,7 +7,7 @@ OldSpriteAnimation::OldSpriteAnimation(bool repeat) : Animation(repeat)
 
 void OldSpriteAnimation::draw(Garden::Vector2I position, Garden::Size size, float xScale, float yScale, Garden::Flip flip)
 {
-    TextureManager::getInstance().drawFrame(m_textureId, position, size, m_spriteRow, m_currentFrame, flip);
+    OldTextureManager::getInstance().drawFrame(m_textureId, position, size, m_spriteRow, m_currentFrame, flip);
 }
 
 void OldSpriteAnimation::update(float deltaTime)

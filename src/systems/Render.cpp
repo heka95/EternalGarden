@@ -1,5 +1,5 @@
 #include "systems/Render.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 #include "core/Manager.hpp"
 
 namespace Garden::Systems
@@ -25,7 +25,7 @@ namespace Garden::Systems
         auto renderWidth = cRenderer->drawWidth * cRenderer->scale.X;
         auto renderHeight = cRenderer->drawHeight * cRenderer->scale.Y;
         SDL_FRect destinationRect = {position.X, position.Y, renderWidth, renderHeight};
-        auto texture = TextureManager::getInstance().getTextureFromId(cRenderer->textureId);
+        auto texture = m_store->getTextureFromId(cRenderer->textureId);
         SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, cRenderer->rotation, nullptr, cRenderer->flip);
 
         /* after camera

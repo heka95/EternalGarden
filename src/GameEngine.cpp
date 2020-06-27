@@ -3,7 +3,7 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include "GameEngine.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 #include "Input.hpp"
 #include "Camera.hpp"
 #include "Game.hpp"
@@ -57,12 +57,13 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
         }
         SDL_RenderSetLogicalSize(m_renderer, 800, 600);
     }
+    /*
     auto game = new Game();
     if (game->initialize())
     {
         m_states.push_back(game);
     }
-
+*/
     // Create ECS
     m_manager = new Garden::Managers::GameManager(m_renderer);
     m_manager->initSystems();
@@ -93,7 +94,7 @@ void GameEngine::doDraw()
 void GameEngine::release()
 {
     m_states.back()->release();
-    TextureManager::getInstance().release();
+    //TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();
     IMG_Quit();

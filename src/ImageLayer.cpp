@@ -1,5 +1,5 @@
 #include "ImageLayer.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 
 ImageLayer::ImageLayer(std::string textureId, int x, int y, float scrollRatio, float scaleX, float scaleY)
 {
@@ -15,7 +15,7 @@ ImageLayer::ImageLayer(std::string textureId, int x, int y, float scrollRatio, f
 
 void ImageLayer::render()
 {
-    TextureManager::getInstance().draw(m_textureId, Garden::Vector2I{m_offsetX, m_offsetY},
+    OldTextureManager::getInstance().draw(m_textureId, Garden::Vector2I{m_offsetX, m_offsetY},
                                        Garden::Size{m_imageWidth, m_imageHeight}, Garden::Vector2F{m_scaleX, m_scaleY}, m_flip, m_scrollRatio);
 }
 
@@ -24,6 +24,6 @@ void ImageLayer::update()
 
 void ImageLayer::queryImage(std::string textureId)
 {
-    SDL_Texture* texture = TextureManager::getInstance().getTextureFromId(m_textureId);
+    SDL_Texture* texture = OldTextureManager::getInstance().getTextureFromId(m_textureId);
     SDL_QueryTexture(texture, NULL, NULL, &m_imageWidth, &m_imageHeight);
 }

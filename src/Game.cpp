@@ -1,6 +1,6 @@
 #include "Game.hpp"
 #include "GameEngine.hpp"
-#include "TextureManager.hpp"
+#include "OldTextureManager.hpp"
 #include "MapLoader.hpp"
 #include "Camera.hpp"
 #include "CollisionHandler.hpp"
@@ -22,7 +22,7 @@ bool Game::initialize()
     m_editMode = false;
     m_renderContext = GameEngine::getInstance().getRenderer();
 
-    TextureManager::getInstance().parseTextures("level1.json");
+    OldTextureManager::getInstance().parseTextures("level1.json");
     if (!MapLoader::getInstance().load("level1", "assets/maps/test_map.json"))
     {
         std::cout << "Failed to load map" << std::endl;
@@ -151,7 +151,7 @@ bool Game::release()
     }
 
     m_gameObjects.clear();
-    TextureManager::getInstance().release();
+    OldTextureManager::getInstance().release();
     return true;
 }
 

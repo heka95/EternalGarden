@@ -9,7 +9,13 @@ namespace Garden::Managers
 {
     GameManager::GameManager(SDL_Renderer *sdlRenderer) : Manager()
     {
+        m_textureStore = new Garden::Core::TextureStore(sdlRenderer);
         load(sdlRenderer);
+    }
+
+    GameManager::~GameManager()
+    {
+        delete m_lua;
     }
 
     void GameManager::load(SDL_Renderer *sdlRenderer)
@@ -21,9 +27,17 @@ namespace Garden::Managers
         createStoreFor(Garden::Types::RigidBodyType);
 
         addSystem<Garden::Systems::InputSystem>(this);
-        addSystem<Garden::Systems::Render>(this, sdlRenderer);
+        addSystem<Garden::Systems::Render>(this, sdlRenderer, m_textureStore);
         addSystem<Garden::Systems::AnimatorSystem>(this);
         addSystem<Garden::Systems::PhysicSystem>(this);
         initSystems();
+
+        m_lua = new Garden::Core::LuaAccessor(this);
+        m_lua->createObject("entity", "player");
+        m_world = m_lua->loadWorld("content/assets/graphics/maps/test_map.lua");
+
+        // Temporary hard loading
+        m_textureStore->load("player", "assets/player/idle.png");
+
     }
 } // namespace Garden::Managers

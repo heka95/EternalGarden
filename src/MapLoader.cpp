@@ -14,6 +14,7 @@ MapLoader &MapLoader::getInstance()
 
 bool MapLoader::parse(std::string id, std::string file)
 {
+    return true;
     std::ifstream file_input(file.c_str(), std::ios::in);
     if (file_input.fail())
     {
