@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <map>
+#include "SDL.h"
 #include "core/ECSTypes.hpp"
 #include "BaseComponent.hpp"
 
@@ -21,6 +21,14 @@ namespace Garden::Components
         std::string Source = "";
     };
 
+    class Tile
+    {
+        public:
+        int TileId{0};
+        SDL_RendererFlip flip{SDL_RendererFlip::SDL_FLIP_NONE};
+        std::string layerName;
+    };
+
     class World : public Garden::BaseComponent
     {
     public:
@@ -34,26 +42,28 @@ namespace Garden::Components
         int tileWidth = 0;
         int tileHeight = 0;
         std::vector<TileSet> tileSets;
-        std::map<std::string, std::vector<int>> tileMapLayers;
+        std::vector<std::vector<Tile>> tileMapLayers;
         std::string physicLayer = "";
         int emptyTile{0};
 
         int getTileSetIndexFromTileId(int tileId)
         {
-            int tileSetIndex = 0;
+            if (tileSets.size() == 1)
+            {
+                return tileId;
+            }
             if (tileSets.size() > 1)
             {
-                for (unsigned int k = 1; k < tileSets.size(); k++)
+                for (unsigned int k = 0; k < tileSets.size(); k++)
                 {
-                    if (tileId > tileSets[k].FirstId && tileId < tileSets[k].LastId)
+                    if (tileId >= tileSets[k].FirstId && tileId <= tileSets[k].LastId)
                     {
-                        tileId = tileId + tileSets[k].TileCount - tileSets[k].LastId;
-                        tileSetIndex = k;
+                        return k;
                         break;
                     }
                 }
             }
-            return tileSetIndex;
+            return -1;
         }
     };
 } // namespace Garden::Components

@@ -45,6 +45,7 @@ void TileLayer::render()
 
 int TileLayer::getTileSetIndexFromTileId(int tileId)
 {
+    tileId = -100;
     int tileSetIndex = 0;
     if (m_tileSets.size() > 1)
     {

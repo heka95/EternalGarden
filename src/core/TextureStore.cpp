@@ -1,5 +1,6 @@
 #include "core/TextureStore.hpp"
 #include <iostream>
+#include <fstream>
 #include "SDL_image.h"
 
 namespace Garden::Core
@@ -11,6 +12,20 @@ namespace Garden::Core
 
     bool TextureStore::load(std::string id, std::string fileName)
     {
+        std::size_t found = fileName.find(".gif");
+        if (found != std::string::npos)
+        {
+            std::cout << "[TEXTURE] [ERROR] can't load GIF texture: " << fileName << " | " << SDL_GetError() << std::endl;
+            return false;
+        }
+
+        std::ifstream infile{fileName};
+        if (!infile.good())
+        {
+            std::cout << "[TEXTURE] [ERROR] file not exists: " << fileName << " | " << SDL_GetError() << std::endl;
+            return false;
+        }
+
         SDL_Surface *surface = IMG_Load(fileName.c_str());
         if (surface == nullptr)
         {

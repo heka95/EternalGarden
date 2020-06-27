@@ -38,23 +38,29 @@ namespace Garden::Systems
 
     void Render::drawMap()
     {
-        for (auto &[key, value] : m_world->tileMapLayers)
+        for (auto &key : m_world->tileMapLayers)
         {
             for (int i = 0; i < m_world->rows; i++)
             {
                 for (int j = 0; j < m_world->columns; j++)
                 {
-                    int tileId = m_world->tileMapLayers[key][(i * m_world->columns) + j];
-                    if (tileId == m_world->emptyTile)
+                    auto currentTile = key.at((i * m_world->columns) + j);
+                    if (currentTile.TileId == m_world->emptyTile)
                     {
                         continue;
                     }
-                    int tileSetIndex = m_world->getTileSetIndexFromTileId(tileId);
+                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
+                    if(tileSetIndex == -1)
+                    {
+                        //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
+                        continue;
+                    }
+                    currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
                     auto tileSet = m_world->tileSets[tileSetIndex];
-                    auto tileRow = tileId / tileSet.Columns;
-                    auto tileColumn = tileId - tileRow * tileSet.Columns - 1;
+                    auto tileRow = currentTile.TileId / tileSet.Columns;
+                    auto tileColumn = currentTile.TileId - tileRow * tileSet.Columns - 1;
 
-                    if (tileId % tileSet.Columns == 0)
+                    if (currentTile.TileId % tileSet.Columns == 0)
                     {
                         tileRow--;
                         tileColumn = tileSet.Columns - 1;
@@ -65,7 +71,7 @@ namespace Garden::Systems
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
                     SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
-                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile.flip);
                 }
             }
         }

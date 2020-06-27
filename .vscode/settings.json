@@ -65,7 +65,8 @@
         "ios": "cpp",
         "locale": "cpp",
         "queue": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "filesystem": "cpp"
     },
     "Lua.diagnostics.globals": [
         "currentManager",

@@ -1,5 +1,6 @@
 #include "scripting/LuaWorldLoader.hpp"
 #include <array>
+#include "SDL.h"
 
 namespace Garden::Scripting
 {
@@ -45,23 +46,77 @@ namespace Garden::Scripting
             for (const auto &key_value_pair : layers)
             {
                 sol::table layerNode = key_value_pair.second;
-                std::string name = layerNode["name"];
-                sol::as_table_t<std::vector<int>> containerData = layerNode["data"];
-                auto data = containerData.value();
-                world->tileMapLayers[name] = data;
-                auto properties = layerNode["properties"];
-                if (properties != sol::nil && properties.valid())
+                std::string type = layerNode["type"];
+                if (type == "tilelayer")
                 {
-                    auto collider = properties["collider"];
-                    if (collider != sol::nil && collider.valid())
+                    loadLayer(manager, layerNode, world);
+                }
+                if (type == "group")
+                {
+                    sol::table subLayers = layerNode["layers"];
+                    if (subLayers != sol::nil && subLayers.valid())
                     {
-                        world->physicLayer = name;
+                        for (const auto &sub_key_value_pair : subLayers)
+                        {
+                            sol::table sublayerNode = sub_key_value_pair.second;
+                            loadLayer(manager, sublayerNode, world);
+                        }
                     }
                 }
             }
         }
 
         return world;
+    }
+
+    void LuaWorldLoader::loadLayer(Manager *manager, const sol::table &layerNode, Garden::Components::World *world)
+    {
+        unsigned int FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+        unsigned int FLIPPED_VERTICALLY_FLAG = 0x40000000;
+        unsigned int FLIPPED_DIAGONALLY_FLAG = 0x20000000;
+
+        std::string name = layerNode["name"];
+        std::cout << "add layer: " << name << std::endl;
+
+        sol::as_table_t<std::vector<unsigned int>> containerData = layerNode["data"];
+        auto data = containerData.value();
+        std::vector<Garden::Components::Tile> tiles;
+        for (auto &tile_index : data)
+        {
+            bool flipped_horizontally = (tile_index & FLIPPED_HORIZONTALLY_FLAG);
+            bool flipped_vertically = (tile_index & FLIPPED_VERTICALLY_FLAG);
+            //bool flipped_diagonally = (tile_index & FLIPPED_DIAGONALLY_FLAG);
+            tile_index &= ~(FLIPPED_HORIZONTALLY_FLAG |
+                            FLIPPED_VERTICALLY_FLAG |
+                            FLIPPED_DIAGONALLY_FLAG);
+            auto tile = Garden::Components::Tile{};
+            tile.TileId = tile_index;
+            tile.layerName = name;
+            tile.flip = SDL_RendererFlip::SDL_FLIP_NONE;
+            if (flipped_horizontally)
+                tile.flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+            if (flipped_vertically)
+                tile.flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
+            if (flipped_horizontally & flipped_vertically)
+            {
+                auto flip = (SDL_RendererFlip::SDL_FLIP_HORIZONTAL | SDL_RendererFlip::SDL_FLIP_VERTICAL);
+                tile.flip = (SDL_RendererFlip)flip;
+            }
+
+            tiles.push_back(tile);
+        }
+
+        std::cout << "add layer: " << name << std::endl;
+        world->tileMapLayers.push_back(tiles);
+        auto properties = layerNode["properties"];
+        if (properties != sol::nil && properties.valid())
+        {
+            auto collider = properties["collider"];
+            if (collider != sol::nil && collider.valid())
+            {
+                world->physicLayer = name;
+            }
+        }
     }
 
 } // namespace Garden::Scripting
