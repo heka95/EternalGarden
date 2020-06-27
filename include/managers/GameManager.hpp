@@ -3,7 +3,7 @@
 #include "core/Manager.hpp"
 #include "core/LuaAccessor.hpp"
 #include "components/World.hpp"
-#include "core/TextureStore.hpp"
+#include "components/CameraComponent.hpp"
 
 namespace Garden::Managers
 {
@@ -20,6 +20,6 @@ namespace Garden::Managers
         bool m_isEnable = false;
         Garden::Core::LuaAccessor *m_lua;
         Garden::Components::World *m_world;
-        Garden::Core::TextureStore *m_textureStore;
+        Garden::Components::CameraComponent *m_camera;
     };
 } // namespace Garden::Managers

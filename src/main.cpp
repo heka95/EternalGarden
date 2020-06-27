@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 
         GameEngine::getInstance().release();
 */
-        //GameEngine::getInstance().release();
+        GameEngine::getInstance().release();
         return EXIT_SUCCESS;
     }
     catch (const std::exception &e)

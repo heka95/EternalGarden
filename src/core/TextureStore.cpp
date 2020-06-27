@@ -32,5 +32,11 @@ namespace Garden::Core
 
     void TextureStore::release()
     {
+        for (const auto &[key, value] : m_textures)
+        {
+            std::cout << "Delete Texture ID:" << key << std::endl;
+            SDL_DestroyTexture(value);
+        }
+        m_textures.clear();
     }
 } // namespace Garden::Core

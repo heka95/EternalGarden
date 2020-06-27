@@ -4,6 +4,7 @@
 #include "components/SpriteRenderer.hpp"
 #include "components/SpriteAnimation.hpp"
 #include "components/RigidBody.hpp"
+#include "components/PlayerCommand.hpp"
 
 namespace Garden::Scripting
 {
@@ -32,6 +33,7 @@ namespace Garden::Scripting
                     animation.speed = element["Speed"];
                     animation.loop = element["Loop"];
                     component->animations[animation.name] = animation;
+                    manager->textureStore()->load(animation.textureId, animation.source);
                 }
             }
 
@@ -77,6 +79,20 @@ namespace Garden::Scripting
         }
     }
 
+    void LuaComponentFactory::buildPlayerCommand(Manager *manager, Garden::Entity entity, const sol::table &parentTable)
+    {
+        auto commands = hasElement(parentTable, "Commands");
+        if (commands)
+        {
+            bool isEnabled = commands["Enabled"];
+            if (isEnabled)
+            {
+                auto playerCommand = new Garden::Components::PlayerCommand();
+                manager->addComponent(entity, playerCommand);
+            }
+        }
+    }
+
     sol::table LuaComponentFactory::hasElement(const sol::table &object, const std::string &property)
     {
         sol::table element = object[property];
@@ -94,6 +110,7 @@ namespace Garden::Scripting
         buildSpriteRenderer(manager, newEntity, parentTable);
         buildSpriteAnimations(manager, newEntity, parentTable);
         buildRigidBody(manager, newEntity, parentTable);
+        buildPlayerCommand(manager, newEntity, parentTable);
         manager->subscribeEntity(newEntity);
         return newEntity;
     }

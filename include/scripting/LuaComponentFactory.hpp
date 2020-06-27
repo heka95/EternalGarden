@@ -16,5 +16,6 @@ namespace Garden::Scripting
         static void buildSpriteRenderer(Manager *manager, Garden::Entity entity, const sol::table &parentTable);
         static void buildSpriteAnimations(Manager *manager, Garden::Entity entity, const sol::table &parentTable);
         static void buildRigidBody(Manager *manager, Garden::Entity entity, const sol::table &parentTable);
+        static void buildPlayerCommand(Manager *manager, Garden::Entity entity, const sol::table &parentTable);
     };
 }

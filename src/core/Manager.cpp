@@ -10,6 +10,7 @@ namespace Garden
             // TODO: delete the content of the store?
             delete store.second;
         }
+        m_textureStore->release();
     }
 
     Entity Manager::createEntity()

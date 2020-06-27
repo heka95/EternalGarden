@@ -20,7 +20,7 @@ namespace Garden::Systems
     class InputSystem : public Garden::System
     {
     public:
-        InputSystem(Manager *manager) : System(1, {Garden::Components::PlayerCommand::type}, manager)
+        InputSystem(int priority, Manager *manager) : System(priority, {Garden::Components::PlayerCommand::type}, manager)
         {
             m_keyStates = SDL_GetKeyboardState(nullptr);
         }

@@ -30,6 +30,10 @@ namespace Garden::Scripting
                 {
                     tileSet.Rows = tileSet.TileCount / tileSet.Columns;
                 }
+                if (!tileSet.Name.empty() && !tileSet.Source.empty())
+                {
+                    manager->textureStore()->load(tileSet.Name, tileSet.Source);
+                }
                 world->tileSets.push_back(tileSet);
             }
         }

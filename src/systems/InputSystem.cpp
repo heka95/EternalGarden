@@ -1,4 +1,7 @@
 #include "systems/InputSystem.hpp"
+#include "components/RigidBody.hpp"
+#include "components/SpriteRenderer.hpp"
+#include "components/SpriteAnimation.hpp"
 #include "GameEngine.hpp"
 
 namespace Garden::Systems
@@ -61,6 +64,45 @@ namespace Garden::Systems
         {
             cCommand->isKeyJump = true;
         }
+
+        //const to change....
+        float run_force = 4.0f;
+        float jump_force = 10.0f;
+        float jump_time = 30.0f;
+        float attacke_time = 20.0f;
+
+        auto rigidBody = getManager()->getComponent<Garden::Components::RigidBody>(e);
+        auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
+        auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
+        animation->currentAnimation = "idle";
+        rigidBody->force = Vector2D::zero();
+
+
+        if (cCommand->isKeyMoveRight)
+        {
+            animation->currentAnimation = "run";
+            rigidBody->force.X = (1 * run_force);
+            renderer->flip = SDL_RendererFlip::SDL_FLIP_NONE;
+        }
+        if (cCommand->isKeyMoveLeft)
+        {
+            animation->currentAnimation = "run";
+            rigidBody->force.X = (-1 * run_force);
+            renderer->flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+        }
+        if (cCommand->isKeyCrouching)
+        {
+            animation->currentAnimation = "crouch";
+            rigidBody->force = Vector2D::zero();
+        }
+        if (cCommand->isKeyAttack)
+        {
+            animation->currentAnimation = "attack";
+            rigidBody->force = Vector2D::zero();
+        }
+
+        // update texture
+        renderer->textureId = animation->animations[animation->currentAnimation].textureId;
     }
 
     int InputSystem::getAxisKey(Axis axis)

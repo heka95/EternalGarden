@@ -93,7 +93,8 @@ void GameEngine::doDraw()
 
 void GameEngine::release()
 {
-    m_states.back()->release();
+    delete m_manager;
+    //m_states.back()->release();
     //TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();

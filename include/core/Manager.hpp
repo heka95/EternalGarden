@@ -8,6 +8,7 @@
 #include "Store.hpp"
 #include "Event.hpp"
 #include "systems/System.hpp"
+#include "core/TextureStore.hpp"
 
 namespace Garden
 {
@@ -15,7 +16,7 @@ namespace Garden
     {
     public:
         Manager() : m_next(1) {}
-        ~Manager();
+        virtual ~Manager();
         Entity createEntity();
         bool destroyEntity(Entity entity);
         std::set<Entity> getEntities() const;
@@ -88,10 +89,13 @@ namespace Garden
             static_assert(E::type != INVALID_TYPE, "E must define its type");
             triggerEvent(origin, E::type, event);
         }
+        Garden::Core::TextureStore *textureStore() { return m_textureStore; }
+
+    protected:
+        Garden::Core::TextureStore *m_textureStore;
 
     private:
         Entity m_next;
-
         std::map<Entity, std::set<ComponentType>> m_entities;
         std::vector<std::shared_ptr<System>> m_systems;
         std::map<ComponentType, Store *> m_stores;

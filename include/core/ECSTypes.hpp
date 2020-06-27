@@ -24,6 +24,7 @@ namespace Garden
         SpriteAnimationType = 3,
         PlayerCommandType = 4,
         RigidBodyType = 5,
-        WorldType = 6
+        WorldType = 6,
+        CameraComponentType = 7
     };
 } // namespace Garden

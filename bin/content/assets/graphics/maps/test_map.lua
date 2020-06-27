@@ -20,7 +20,7 @@ return {
       spacing = 0,
       margin = 0,
       columns = 8,
-      image = "../../../../assets/maps/forest.png",
+      image = "assets/maps/forest.png",
       imagewidth = 512,
       imageheight = 512,
       objectalignment = "unspecified",
