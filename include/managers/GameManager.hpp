@@ -10,7 +10,7 @@ namespace Garden::Managers
     class GameManager : public Garden::Manager
     {
     public:
-        GameManager(SDL_Renderer *sdlRenderer);
+        GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox);
         ~GameManager();
         void load(SDL_Renderer *sdlRenderer);
         bool enable() const { return m_isEnable; }

@@ -2,6 +2,7 @@
 
 #include "BaseComponent.hpp"
 #include "Vector2D.hpp"
+#include "SDL.h"
 
 namespace Garden::Components
 {
@@ -14,7 +15,10 @@ namespace Garden::Components
             m_type = type;
         }
 
-        Garden::Vector2D *target = nullptr;
+        Entity target{0};
         Garden::Vector2D position{0, 0};
+        SDL_Rect viewBox{0, 0, 0, 0};
+        int sceneWidth{0};
+        int sceneHeight{0};
     };
 } // namespace Garden::Components

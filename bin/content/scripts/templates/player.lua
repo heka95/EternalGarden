@@ -77,7 +77,7 @@ data:extend({
                 }
             }
         },
-        RigidBody = {Mass = 1.0, Gravity = 3.5},
+        RigidBody = {Mass = 1.0, Gravity = 0.1},
         Commands = 
         {
             Enabled = true

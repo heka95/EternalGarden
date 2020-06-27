@@ -4,12 +4,15 @@
 #include "systems/Render.hpp"
 #include "systems/AnimatorSystem.hpp"
 #include "systems/PhysicSystem.hpp"
+#include "systems/CameraSystem.hpp"
+#include "GraphicWindow.hpp"
 
 namespace Garden::Managers
 {
-    GameManager::GameManager(SDL_Renderer *sdlRenderer) : Manager()
+    GameManager::GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox) : Manager()
     {
         m_camera = new Garden::Components::CameraComponent();
+        m_camera->viewBox = viewbox;
         m_textureStore = new Garden::Core::TextureStore(sdlRenderer);
         load(sdlRenderer);
     }
@@ -25,6 +28,8 @@ namespace Garden::Managers
     {
         m_lua = new Garden::Core::LuaAccessor(this);
         m_world = m_lua->loadWorld("content/assets/graphics/maps/test_map.lua");
+        m_camera->sceneWidth = (m_world->columns * m_world->tileWidth);
+        m_camera->sceneHeight = (m_world->rows * m_world->tileHeight);
 
         createStoreFor(Garden::Types::TransformationType);
         createStoreFor(Garden::Types::SpriteRendererType);
@@ -32,6 +37,7 @@ namespace Garden::Managers
         createStoreFor(Garden::Types::PlayerCommandType);
         createStoreFor(Garden::Types::RigidBodyType);
 
+        addSystem<Garden::Systems::CameraSystem>(1, this, m_camera);
         addSystem<Garden::Systems::InputSystem>(2, this);
         addSystem<Garden::Systems::PhysicSystem>(3, this);
         addSystem<Garden::Systems::Render>(4, this, sdlRenderer, m_textureStore, m_world, m_camera);
@@ -39,7 +45,6 @@ namespace Garden::Managers
         initSystems();
 
         auto player = m_lua->createObject("entity", "player");
-        auto playerPosition = getComponent<Garden::Components::Transform>(player)->Position;
-        m_camera->target = &playerPosition;
+        m_camera->target = player;
     }
 } // namespace Garden::Managers

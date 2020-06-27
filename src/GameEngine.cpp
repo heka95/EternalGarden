@@ -65,7 +65,8 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     }
 */
     // Create ECS
-    m_manager = new Garden::Managers::GameManager(m_renderer);
+    auto viewbox = SDL_Rect{0, 0, m_graphicWindow->getWindowSize().width, m_graphicWindow->getWindowSize().height};
+    m_manager = new Garden::Managers::GameManager(m_renderer, viewbox);
     m_manager->initSystems();
 }
 

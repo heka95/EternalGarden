@@ -13,7 +13,6 @@ namespace Garden::Systems
         bodyComponent->position = bodyComponent->velocity * deltaTime;
 
         auto transformComponent = getManager()->getComponent<Garden::Components::Transform>(e);
-        transformComponent->Position.X += bodyComponent->position.X;
-        transformComponent->Position.Y += bodyComponent->position.Y;
+        transformComponent->Position += bodyComponent->position;
     }
 } // namespace Garden::Systems
