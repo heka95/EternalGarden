@@ -7,18 +7,34 @@
 
 namespace Garden::Scripting
 {
-    void LuaComponentFactory::buildSpriteAnimation(Manager *manager, Garden::Entity entity, const sol::table &parentTable)
+    void LuaComponentFactory::buildSpriteAnimations(Manager *manager, Garden::Entity entity, const sol::table &parentTable)
     {
-        auto luaObject = hasElement(parentTable, "Animation");
+        auto luaObject = hasElement(parentTable, "Animations");
         if (luaObject)
         {
             auto component = new Garden::Components::SpriteAnimation();
-            component->width = luaObject["FrameWidth"];
-            component->height = luaObject["FrameHeight"];
-            component->rowCount = luaObject["SpriteRowIndex"];
-            component->frameCount = luaObject["FrameCount"];
-            component->speed = luaObject["Speed"];
-            component->loop = luaObject["Loop"];
+            component->currentAnimation = luaObject["DefaultAnimation"];
+            sol::table elements = luaObject["Elements"];
+
+            if (elements != sol::nil && elements.valid())
+            {
+                for (const auto &key_value_pair : elements)
+                {
+                    sol::table element = key_value_pair.second;
+                    auto animation = Garden::Components::AnimationElement{};
+                    animation.name = element["Name"];
+                    animation.source = element["Source"];
+                    animation.textureId = element["TextureId"];
+                    animation.width = element["FrameWidth"];
+                    animation.height = element["FrameHeight"];
+                    animation.rowCount = element["SpriteRowIndex"];
+                    animation.frameCount = element["FrameCount"];
+                    animation.speed = element["Speed"];
+                    animation.loop = element["Loop"];
+                    component->animations[animation.name] = animation;
+                }
+            }
+
             manager->addComponent(entity, component);
         }
     }
@@ -76,7 +92,7 @@ namespace Garden::Scripting
         auto newEntity = manager->createEntity();
         buildTransformation(manager, newEntity, parentTable);
         buildSpriteRenderer(manager, newEntity, parentTable);
-        buildSpriteAnimation(manager, newEntity, parentTable);
+        buildSpriteAnimations(manager, newEntity, parentTable);
         buildRigidBody(manager, newEntity, parentTable);
         manager->subscribeEntity(newEntity);
         return newEntity;
