@@ -39,7 +39,7 @@ namespace Garden::Managers
 
         addSystem<Garden::Systems::CameraSystem>(1, this, m_camera);
         addSystem<Garden::Systems::InputSystem>(2, this);
-        addSystem<Garden::Systems::PhysicSystem>(3, this);
+        addSystem<Garden::Systems::PhysicSystem>(3, this, m_camera);
         addSystem<Garden::Systems::Render>(4, this, sdlRenderer, m_textureStore, m_world, m_camera);
         addSystem<Garden::Systems::AnimatorSystem>(5, this);
         initSystems();

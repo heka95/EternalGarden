@@ -15,8 +15,8 @@ namespace Garden::Systems
 
         if (camera->target != INVALID_ENTITY)
         {
-            camera->viewBox.x = targetPosition.X - windowWidth / 2;
-            camera->viewBox.y = targetPosition.Y - windowHeight / 2;
+            camera->viewBox.x = targetPosition.X - (windowWidth / 2);
+            camera->viewBox.y = targetPosition.Y - (windowHeight / 2);
 
             if (camera->viewBox.x < 0)
             {

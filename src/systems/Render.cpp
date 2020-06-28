@@ -38,19 +38,35 @@ namespace Garden::Systems
 
     void Render::drawMap()
     {
+        int renderPrecache = 2;
+
+        auto cameraPosition = m_camera->position;
+        auto minI = static_cast<int>(cameraPosition.Y) / m_world->tileHeight;
+        auto maxI = (minI + (static_cast<int>(m_camera->viewBox.h) / m_world->tileHeight)) + renderPrecache;
+        if (maxI > m_world->rows)
+            maxI = m_world->rows;
+
+        auto minJ = static_cast<int>(cameraPosition.X) / m_world->tileWidth;
+        auto maxJ = (minJ + (static_cast<int>(m_camera->viewBox.w) / m_world->tileWidth)) + renderPrecache;
+        if (maxJ > m_world->columns)
+            maxJ = m_world->columns;
+
+        int drawedTiles = 0;
+
         for (auto &key : m_world->tileMapLayers)
         {
-            for (int i = 0; i < m_world->rows; i++)
+            for (int i = minI; i < maxI; i++)
             {
-                for (int j = 0; j < m_world->columns; j++)
+                for (int j = minJ; j < maxJ; j++)
                 {
+                    drawedTiles++;
                     auto currentTile = key.at((i * m_world->columns) + j);
                     if (currentTile.TileId == m_world->emptyTile)
                     {
                         continue;
                     }
                     int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
-                    if(tileSetIndex == -1)
+                    if (tileSetIndex == -1)
                     {
                         //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
                         continue;
@@ -67,7 +83,6 @@ namespace Garden::Systems
                     }
 
                     auto position = Garden::Vector2D{j * tileSet.TileSize, i * tileSet.TileSize};
-                    auto cameraPosition = m_camera->position;
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
                     SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
@@ -75,6 +90,8 @@ namespace Garden::Systems
                 }
             }
         }
+
+        //std::cout << "drawed tiles: " << drawedTiles << std::endl;
     }
 
 } // namespace Garden::Systems

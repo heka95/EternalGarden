@@ -14,5 +14,15 @@ namespace Garden::Systems
 
         auto transformComponent = getManager()->getComponent<Garden::Components::Transform>(e);
         transformComponent->Position += bodyComponent->position;
+
+        if (transformComponent->Position.X < 0)
+            transformComponent->Position.X = 0;
+        if (transformComponent->Position.Y < 0)
+            transformComponent->Position.Y = 0;
+        if (transformComponent->Position.X > m_camera->sceneWidth)
+            transformComponent->Position.X = m_camera->sceneWidth;
+        // workaround - in future, substract not 128 but only the entity height
+        if (transformComponent->Position.Y > m_camera->sceneHeight - 128)
+            transformComponent->Position.Y = m_camera->sceneHeight - 128;
     }
 } // namespace Garden::Systems
