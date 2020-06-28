@@ -76,6 +76,7 @@
         "vector2D",
         "SpriteAnimation",
         "RigidBody",
-        "data"
+        "data",
+        "AnimationType"
     ]
 }

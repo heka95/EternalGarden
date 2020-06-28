@@ -74,34 +74,35 @@ namespace Garden::Systems
         auto rigidBody = getManager()->getComponent<Garden::Components::RigidBody>(e);
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
         auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
-        animation->currentAnimation = "idle";
+        animation->currentAnimation = Garden::Components::AnimationType::IDLE;
         rigidBody->force = Vector2D::zero();
 
 
         if (cCommand->isKeyMoveRight)
         {
-            animation->currentAnimation = "run";
+            animation->currentAnimation = Garden::Components::AnimationType::RUN;
             rigidBody->force.X = (1 * run_force);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_NONE;
         }
         if (cCommand->isKeyMoveLeft)
         {
-            animation->currentAnimation = "run";
+            animation->currentAnimation = Garden::Components::AnimationType::RUN;
             rigidBody->force.X = (-1 * run_force);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
         }
         if (cCommand->isKeyCrouching)
         {
-            animation->currentAnimation = "crouch";
+            animation->currentAnimation = Garden::Components::AnimationType::CROUCH;
             rigidBody->force = Vector2D::zero();
         }
         if (cCommand->isKeyAttack)
         {
-            animation->currentAnimation = "attack";
+            animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
             rigidBody->force = Vector2D::zero();
         }
         if(cCommand->isKeyJump)
         {
+            animation->currentAnimation = Garden::Components::AnimationType::JUMP;
             rigidBody->force.Y = -jump_force;
         }
 

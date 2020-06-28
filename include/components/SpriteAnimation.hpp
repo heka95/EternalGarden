@@ -4,9 +4,20 @@
 
 namespace Garden::Components
 {
+    enum AnimationType
+    {
+        IDLE,
+        RUN,
+        JUMP,
+        ATTACK,
+        CROUCH,
+        FALL
+    };
+
     class AnimationElement
     {
     public:
+        AnimationType type{AnimationType::IDLE};
         std::string name{""};
         std::string source{""};
         std::string textureId{""};
@@ -26,7 +37,7 @@ namespace Garden::Components
         {
             m_type = type;
         }
-        std::string currentAnimation{""};
-        std::map<std::string, AnimationElement> animations;
+        AnimationType currentAnimation{AnimationType::IDLE};
+        std::map<AnimationType, AnimationElement> animations;
     };
 } // namespace Garden::Components

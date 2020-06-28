@@ -12,10 +12,10 @@ data:extend({
             DefaultFlip = "none"
         },
         Animations = {
-            DefaultAnimation = "idle",
+            DefaultAnimation = AnimationType.IDLE,
             Elements = {
                 {
-                    Name = "idle",
+                    Type = AnimationType.IDLE,
                     Source = "assets/player/idle.png",
                     TextureId = "player",
                     FrameWidth = 64,
@@ -25,7 +25,7 @@ data:extend({
                     Speed = 85,
                     Loop = true
                 }, {
-                    Name = "run",
+                    Type = AnimationType.RUN,
                     Source = "assets/player/walk.png",
                     TextureId = "player_run",
                     FrameWidth = 64,
@@ -35,7 +35,7 @@ data:extend({
                     Speed = 100,
                     Loop = true
                 }, {
-                    Name = "jump",
+                    Type = AnimationType.JUMP,
                     Source = "assets/player/jump.png",
                     TextureId = "player_jump",
                     FrameWidth = 64,
@@ -45,7 +45,7 @@ data:extend({
                     Speed = 100,
                     Loop = true
                 }, {
-                    Name = "attack",
+                    Type = AnimationType.ATTACK,
                     Source = "assets/player/attack.png",
                     TextureId = "player_attack",
                     FrameWidth = 64,
@@ -55,7 +55,7 @@ data:extend({
                     Speed = 100,
                     Loop = true
                 }, {
-                    Name = "crouch",
+                    Type = AnimationType.CROUCH,
                     Source = "assets/player/slide.png",
                     TextureId = "player_crouch",
                     FrameWidth = 64,
@@ -65,7 +65,7 @@ data:extend({
                     Speed = 100,
                     Loop = true
                 }, {
-                    Name = "fall",
+                    Type = AnimationType.FALL,
                     Source = "assets/player/fall.png",
                     TextureId = "player_fall",
                     FrameWidth = 64,

@@ -23,6 +23,7 @@ namespace Garden::Scripting
                 {
                     sol::table element = key_value_pair.second;
                     auto animation = Garden::Components::AnimationElement{};
+                    animation.type = element["Type"];
                     animation.name = element["Name"];
                     animation.source = element["Source"];
                     animation.textureId = element["TextureId"];
@@ -32,7 +33,7 @@ namespace Garden::Scripting
                     animation.frameCount = element["FrameCount"];
                     animation.speed = element["Speed"];
                     animation.loop = element["Loop"];
-                    component->animations[animation.name] = animation;
+                    component->animations[animation.type] = animation;
                     manager->textureStore()->load(animation.textureId, animation.source);
                 }
             }
