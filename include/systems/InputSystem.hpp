@@ -5,6 +5,7 @@
 #include "components/BaseComponent.hpp"
 #include "components/PlayerCommand.hpp"
 #include "systems/System.hpp"
+#include "components/CameraComponent.hpp"
 
 namespace Garden::Systems
 {
@@ -20,14 +21,16 @@ namespace Garden::Systems
     class InputSystem : public Garden::System
     {
     public:
-        InputSystem(int priority, Manager *manager) : System(priority, {Garden::Components::PlayerCommand::type}, manager)
+        InputSystem(int priority, Manager *manager, Garden::Components::CameraComponent *camera) : System(priority, {Garden::Components::PlayerCommand::type}, manager)
         {
+            m_camera = camera;
             m_keyStates = SDL_GetKeyboardState(nullptr);
         }
         virtual void updateEntity(float deltaTime, Entity e) override;
         virtual void preUpdate(float deltaTime) override;
 
     private:
+        Garden::Components::CameraComponent *m_camera;
         void windowEvents(SDL_Event event);
         void keyUp();
         void keyDown();

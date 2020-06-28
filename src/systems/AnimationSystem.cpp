@@ -8,17 +8,19 @@ namespace Garden::Systems
 {
     void AnimatorSystem::updateEntity(float deltaTime, Entity e)
     {
-        auto cAnimatorComponent = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
-        auto cRenderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
-        auto cAnimator = cAnimatorComponent->animations[cAnimatorComponent->currentAnimation];
+        auto animator = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
+        auto spriteRenderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
+        auto currentAnimation = animator->animations[animator->currentAnimation];
+        auto currentFrame = (SDL_GetTicks() / currentAnimation.speed) % currentAnimation.frameCount;
 
-        auto currentFrame = (SDL_GetTicks() / cAnimator.speed) % cAnimator.frameCount;
+        spriteRenderer->drawHeight = currentAnimation.height;
+        spriteRenderer->drawWidth = currentAnimation.width;
+        spriteRenderer->textureId = currentAnimation.textureId;
+        spriteRenderer->origin.X = currentAnimation.width / 2;
+        spriteRenderer->origin.Y = currentAnimation.height / 2;
 
-        cRenderer->drawHeight = cAnimator.height;
-        cRenderer->drawWidth = cAnimator.width;
-
-        auto xOffset = cAnimator.width * currentFrame;
-        auto yOffset = cAnimator.height * (cAnimator.rowCount - 1);
-        cRenderer->drawOffset = Garden::Vector2D{(float)xOffset, (float)yOffset};
+        auto xOffset = currentAnimation.width * currentFrame;
+        auto yOffset = currentAnimation.height * (currentAnimation.rowCount - 1);
+        spriteRenderer->drawOffset = Garden::Vector2D{static_cast<float>(xOffset), static_cast<float>(yOffset)};
     }
 } // namespace Garden::Systems

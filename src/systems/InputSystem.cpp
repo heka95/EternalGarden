@@ -35,8 +35,8 @@ namespace Garden::Systems
             auto height = event.window.data2;
             const SDL_Rect window{0, 0, width, height};
             GameEngine::getInstance().setWindowSize(window);
-            // todo add camera
-            //Camera::getInstance().setSceneSize(window.w, window.h);
+            m_camera->viewBox.h = window.h;
+            m_camera->viewBox.w = window.w;
         }
     }
 

@@ -23,17 +23,11 @@ namespace Garden::Systems
 
     void Render::updateEntity(float deltaTime, Entity e)
     {
-        auto cTransform = getManager()->getComponent<Garden::Components::Transform>(e);
-        auto position = cTransform->Position;
+        auto transform = getManager()->getComponent<Garden::Components::Transform>(e);
+        auto position = transform->Position;
         auto cameraPosition = m_camera->position;
 
-        auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
-
-        if (animation != nullptr)
-        {
-            renderer->textureId = animation->animations[animation->currentAnimation].textureId;
-        }
 
         SDL_Rect sourceRect = {(int)renderer->drawOffset.X, (int)renderer->drawOffset.Y, renderer->drawWidth, renderer->drawHeight};
         auto renderWidth = renderer->drawWidth * renderer->scale.X;

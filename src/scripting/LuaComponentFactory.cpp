@@ -69,6 +69,8 @@ namespace Garden::Scripting
             component->scale = Garden::Vector2D{luaObject["XScale"], luaObject["YScale"]};
             component->textureId = luaObject["TextureId"];
             component->flip = luaObject["DefaultFlip"];
+            component->origin.X = component->width / 2;
+            component->origin.Y = component->height / 2;
             manager->addComponent(entity, component);
         }
     }

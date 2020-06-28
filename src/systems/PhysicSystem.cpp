@@ -2,6 +2,7 @@
 #include "core/Manager.hpp"
 #include "components/Transformation.hpp"
 #include "components/SpriteAnimation.hpp"
+#include "components/SpriteRenderer.hpp"
 
 namespace Garden::Systems
 {
@@ -9,6 +10,7 @@ namespace Garden::Systems
     {
         auto rigidBody = getManager()->getComponent<Garden::Components::RigidBody>(e);
         auto transform = getManager()->getComponent<Garden::Components::Transform>(e);
+        auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
 
         // update
         rigidBody->acceleration.X = (rigidBody->force.X + rigidBody->friction.X) / rigidBody->mass;
@@ -27,8 +29,8 @@ namespace Garden::Systems
             transform->Position.X = 0;
         if (transform->Position.X > m_camera->sceneWidth)
             transform->Position.X = m_camera->sceneWidth;
-        // todo : hard values
-        rigidBody->collider(transform->Position.X, transform->Position.Y, 58, 64);
+
+        rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
         if (m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
             transform->Position.X = lastSafePositionX;
@@ -39,11 +41,11 @@ namespace Garden::Systems
         // Check and fix if entity is into the world
         if (transform->Position.Y < 0)
             transform->Position.Y = 0;
-        // todo : hard value
-        if (transform->Position.Y > m_camera->sceneHeight - 128)
-            transform->Position.Y = m_camera->sceneHeight - 128;
-        // todo : hard values
-        rigidBody->collider(transform->Position.X, transform->Position.Y, 58, 64);
+            
+        if (transform->Position.Y > m_camera->sceneHeight - renderer->drawHeight)
+            transform->Position.Y = m_camera->sceneHeight - renderer->drawHeight;
+
+        rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
         if (m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
             transform->Position.Y = lastSafePositionY;
@@ -54,20 +56,20 @@ namespace Garden::Systems
             rigidBody->isGrounded = false;
         }
 
-        // todo
-        //m_origin->X = m_transform->X + m_size.width / 2;
-        //m_origin->Y = m_transform->Y + m_size.height / 2;
-
         // maybe better...
         auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
-        if (rigidBody->isRunning) 
+        if (rigidBody->isRunning)
         {
             animation->currentAnimation = Garden::Components::AnimationType::RUN;
         }
-        if (rigidBody->isCrouching) animation->currentAnimation = Garden::Components::AnimationType::CROUCH;
-        if (rigidBody->isJumping) animation->currentAnimation = Garden::Components::AnimationType::JUMP;
-        if (rigidBody->isFalling) animation->currentAnimation = Garden::Components::AnimationType::FALL;
-        if (rigidBody->isAttacking) animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
+        if (rigidBody->isCrouching)
+            animation->currentAnimation = Garden::Components::AnimationType::CROUCH;
+        if (rigidBody->isJumping)
+            animation->currentAnimation = Garden::Components::AnimationType::JUMP;
+        if (rigidBody->isFalling)
+            animation->currentAnimation = Garden::Components::AnimationType::FALL;
+        if (rigidBody->isAttacking)
+            animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
 
         bool drawCollider{true};
         // Debug draw collider
