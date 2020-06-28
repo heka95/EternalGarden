@@ -77,8 +77,16 @@ data:extend({
                 }
             }
         },
-        RigidBody = {Mass = 1.0, Gravity = 3.5},
-        Commands = 
+        RigidBody =
+        {
+            Mass = 65.0,
+            Gravity = 9.807, -- Earth real gravity
+            RunSpeed = 450.0,
+            JumpForce = 1350.0,
+            JumpTime = 20.0,
+            AttackTime = 20.0
+        },
+        Commands =
         {
             Enabled = true
         }

@@ -1,6 +1,7 @@
 #include "systems/Render.hpp"
 #include "OldTextureManager.hpp"
 #include "core/Manager.hpp"
+#include "components/SpriteAnimation.hpp"
 #include <iostream>
 
 namespace Garden::Systems
@@ -24,16 +25,22 @@ namespace Garden::Systems
     {
         auto cTransform = getManager()->getComponent<Garden::Components::Transform>(e);
         auto position = cTransform->Position;
-
-        auto cRenderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
         auto cameraPosition = m_camera->position;
 
-        SDL_Rect sourceRect = {(int)cRenderer->drawOffset.X, (int)cRenderer->drawOffset.Y, cRenderer->drawWidth, cRenderer->drawHeight};
-        auto renderWidth = cRenderer->drawWidth * cRenderer->scale.X;
-        auto renderHeight = cRenderer->drawHeight * cRenderer->scale.Y;
+        auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
+        auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
+
+        if (animation != nullptr)
+        {
+            renderer->textureId = animation->animations[animation->currentAnimation].textureId;
+        }
+
+        SDL_Rect sourceRect = {(int)renderer->drawOffset.X, (int)renderer->drawOffset.Y, renderer->drawWidth, renderer->drawHeight};
+        auto renderWidth = renderer->drawWidth * renderer->scale.X;
+        auto renderHeight = renderer->drawHeight * renderer->scale.Y;
         SDL_FRect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, renderWidth, renderHeight};
-        auto texture = m_store->getTextureFromId(cRenderer->textureId);
-        SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, cRenderer->rotation, nullptr, cRenderer->flip);
+        auto texture = m_store->getTextureFromId(renderer->textureId);
+        SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, renderer->rotation, nullptr, renderer->flip);
     }
 
     void Render::drawMap()

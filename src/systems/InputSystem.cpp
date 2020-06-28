@@ -35,6 +35,7 @@ namespace Garden::Systems
             auto height = event.window.data2;
             const SDL_Rect window{0, 0, width, height};
             GameEngine::getInstance().setWindowSize(window);
+            // todo add camera
             //Camera::getInstance().setSceneSize(window.w, window.h);
         }
     }
@@ -65,49 +66,64 @@ namespace Garden::Systems
             cCommand->isKeyJump = true;
         }
 
-        //const to change....
-        float run_force = 4.0f;
-        float jump_force = 10.0f;
-        float jump_time = 30.0f;
-        float attacke_time = 20.0f;
-
         auto rigidBody = getManager()->getComponent<Garden::Components::RigidBody>(e);
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
         auto animation = getManager()->getComponent<Garden::Components::SpriteAnimation>(e);
         animation->currentAnimation = Garden::Components::AnimationType::IDLE;
         rigidBody->force = Vector2D::zero();
+        rigidBody->isCrouching = false;
+        rigidBody->isRunning = false;
 
-
-        if (cCommand->isKeyMoveRight)
+        if (cCommand->isKeyMoveRight && !rigidBody->isAttacking)
         {
-            animation->currentAnimation = Garden::Components::AnimationType::RUN;
-            rigidBody->force.X = (1 * run_force);
+            rigidBody->force.X = (1 * rigidBody->runSpeed);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_NONE;
+            rigidBody->isRunning = true;
         }
-        if (cCommand->isKeyMoveLeft)
+        if (cCommand->isKeyMoveLeft && !rigidBody->isAttacking)
         {
-            animation->currentAnimation = Garden::Components::AnimationType::RUN;
-            rigidBody->force.X = (-1 * run_force);
+            rigidBody->force.X = (-1 * rigidBody->runSpeed);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+            rigidBody->isRunning = true;
         }
         if (cCommand->isKeyCrouching)
         {
-            animation->currentAnimation = Garden::Components::AnimationType::CROUCH;
             rigidBody->force = Vector2D::zero();
+            rigidBody->isCrouching = true;
         }
         if (cCommand->isKeyAttack)
         {
-            animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
             rigidBody->force = Vector2D::zero();
+            rigidBody->isAttacking = true;
         }
-        if(cCommand->isKeyJump)
+        if (cCommand->isKeyJump && rigidBody->isGrounded)
         {
-            animation->currentAnimation = Garden::Components::AnimationType::JUMP;
-            rigidBody->force.Y = -jump_force;
+            rigidBody->force.Y = -rigidBody->jumpForce;
+            rigidBody->isJumping = true;
+            rigidBody->isGrounded = false;
+        }
+        if (cCommand->isKeyJump && rigidBody->isJumping && rigidBody->jumpRemainingTime > 0)
+        {
+            rigidBody->jumpRemainingTime -= deltaTime;
+            rigidBody->force.Y = -rigidBody->jumpForce;
+        }
+        else
+        {
+            rigidBody->isJumping = false;
+            rigidBody->jumpRemainingTime = rigidBody->jumpTime;
         }
 
-        // update texture
-        renderer->textureId = animation->animations[animation->currentAnimation].textureId;
+        rigidBody->isFalling = (rigidBody->velocity.Y > 0 && !rigidBody->isGrounded);
+
+        if (rigidBody->isAttacking && rigidBody->attackRemainingTime > 0)
+        {
+            rigidBody->attackRemainingTime -= deltaTime;
+        }
+        else
+        {
+            rigidBody->isAttacking = false;
+            rigidBody->attackRemainingTime = rigidBody->attackTime;
+        }
     }
 
     int InputSystem::getAxisKey(Axis axis)

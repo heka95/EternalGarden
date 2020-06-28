@@ -12,6 +12,7 @@ namespace Garden::Components
         static const ComponentType type = Garden::Types::SpriteRendererType;
         SpriteRenderer()
         {
+            // todo
             //m_origin.X = width / 2;
             //m_origin.Y = height / 2;
             m_type = type;

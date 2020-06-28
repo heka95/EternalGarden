@@ -15,8 +15,22 @@ namespace Garden::Components
             m_type = type;
         }
 
-        float mass = 1.0f;
-        float gravity = 9.8f;
+        float mass{0};
+        float gravity{0};
+        float runSpeed{0};
+        float jumpForce{0};
+        float jumpTime{0};
+        float attackTime{0};
+
+        float jumpRemainingTime{0};
+        float attackRemainingTime{0};
+        bool isGrounded{false};
+        bool isFalling{false};
+        bool isAttacking{false};
+        bool isRunning{false};
+        bool isCrouching{false};
+        bool isJumping{false};
+
         Garden::Vector2D force{0, 0};
         Garden::Vector2D friction{0, 0};
         Garden::Vector2D position{0, 0};

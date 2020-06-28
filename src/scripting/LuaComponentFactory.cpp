@@ -50,6 +50,10 @@ namespace Garden::Scripting
             auto component = new Garden::Components::RigidBody();
             component->mass = luaObject["Mass"];
             component->gravity = luaObject["Gravity"];
+            component->runSpeed = luaObject["RunSpeed"];
+            component->jumpForce = luaObject["JumpForce"];
+            component->jumpTime = luaObject["JumpTime"];
+            component->attackTime = luaObject["AttackTime"];
             manager->addComponent(entity, component);
         }
     }
