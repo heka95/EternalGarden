@@ -114,7 +114,8 @@ namespace Garden::Scripting
             auto collider = properties["collider"];
             if (collider != sol::nil && collider.valid())
             {
-                world->physicLayer = name;
+                // Current tile index = length - 1
+                world->physicLayer = world->tileMapLayers.size() - 1;
             }
         }
     }

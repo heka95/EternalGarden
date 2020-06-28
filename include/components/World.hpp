@@ -43,7 +43,7 @@ namespace Garden::Components
         int tileHeight = 0;
         std::vector<TileSet> tileSets;
         std::vector<std::vector<Tile>> tileMapLayers;
-        std::string physicLayer = "";
+        int physicLayer = {-1};
         int emptyTile{0};
 
         int getTileSetIndexFromTileId(int tileId)

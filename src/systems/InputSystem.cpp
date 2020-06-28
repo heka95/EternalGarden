@@ -100,6 +100,10 @@ namespace Garden::Systems
             animation->currentAnimation = "attack";
             rigidBody->force = Vector2D::zero();
         }
+        if(cCommand->isKeyJump)
+        {
+            rigidBody->force.Y = -jump_force;
+        }
 
         // update texture
         renderer->textureId = animation->animations[animation->currentAnimation].textureId;
