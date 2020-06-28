@@ -83,9 +83,8 @@ namespace Garden::Systems
                         tileColumn = tileSet.Columns - 1;
                     }
 
-                    auto position = Garden::Vector2D{j * tileSet.TileSize, i * tileSet.TileSize};
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
-                    SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSet.TileSize, tileSet.TileSize};
+                    SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
                     SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile.flip);
                 }
@@ -111,16 +110,13 @@ namespace Garden::Systems
                 currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
                 auto tileSet = m_world->tileSets[tileSetIndex];
                 auto tileRow = currentTile.TileId / tileSet.Columns;
-                auto tileColumn = currentTile.TileId - tileRow * tileSet.Columns - 1;
 
                 if (currentTile.TileId % tileSet.Columns == 0)
                 {
                     tileRow--;
-                    tileColumn = tileSet.Columns - 1;
                 }
 
-                auto position = Garden::Vector2D{j * tileSet.TileSize, i * tileSet.TileSize};
-                SDL_Rect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, tileSet.TileSize, tileSet.TileSize};
+                SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
                 SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
                 SDL_RenderDrawRect(m_renderer, &destinationRect);
             }

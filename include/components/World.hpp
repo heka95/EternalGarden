@@ -29,14 +29,10 @@ namespace Garden::Components
         std::string layerName;
     };
 
-    class World : public Garden::BaseComponent
+    class World
     {
     public:
-        static const ComponentType type = Garden::Types::WorldType;
-        World()
-        {
-            m_type = type;
-        }
+        World() = default;
         int rows = 0;
         int columns = 0;
         int tileWidth = 0;

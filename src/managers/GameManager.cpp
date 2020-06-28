@@ -14,7 +14,7 @@ namespace Garden::Managers
         m_camera = new Garden::Components::CameraComponent();
         m_camera->viewBox = viewbox;
         m_textureStore = new Garden::Core::TextureStore(sdlRenderer);
-        load(sdlRenderer);
+        load(sdlRenderer, "content/script/levels/00_level_arena.lua");
     }
 
     GameManager::~GameManager()
@@ -24,7 +24,7 @@ namespace Garden::Managers
         delete m_camera;
     }
 
-    void GameManager::load(SDL_Renderer *sdlRenderer)
+    void GameManager::load(SDL_Renderer *sdlRenderer, std::string const &level)
     {
         m_lua = new Garden::Core::LuaAccessor(this);
         m_world = m_lua->loadWorld("content/assets/graphics/maps/test_map.lua");

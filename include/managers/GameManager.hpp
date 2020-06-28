@@ -12,7 +12,7 @@ namespace Garden::Managers
     public:
         GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox);
         ~GameManager();
-        void load(SDL_Renderer *sdlRenderer);
+        void load(SDL_Renderer *sdlRenderer, std::string const &level);
         bool enable() const { return m_isEnable; }
         void enable(const bool &enable) { m_isEnable = enable; }
 
