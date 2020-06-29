@@ -46,22 +46,28 @@ namespace Garden::Systems
         auto maxI = (minI + (static_cast<int>(m_camera->viewBox.h) / m_world->tileHeight)) + renderPrecache;
         if (maxI > m_world->rows)
             maxI = m_world->rows;
+        if (minI < 0)
+            minI = 0;
 
         auto minJ = static_cast<int>(cameraPosition.X) / m_world->tileWidth;
         auto maxJ = (minJ + (static_cast<int>(m_camera->viewBox.w) / m_world->tileWidth)) + renderPrecache;
         if (maxJ > m_world->columns)
             maxJ = m_world->columns;
+        if (minJ < 0)
+            minJ = 0;
 
         int drawedTiles = 0;
 
         for (auto &key : m_world->tileMapLayers)
         {
+            if(key.isCollider)
+            continue;
             for (int i = minI; i < maxI; i++)
             {
                 for (int j = minJ; j < maxJ; j++)
                 {
                     drawedTiles++;
-                    auto currentTile = key.at((i * m_world->columns) + j);
+                    auto currentTile = key.tiles.at((i * m_world->columns) + j);
                     if (currentTile.TileId == m_world->emptyTile)
                     {
                         continue;
@@ -98,7 +104,7 @@ namespace Garden::Systems
             {
                 for (int j = minJ; j < maxJ; j++)
                 {
-                    auto currentTile = colliderLayer.at((i * m_world->columns) + j);
+                    auto currentTile = colliderLayer.tiles.at((i * m_world->columns) + j);
                     if (currentTile.TileId == m_world->emptyTile)
                     {
                         continue;

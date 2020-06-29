@@ -80,7 +80,9 @@ namespace Garden::Scripting
 
         sol::as_table_t<std::vector<unsigned int>> containerData = layerNode["data"];
         auto data = containerData.value();
-        std::vector<Garden::Components::Tile> tiles;
+
+        auto layer = Garden::Components::Layer{};
+        layer.name = name;
         for (auto &tile_index : data)
         {
             bool flipped_horizontally = (tile_index & FLIPPED_HORIZONTALLY_FLAG);
@@ -91,7 +93,6 @@ namespace Garden::Scripting
                             FLIPPED_DIAGONALLY_FLAG);
             auto tile = Garden::Components::Tile{};
             tile.TileId = tile_index;
-            tile.layerName = name;
             tile.flip = SDL_RendererFlip::SDL_FLIP_NONE;
             if (flipped_horizontally)
                 tile.flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
@@ -102,12 +103,9 @@ namespace Garden::Scripting
                 auto flip = (SDL_RendererFlip::SDL_FLIP_HORIZONTAL | SDL_RendererFlip::SDL_FLIP_VERTICAL);
                 tile.flip = (SDL_RendererFlip)flip;
             }
-
-            tiles.push_back(tile);
+            layer.tiles.push_back(tile);
         }
-
-        std::cout << "add layer: " << name << std::endl;
-        world->tileMapLayers.push_back(tiles);
+        
         auto properties = layerNode["properties"];
         if (properties != sol::nil && properties.valid())
         {
@@ -115,9 +113,12 @@ namespace Garden::Scripting
             if (collider != sol::nil && collider.valid())
             {
                 // Current tile index = length - 1
-                world->physicLayer = world->tileMapLayers.size() - 1;
+                world->physicLayer = world->tileMapLayers.size();
+                layer.isCollider = true;
             }
         }
+
+        world->tileMapLayers.push_back(layer);
     }
 
 } // namespace Garden::Scripting

@@ -5,7 +5,7 @@ namespace Garden::Core
 {
     CollisionEngine::CollisionEngine(Garden::Components::World *world)
     {
-        m_layerTileMap = world->tileMapLayers[world->physicLayer];
+        m_layerTileMap = world->tileMapLayers[world->physicLayer].tiles;
         m_tileSize = world->tileWidth; // or heigth, the grid will always a square
         m_columns = world->columns;
         m_row = world->rows;
