@@ -88,7 +88,7 @@ data:extend({
             ColliderBuffer =
             {
                 X = 17,
-                Y = -5,
+                Y = 0,
                 Width = 44,
                 Height = 41
             }

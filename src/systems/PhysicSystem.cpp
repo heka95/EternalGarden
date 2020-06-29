@@ -72,14 +72,12 @@ namespace Garden::Systems
         if (rigidBody->isAttacking)
             animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
 
-        bool drawCollider{true};
-        // Debug draw collider
-        if (drawCollider)
+        if (m_world->debug)
         {
             auto cameraPosition = m_camera->position;
-            SDL_Rect box = {(int)(rigidBody->collider().x - cameraPosition.X), (int)(rigidBody->collider().y - cameraPosition.Y), rigidBody->collider().w, rigidBody->collider().h};
+            SDL_FRect box = {(rigidBody->collider().x - cameraPosition.X), (rigidBody->collider().y - cameraPosition.Y), rigidBody->collider().w, rigidBody->collider().h};
             SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-            SDL_RenderDrawRect(m_renderer, &box);
+            SDL_RenderDrawRectF(m_renderer, &box);
         }
     }
 } // namespace Garden::Systems

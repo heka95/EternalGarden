@@ -29,6 +29,7 @@ namespace Garden::Managers
         m_lua = new Garden::Core::LuaAccessor(this);
         m_definition = m_lua->loadLevel(level);
         m_world = m_lua->loadWorld(m_definition->mapFile);
+        m_world->debug = m_definition->debugMode;
         m_camera->sceneWidth = (m_world->columns * m_world->tileWidth);
         m_camera->sceneHeight = (m_world->rows * m_world->tileHeight);
 

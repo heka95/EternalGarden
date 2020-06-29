@@ -91,34 +91,37 @@ namespace Garden::Systems
             }
         }
 
-        auto colliderLayer = m_world->tileMapLayers[m_world->physicLayer];
-        for (int i = minI; i < maxI; i++)
+        if (m_world->debug)
         {
-            for (int j = minJ; j < maxJ; j++)
+            auto colliderLayer = m_world->tileMapLayers[m_world->physicLayer];
+            for (int i = minI; i < maxI; i++)
             {
-                auto currentTile = colliderLayer.at((i * m_world->columns) + j);
-                if (currentTile.TileId == m_world->emptyTile)
+                for (int j = minJ; j < maxJ; j++)
                 {
-                    continue;
-                }
-                int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
-                if (tileSetIndex == -1)
-                {
-                    //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
-                    continue;
-                }
-                currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
-                auto tileSet = m_world->tileSets[tileSetIndex];
-                auto tileRow = currentTile.TileId / tileSet.Columns;
+                    auto currentTile = colliderLayer.at((i * m_world->columns) + j);
+                    if (currentTile.TileId == m_world->emptyTile)
+                    {
+                        continue;
+                    }
+                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
+                    if (tileSetIndex == -1)
+                    {
+                        //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
+                        continue;
+                    }
+                    currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
+                    auto tileSet = m_world->tileSets[tileSetIndex];
+                    auto tileRow = currentTile.TileId / tileSet.Columns;
 
-                if (currentTile.TileId % tileSet.Columns == 0)
-                {
-                    tileRow--;
-                }
+                    if (currentTile.TileId % tileSet.Columns == 0)
+                    {
+                        tileRow--;
+                    }
 
-                SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
-                SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
-                SDL_RenderDrawRect(m_renderer, &destinationRect);
+                    SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
+                    SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
+                    SDL_RenderDrawRect(m_renderer, &destinationRect);
+                }
             }
         }
     }
