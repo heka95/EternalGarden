@@ -67,23 +67,23 @@ namespace Garden::Systems
                 for (int j = minJ; j < maxJ; j++)
                 {
                     drawedTiles++;
-                    auto currentTile = key->tiles.at((i * m_world->columns) + j);
-                    if (currentTile.TileId == m_world->emptyTile)
+                    auto currentTile = key->tiles[(i * m_world->columns) + j];
+                    if (currentTile->TileId == m_world->emptyTile)
                     {
                         continue;
                     }
-                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
+                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile->TileId);
                     if (tileSetIndex == -1)
                     {
                         //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
                         continue;
                     }
-                    currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
-                    auto tileSet = m_world->tileSets[tileSetIndex];
-                    auto tileRow = currentTile.TileId / tileSet.Columns;
-                    auto tileColumn = currentTile.TileId - tileRow * tileSet.Columns - 1;
+                    auto relativeId = currentTile->TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
+                    auto tileSet = m_world->tileSets.at(tileSetIndex);
+                    auto tileRow = relativeId / tileSet.Columns;
+                    auto tileColumn = relativeId - tileRow * tileSet.Columns - 1;
 
-                    if (currentTile.TileId % tileSet.Columns == 0)
+                    if (relativeId % tileSet.Columns == 0)
                     {
                         tileRow--;
                         tileColumn = tileSet.Columns - 1;
@@ -92,7 +92,7 @@ namespace Garden::Systems
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
                     SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
-                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile.flip);
+                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile->flip);
                 }
             }
         }
@@ -105,22 +105,22 @@ namespace Garden::Systems
                 for (int j = minJ; j < maxJ; j++)
                 {
                     auto currentTile = colliderLayer->tiles[(i * m_world->columns) + j];
-                    if (currentTile.TileId == m_world->emptyTile)// || !currentTile.isCollided)
+                    if (currentTile->TileId == m_world->emptyTile || !currentTile->isCollided)
                     {
                         continue;
                     }
-                    currentTile.isCollided = false;
-                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
+                    currentTile->isCollided = false;
+                    int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile->TileId);
                     if (tileSetIndex == -1)
                     {
                         //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
                         continue;
                     }
-                    currentTile.TileId = currentTile.TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
-                    auto tileSet = m_world->tileSets[tileSetIndex];
-                    auto tileRow = currentTile.TileId / tileSet.Columns;
+                    auto relativeId = currentTile->TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
+                    auto tileSet = m_world->tileSets.at(tileSetIndex);
+                    auto tileRow = relativeId / tileSet.Columns;
 
-                    if (currentTile.TileId % tileSet.Columns == 0)
+                    if (relativeId % tileSet.Columns == 0)
                     {
                         tileRow--;
                     }

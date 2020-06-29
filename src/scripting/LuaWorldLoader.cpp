@@ -91,17 +91,17 @@ namespace Garden::Scripting
             tile_index &= ~(FLIPPED_HORIZONTALLY_FLAG |
                             FLIPPED_VERTICALLY_FLAG |
                             FLIPPED_DIAGONALLY_FLAG);
-            auto tile = Garden::Components::Tile{};
-            tile.TileId = tile_index;
-            tile.flip = SDL_RendererFlip::SDL_FLIP_NONE;
+            auto tile = new Garden::Components::Tile{};
+            tile->TileId = tile_index;
+            tile->flip = SDL_RendererFlip::SDL_FLIP_NONE;
             if (flipped_horizontally)
-                tile.flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+                tile->flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
             if (flipped_vertically)
-                tile.flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
+                tile->flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
             if (flipped_horizontally & flipped_vertically)
             {
                 auto flip = (SDL_RendererFlip::SDL_FLIP_HORIZONTAL | SDL_RendererFlip::SDL_FLIP_VERTICAL);
-                tile.flip = (SDL_RendererFlip)flip;
+                tile->flip = (SDL_RendererFlip)flip;
             }
             layer->tiles.push_back(tile);
         }

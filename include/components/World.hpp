@@ -32,7 +32,7 @@ namespace Garden::Components
     class Layer
     {
         public:
-        std::vector<Tile> tiles;
+        std::vector<Tile*> tiles;
         std::string name{""};
         bool isCollider{false};
     };

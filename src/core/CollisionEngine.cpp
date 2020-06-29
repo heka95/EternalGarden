@@ -39,9 +39,9 @@ namespace Garden::Core
             for (int j = left_tile; j <= right_tile; ++j)
             {
                 auto currentTile = m_layerTileMap->tiles[((i * m_columns) + j)];
-                if (currentTile.TileId > 0)
+                if (currentTile->TileId > 0)
                 {
-                    currentTile.isCollided = true;
+                    currentTile->isCollided = true;
                     return true;
                 }
             }
