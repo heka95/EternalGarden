@@ -19,41 +19,42 @@ namespace Garden::Systems
         rigidBody->position = rigidBody->velocity * deltaTime;
 
         // backup old position
-        auto lastSafePositionX = transform->Position.X;
-        auto lastSafePositionY = transform->Position.Y;
+        auto positionXSimulation = transform->Position.X;
+        auto positionYSimulation = transform->Position.Y;
 
         // --- process X
-        transform->Position.X += rigidBody->position.X;
+        positionXSimulation += rigidBody->position.X;
         // Check and fix if entity is into the world
-        if (transform->Position.X < 0)
-            transform->Position.X = 0;
-        if (transform->Position.X > m_camera->sceneWidth)
-            transform->Position.X = m_camera->sceneWidth;
+        if (positionXSimulation < 0)
+            positionXSimulation = 0;
+        if (positionXSimulation > m_camera->sceneWidth)
+            positionXSimulation = m_camera->sceneWidth;
 
-        rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
-        if (m_collisionEngine.get()->worldCollision(rigidBody->collider()))
+        rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
+        if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
-            transform->Position.X = lastSafePositionX;
+            transform->Position.X = positionXSimulation;
         }
 
         // --- process Y
-        transform->Position.Y += rigidBody->position.Y;
+        positionYSimulation += rigidBody->position.Y;
         // Check and fix if entity is into the world
-        if (transform->Position.Y < 0)
-            transform->Position.Y = 0;
+        if (positionYSimulation < 0)
+            positionYSimulation = 0;
             
-        if (transform->Position.Y > m_camera->sceneHeight - renderer->drawHeight)
-            transform->Position.Y = m_camera->sceneHeight - renderer->drawHeight;
+        if (positionYSimulation > m_camera->sceneHeight - renderer->drawHeight)
+            positionYSimulation = m_camera->sceneHeight - renderer->drawHeight;
 
-        rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
-        if (m_collisionEngine.get()->worldCollision(rigidBody->collider()))
+        rigidBody->collider(transform->Position.X, positionYSimulation, renderer->drawWidth, renderer->drawHeight);
+        if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
-            transform->Position.Y = lastSafePositionY;
-            rigidBody->isGrounded = true;
+            transform->Position.Y = positionYSimulation;
+            rigidBody->isGrounded = false;
         }
         else
         {
-            rigidBody->isGrounded = false;
+            rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
+            rigidBody->isGrounded = true;
         }
 
         // maybe better...

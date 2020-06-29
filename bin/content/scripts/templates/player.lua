@@ -84,7 +84,14 @@ data:extend({
             RunSpeed = 450.0,
             JumpForce = 1350.0,
             JumpTime = 20.0,
-            AttackTime = 20.0
+            AttackTime = 20.0,
+            ColliderBuffer =
+            {
+                X = 17,
+                Y = -5,
+                Width = 44,
+                Height = 41
+            }
         },
         Commands =
         {

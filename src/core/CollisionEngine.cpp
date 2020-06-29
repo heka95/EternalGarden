@@ -11,14 +11,14 @@ namespace Garden::Core
         m_row = world->rows;
     }
 
-    bool CollisionEngine::checkCollision(SDL_Rect a, SDL_Rect b)
+    bool CollisionEngine::checkCollision(SDL_FRect a, SDL_FRect b)
     {
         bool isXIntersect = (a.x < b.x + b.w) && (a.x + a.w > b.x);
         bool isYIntersect = (a.y < b.y + b.h) && (a.y + a.h > b.y);
         return (isXIntersect && isYIntersect);
     }
 
-    bool CollisionEngine::worldCollision(SDL_Rect a)
+    bool CollisionEngine::worldCollision(SDL_FRect a)
     {
         int left_tile = a.x / m_tileSize;
         int right_tile = (a.x + a.w) / m_tileSize;

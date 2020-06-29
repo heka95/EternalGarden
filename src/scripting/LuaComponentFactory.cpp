@@ -54,6 +54,11 @@ namespace Garden::Scripting
             component->jumpForce = luaObject["JumpForce"];
             component->jumpTime = luaObject["JumpTime"];
             component->attackTime = luaObject["AttackTime"];
+            int buffX = luaObject["ColliderBuffer"]["X"];
+            int buffY = luaObject["ColliderBuffer"]["Y"];
+            int buffW = luaObject["ColliderBuffer"]["Width"];
+            int buffH = luaObject["ColliderBuffer"]["Height"];
+            component->setBuffer(buffX, buffY, buffW, buffH);
             manager->addComponent(entity, component);
         }
     }
