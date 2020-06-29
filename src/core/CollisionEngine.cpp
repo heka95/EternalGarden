@@ -5,7 +5,7 @@ namespace Garden::Core
 {
     CollisionEngine::CollisionEngine(Garden::Components::World *world)
     {
-        m_layerTileMap = world->tileMapLayers[world->physicLayer].tiles;
+        m_layerTileMap = world->tileMapLayers[world->physicLayer];
         m_tileSize = world->tileWidth; // or heigth, the grid will always a square
         m_columns = world->columns;
         m_row = world->rows;
@@ -38,9 +38,10 @@ namespace Garden::Core
         {
             for (int j = left_tile; j <= right_tile; ++j)
             {
-                auto currentTile = m_layerTileMap.at((i * m_columns) + j);
+                auto currentTile = m_layerTileMap->tiles[((i * m_columns) + j)];
                 if (currentTile.TileId > 0)
                 {
+                    currentTile.isCollided = true;
                     return true;
                 }
             }

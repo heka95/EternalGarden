@@ -12,7 +12,7 @@ namespace Garden::Core
         bool worldCollision(SDL_FRect a);
 
     private:
-        std::vector<Garden::Components::Tile> m_layerTileMap;
+        Garden::Components::Layer *m_layerTileMap;
         int m_tileSize{0};
         int m_columns{0};
         int m_row{0};

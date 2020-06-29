@@ -26,6 +26,7 @@ namespace Garden::Components
         public:
         int TileId{0};
         SDL_RendererFlip flip{SDL_RendererFlip::SDL_FLIP_NONE};
+        bool isCollided{false};
     };
 
     class Layer
@@ -45,7 +46,7 @@ namespace Garden::Components
         int tileWidth = 0;
         int tileHeight = 0;
         std::vector<TileSet> tileSets;
-        std::vector<Layer> tileMapLayers;
+        std::vector<Layer*> tileMapLayers;
         int physicLayer = {-1};
         int emptyTile{0};
         bool debug{false};

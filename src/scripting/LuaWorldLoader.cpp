@@ -81,8 +81,8 @@ namespace Garden::Scripting
         sol::as_table_t<std::vector<unsigned int>> containerData = layerNode["data"];
         auto data = containerData.value();
 
-        auto layer = Garden::Components::Layer{};
-        layer.name = name;
+        auto layer = new Garden::Components::Layer{};
+        layer->name = name;
         for (auto &tile_index : data)
         {
             bool flipped_horizontally = (tile_index & FLIPPED_HORIZONTALLY_FLAG);
@@ -103,7 +103,7 @@ namespace Garden::Scripting
                 auto flip = (SDL_RendererFlip::SDL_FLIP_HORIZONTAL | SDL_RendererFlip::SDL_FLIP_VERTICAL);
                 tile.flip = (SDL_RendererFlip)flip;
             }
-            layer.tiles.push_back(tile);
+            layer->tiles.push_back(tile);
         }
         
         auto properties = layerNode["properties"];
@@ -114,7 +114,7 @@ namespace Garden::Scripting
             {
                 // Current tile index = length - 1
                 world->physicLayer = world->tileMapLayers.size();
-                layer.isCollider = true;
+                layer->isCollider = true;
             }
         }
 

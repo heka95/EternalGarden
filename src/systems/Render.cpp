@@ -60,14 +60,14 @@ namespace Garden::Systems
 
         for (auto &key : m_world->tileMapLayers)
         {
-            if(key.isCollider)
+            if(key->isCollider)
             continue;
             for (int i = minI; i < maxI; i++)
             {
                 for (int j = minJ; j < maxJ; j++)
                 {
                     drawedTiles++;
-                    auto currentTile = key.tiles.at((i * m_world->columns) + j);
+                    auto currentTile = key->tiles.at((i * m_world->columns) + j);
                     if (currentTile.TileId == m_world->emptyTile)
                     {
                         continue;
@@ -104,11 +104,12 @@ namespace Garden::Systems
             {
                 for (int j = minJ; j < maxJ; j++)
                 {
-                    auto currentTile = colliderLayer.tiles.at((i * m_world->columns) + j);
-                    if (currentTile.TileId == m_world->emptyTile)
+                    auto currentTile = colliderLayer->tiles[(i * m_world->columns) + j];
+                    if (currentTile.TileId == m_world->emptyTile)// || !currentTile.isCollided)
                     {
                         continue;
                     }
+                    currentTile.isCollided = false;
                     int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile.TileId);
                     if (tileSetIndex == -1)
                     {
