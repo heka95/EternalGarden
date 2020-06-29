@@ -9,12 +9,12 @@
 
 namespace Garden::Managers
 {
-    GameManager::GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox) : Manager()
+    GameManager::GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox, std::string const &level) : Manager()
     {
         m_camera = new Garden::Components::CameraComponent();
         m_camera->viewBox = viewbox;
         m_textureStore = new Garden::Core::TextureStore(sdlRenderer);
-        load(sdlRenderer, "content/script/levels/00_level_arena.lua");
+        load(sdlRenderer, level);
     }
 
     GameManager::~GameManager()
@@ -27,7 +27,8 @@ namespace Garden::Managers
     void GameManager::load(SDL_Renderer *sdlRenderer, std::string const &level)
     {
         m_lua = new Garden::Core::LuaAccessor(this);
-        m_world = m_lua->loadWorld("content/assets/graphics/maps/test_map.lua");
+        m_definition = m_lua->loadLevel(level);
+        m_world = m_lua->loadWorld(m_definition->mapFile);
         m_camera->sceneWidth = (m_world->columns * m_world->tileWidth);
         m_camera->sceneHeight = (m_world->rows * m_world->tileHeight);
 
@@ -44,7 +45,10 @@ namespace Garden::Managers
         addSystem<Garden::Systems::AnimatorSystem>(5, this);
         initSystems();
 
-        auto player = m_lua->createObject("entity", "player");
-        m_camera->target = player;
+        for (auto &entity : m_definition->entities)
+        {
+            auto player = m_lua->createObject(std::get<0>(entity), std::get<1>(entity));
+            m_camera->target = player;
+        }
     }
 } // namespace Garden::Managers

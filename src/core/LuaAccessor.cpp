@@ -16,6 +16,7 @@
 #include "components/World.hpp"
 #include "scripting/LuaComponentFactory.hpp"
 #include "scripting/LuaWorldLoader.hpp"
+#include "scripting/LuaLevelLoader.hpp"
 
 namespace Garden::Core
 {
@@ -40,6 +41,12 @@ namespace Garden::Core
     {
         m_lua.script_file(fileName);
         m_funcGetObject = m_lua["getobject"];
+    }
+
+    Garden::Core::LevelDefinition *LuaAccessor::loadLevel(const std::string &fileName)
+    {
+        sol::table result = m_lua.script_file(fileName);
+        return Garden::Scripting::LuaLevelLoader::loadLevel(m_manager, result);
     }
 
     Garden::Components::World *LuaAccessor::loadWorld(const std::string &fileName)

@@ -3,6 +3,7 @@
 #include "sol.hpp"
 #include "core/Manager.hpp"
 #include "components/World.hpp"
+#include "core/LevelDefinition.hpp"
 
 namespace Garden::Core
 {
@@ -30,6 +31,7 @@ namespace Garden::Core
         }
         Entity createObject(const std::string &category, const std::string &name);
         Garden::Components::World* loadWorld(const std::string &fileName);
+        Garden::Core::LevelDefinition *loadLevel(const std::string &fileName);
     private:
         void addContentPackage(const std::string &folder);
         void registerComponents();

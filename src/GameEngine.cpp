@@ -57,16 +57,10 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
         }
         SDL_RenderSetLogicalSize(m_renderer, 800, 600);
     }
-    /*
-    auto game = new Game();
-    if (game->initialize())
-    {
-        m_states.push_back(game);
-    }
-*/
+
     // Create ECS
     auto viewbox = SDL_Rect{0, 0, m_graphicWindow->getWindowSize().width, m_graphicWindow->getWindowSize().height};
-    m_manager = new Garden::Managers::GameManager(m_renderer, viewbox);
+    m_manager = new Garden::Managers::GameManager(m_renderer, viewbox, "content/scripts/levels/00_level_arena.lua");
     m_manager->initSystems();
 }
 
