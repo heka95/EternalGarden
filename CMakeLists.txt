@@ -62,8 +62,11 @@ if(NOT LUA_FOUND)
 endif()
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${LUA_INCLUDE_DIR})
-target_link_libraries (${PROJECT_NAME} ${LUA_LIBRARIES}/liblua53.a)
-
+if (LUA_FOUND AND WIN32)
+    target_link_libraries (${PROJECT_NAME} ${LUA_LIBRARIES}/liblua53.a)
+else()
+    target_link_libraries (${PROJECT_NAME} ${LUA_LIBRARIES})
+endif()
 
 # SOL 2 (LUA C++ Binder)
 include_directories(${PROJECT_SOURCE_DIR}/external/sol2)
