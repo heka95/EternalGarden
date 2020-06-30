@@ -5,13 +5,14 @@
 #include "components/World.hpp"
 #include "components/CameraComponent.hpp"
 #include "core/LevelDefinition.hpp"
+#include "GraphicWindow.hpp"
 
 namespace Garden::Managers
 {
     class GameManager : public Garden::Manager
     {
     public:
-        GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox, std::string const &level);
+        GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox, std::string const &level, GraphicWindow *graphicWindow);
         ~GameManager();
         void load(SDL_Renderer *sdlRenderer, std::string const &level);
         bool enable() const { return m_isEnable; }
@@ -23,5 +24,6 @@ namespace Garden::Managers
         Garden::Components::World *m_world;
         Garden::Components::CameraComponent *m_camera;
         Garden::Core::LevelDefinition *m_definition;
+        GraphicWindow *m_graphicWindow;
     };
 } // namespace Garden::Managers

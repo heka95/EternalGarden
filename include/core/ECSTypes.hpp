@@ -13,8 +13,13 @@ namespace Garden
 
     enum class EventStatus
     {
-        KEEP, /**< The handler must be kept */
-        DIE,  /**< The handler can be removed */
+        KEEP_AFTER_CALL,
+        DELETE_AFTER_CALL,
+    };
+
+    enum EventTypes : EventType
+    {
+        ExitGame = 1
     };
 
     enum Types : ComponentType

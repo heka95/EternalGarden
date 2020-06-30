@@ -4,6 +4,7 @@
 #include "SDL_image.h"
 #include "GameEngine.hpp"
 #include "managers/GameManager.hpp"
+#include "Event.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
 {
@@ -32,16 +33,6 @@ void GameEngine::stopRunning()
     std::cout << "Engine stop asked !" << std::endl;
 }
 
-std::unique_ptr<GameEngine> GameEngine::m_instance;
-GameEngine &GameEngine::getInstance()
-{
-    if (m_instance == nullptr)
-    {
-        m_instance.reset(new GameEngine());
-    }
-    return *m_instance.get();
-}
-
 void GameEngine::configureAndInit(Garden::Configuration &configuration)
 {
     if (m_graphicWindow->createContext(configuration))
@@ -56,15 +47,22 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 
     // Create ECS
     auto viewbox = SDL_Rect{0, 0, m_graphicWindow->getWindowSize().width, m_graphicWindow->getWindowSize().height};
-    m_manager = new Garden::Managers::GameManager(m_renderer, viewbox, "content/scripts/levels/00_level_arena.lua");
+    m_manager = new Garden::Managers::GameManager(m_renderer, viewbox, "content/scripts/levels/00_level_arena.lua", m_graphicWindow.get());
     m_manager->initSystems();
+    m_manager->registerHandler<Garden::ExitEvent>(&GameEngine::onExitGame, this);
+}
+
+Garden::EventStatus GameEngine::onExitGame(Garden::Entity source, Garden::EventType type, Garden::Event *event)
+{
+    assert(type == Garden::ExitEvent::type);
+    auto exitAsked = static_cast<Garden::ExitEvent *>(event)->exitAsked;
+    m_isRunning = !exitAsked;
+    return Garden::EventStatus::DELETE_AFTER_CALL;
 }
 
 void GameEngine::release()
 {
     delete m_manager;
-    //m_states.back()->release();
-    //TextureManager::getInstance().release();
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();
     IMG_Quit();

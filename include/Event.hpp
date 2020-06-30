@@ -13,5 +13,18 @@ namespace Garden
         EventType m_type = INVALID_TYPE;
     };
 
-    typedef std::function<EventStatus(Entity, EventType, Event *)> EventHandler;
+    class ExitEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::ExitGame;
+
+        ExitEvent()
+        {
+            m_type = type;
+        }
+        bool exitAsked{false};
+    };
+
+    typedef std::function<EventStatus(Entity, EventType, Event *)>
+        EventHandler;
 } // namespace Garden

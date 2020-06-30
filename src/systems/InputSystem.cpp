@@ -3,6 +3,7 @@
 #include "components/SpriteRenderer.hpp"
 #include "components/SpriteAnimation.hpp"
 #include "GameEngine.hpp"
+#include "Event.hpp"
 
 namespace Garden::Systems
 {
@@ -15,8 +16,12 @@ namespace Garden::Systems
             switch (event.type)
             {
             case SDL_QUIT:
-                GameEngine::getInstance().stopRunning();
-                break;
+            {
+                Garden::ExitEvent event{};
+                event.exitAsked = true;
+                getManager()->triggerEvent(1, &event);
+            }
+            break;
             case SDL_KEYDOWN:
                 m_keyStates = SDL_GetKeyboardState(nullptr);
                 break;
@@ -31,12 +36,12 @@ namespace Garden::Systems
     {
         if (event.window.event == SDL_WINDOWEVENT_RESIZED)
         {
-            auto width = event.window.data1;
-            auto height = event.window.data2;
-            const SDL_Rect window{0, 0, width, height};
-            GameEngine::getInstance().setWindowSize(window);
-            m_camera->viewBox.h = window.h;
-            m_camera->viewBox.w = window.w;
+            Garden::Size size{};
+            size.width = event.window.data1;
+            size.height = event.window.data2;
+            m_graphicWindow->windowSize(size);
+            m_camera->viewBox.h = size.height;
+            m_camera->viewBox.w = size.width;
         }
     }
 

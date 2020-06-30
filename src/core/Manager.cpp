@@ -239,7 +239,7 @@ namespace Garden
 
         for (auto handler : it->second)
         {
-            if (handler(origin, type, event) == EventStatus::KEEP)
+            if (handler(origin, type, event) == EventStatus::KEEP_AFTER_CALL)
             {
                 kept.push_back(handler);
             }

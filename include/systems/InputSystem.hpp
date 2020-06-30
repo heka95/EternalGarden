@@ -6,6 +6,7 @@
 #include "components/PlayerCommand.hpp"
 #include "systems/System.hpp"
 #include "components/CameraComponent.hpp"
+#include "GraphicWindow.hpp"
 
 namespace Garden::Systems
 {
@@ -21,8 +22,9 @@ namespace Garden::Systems
     class InputSystem : public Garden::System
     {
     public:
-        InputSystem(int priority, Manager *manager, Garden::Components::CameraComponent *camera) : System(priority, {Garden::Components::PlayerCommand::type}, manager)
+        InputSystem(int priority, Manager *manager, Garden::Components::CameraComponent *camera, GraphicWindow *graphicWindow) : System(priority, {Garden::Components::PlayerCommand::type}, manager)
         {
+            m_graphicWindow = graphicWindow;
             m_camera = camera;
             m_keyStates = SDL_GetKeyboardState(nullptr);
         }
@@ -37,5 +39,6 @@ namespace Garden::Systems
         bool getKeyDown(SDL_Scancode key);
         int getAxisKey(Axis axis);
         const Uint8 *m_keyStates;
+        GraphicWindow *m_graphicWindow;
     };
 } // namespace Garden::Systems

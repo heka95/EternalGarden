@@ -9,8 +9,9 @@
 
 namespace Garden::Managers
 {
-    GameManager::GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox, std::string const &level) : Manager()
+    GameManager::GameManager(SDL_Renderer *sdlRenderer, SDL_Rect viewbox, std::string const &level, GraphicWindow *graphicWindow) : Manager()
     {
+        m_graphicWindow = graphicWindow;
         m_camera = new Garden::Components::CameraComponent();
         m_camera->viewBox = viewbox;
         m_textureStore = new Garden::Core::TextureStore(sdlRenderer);
@@ -40,7 +41,7 @@ namespace Garden::Managers
         createStoreFor(Garden::Types::RigidBodyType);
 
         addSystem<Garden::Systems::CameraSystem>(1, this, m_camera);
-        addSystem<Garden::Systems::InputSystem>(2, this, m_camera);
+        addSystem<Garden::Systems::InputSystem>(2, this, m_camera, m_graphicWindow);
         addSystem<Garden::Systems::PhysicSystem>(3, this, m_camera, m_world, sdlRenderer);
         addSystem<Garden::Systems::Render>(4, this, sdlRenderer, m_textureStore, m_world, m_camera);
         addSystem<Garden::Systems::AnimatorSystem>(5, this);
