@@ -3,10 +3,6 @@
 #include "SDL_ttf.h"
 #include "SDL_image.h"
 #include "GameEngine.hpp"
-#include "OldTextureManager.hpp"
-#include "Input.hpp"
-#include "Camera.hpp"
-#include "Game.hpp"
 #include "managers/GameManager.hpp"
 
 GameEngine::GameEngine() : m_isRunning(false)
@@ -64,28 +60,6 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     m_manager->initSystems();
 }
 
-void GameEngine::doUpdate()
-{
-    m_states.back()->doUpdate();
-}
-
-void GameEngine::popState()
-{
-}
-
-void GameEngine::pushState(GameState *current)
-{
-}
-
-void GameEngine::changeState(GameState *target)
-{
-}
-
-void GameEngine::doDraw()
-{
-    m_states.back()->doDraw();
-}
-
 void GameEngine::release()
 {
     delete m_manager;
@@ -95,9 +69,4 @@ void GameEngine::release()
     m_graphicWindow.release();
     IMG_Quit();
     SDL_Quit();
-}
-
-void GameEngine::doEvents()
-{
-    Input::getInstance().listen();
 }

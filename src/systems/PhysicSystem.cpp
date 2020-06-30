@@ -31,6 +31,7 @@ namespace Garden::Systems
             positionXSimulation = m_camera->sceneWidth;
 
         rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
+        
         if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
             transform->Position.X = positionXSimulation;

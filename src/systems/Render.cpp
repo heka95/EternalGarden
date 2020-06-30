@@ -1,5 +1,4 @@
 #include "systems/Render.hpp"
-#include "OldTextureManager.hpp"
 #include "core/Manager.hpp"
 #include "components/SpriteAnimation.hpp"
 #include <iostream>

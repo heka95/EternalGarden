@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "GameTypes.hpp"
+#include "Size.hpp"
 
 namespace Garden
 {

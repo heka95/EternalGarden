@@ -34,6 +34,7 @@ namespace Garden::Core
         if (bottom_tile > m_row)
             bottom_tile = m_row;
 
+        bool isCollided{false};
         for (int i = top_tile; i <= bottom_tile; ++i)
         {
             for (int j = left_tile; j <= right_tile; ++j)
@@ -42,11 +43,11 @@ namespace Garden::Core
                 if (currentTile->TileId > 0)
                 {
                     currentTile->isCollided = true;
-                    return true;
+                    isCollided = true;
                 }
             }
         }
-        return false;
+        return isCollided;
     }
 
 } // namespace Garden::Core

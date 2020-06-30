@@ -3,7 +3,8 @@
 #include <string>
 #include <memory>
 #include "SDL.h"
-#include "GameTypes.hpp"
+#include "Size.hpp"
+#include "Configuration.hpp"
 
 class GraphicWindow
 {
