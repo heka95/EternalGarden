@@ -24,8 +24,10 @@
 *.out
 *.app
 
+
 #ignore assets
 /bin/assets/**/*.*
+/bin/*.dll
 
 #ignore spikes
 /spike/**/*.*
