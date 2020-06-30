@@ -10,7 +10,7 @@ namespace Garden::Scripting
     class LuaWorldLoader
     {
         friend Garden::Core::LuaAccessor;
-        static Garden::Components::World *loadWorld(Manager *manager, const sol::table &rootTable);
+        static Garden::Components::World *loadWorld(Manager *manager, const sol::table &rootTable, const std::string &mapFolderName);
         static void loadLayer(Manager *manager, const sol::table &layerNode, Garden::Components::World *world);
     };
 } // namespace Garden::Scripting

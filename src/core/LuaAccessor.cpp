@@ -17,6 +17,7 @@
 #include "scripting/LuaComponentFactory.hpp"
 #include "scripting/LuaWorldLoader.hpp"
 #include "scripting/LuaLevelLoader.hpp"
+#include "Utilities.hpp"
 
 namespace Garden::Core
 {
@@ -52,7 +53,8 @@ namespace Garden::Core
     Garden::Components::World *LuaAccessor::loadWorld(const std::string &fileName)
     {
         sol::table result = m_lua.script_file(fileName);
-        return Garden::Scripting::LuaWorldLoader::loadWorld(m_manager, result);
+        auto mapFolder = Utility::directoryNameof(fileName);
+        return Garden::Scripting::LuaWorldLoader::loadWorld(m_manager, result, mapFolder);
     }
 
     Entity LuaAccessor::createObject(const std::string &category, const std::string &name)

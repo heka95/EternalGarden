@@ -1,10 +1,11 @@
 #include "scripting/LuaWorldLoader.hpp"
 #include <array>
+#include "Utilities.hpp"
 #include "SDL.h"
 
 namespace Garden::Scripting
 {
-    Garden::Components::World *LuaWorldLoader::loadWorld(Manager *manager, const sol::table &rootTable)
+    Garden::Components::World *LuaWorldLoader::loadWorld(Manager *manager, const sol::table &rootTable, const std::string &mapFolderName)
     {
         auto world = new Garden::Components::World();
         world->columns = rootTable["width"];
@@ -33,7 +34,8 @@ namespace Garden::Scripting
                 }
                 if (!tileSet.Name.empty() && !tileSet.Source.empty())
                 {
-                    manager->textureStore()->load(tileSet.Name, tileSet.Source);
+                    auto filePath = mapFolderName + "/" + tileSet.Source;
+                    manager->textureStore()->load(tileSet.Name, filePath);
                 }
                 world->tileSets.push_back(tileSet);
             }
@@ -105,7 +107,7 @@ namespace Garden::Scripting
             }
             layer->tiles.push_back(tile);
         }
-        
+
         auto properties = layerNode["properties"];
         if (properties != sol::nil && properties.valid())
         {
