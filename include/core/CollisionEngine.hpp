@@ -8,8 +8,8 @@ namespace Garden::Core
     {
     public:
         CollisionEngine(Garden::Components::World *world);
-        bool checkCollision(SDL_FRect a, SDL_FRect b);
-        bool worldCollision(SDL_FRect a);
+        bool checkCollision(SDL_Rect a, SDL_Rect b);
+        bool worldCollision(SDL_Rect a);
 
     private:
         Garden::Components::Layer *m_layerTileMap;

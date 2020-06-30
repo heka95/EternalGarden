@@ -76,9 +76,9 @@ namespace Garden::Systems
         if (m_world->debug)
         {
             auto cameraPosition = m_camera->position;
-            SDL_FRect box = {(rigidBody->collider().x - cameraPosition.X), (rigidBody->collider().y - cameraPosition.Y), rigidBody->collider().w, rigidBody->collider().h};
+            SDL_Rect box = {(rigidBody->collider().x - static_cast<int>(cameraPosition.X)), (rigidBody->collider().y - static_cast<int>(cameraPosition.Y)), rigidBody->collider().w, rigidBody->collider().h};
             SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-            SDL_RenderDrawRectF(m_renderer, &box);
+            SDL_RenderDrawRect(m_renderer, &box);
         }
     }
 } // namespace Garden::Systems

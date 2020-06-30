@@ -28,12 +28,12 @@ namespace Garden::Systems
 
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
 
-        SDL_Rect sourceRect = {(int)renderer->drawOffset.X, (int)renderer->drawOffset.Y, renderer->drawWidth, renderer->drawHeight};
-        auto renderWidth = renderer->drawWidth * renderer->scale.X;
-        auto renderHeight = renderer->drawHeight * renderer->scale.Y;
-        SDL_FRect destinationRect = {position.X - cameraPosition.X, position.Y - cameraPosition.Y, renderWidth, renderHeight};
+        SDL_Rect sourceRect = {static_cast<int>(renderer->drawOffset.X), static_cast<int>(renderer->drawOffset.Y), renderer->drawWidth, renderer->drawHeight};
+        auto renderWidth = static_cast<int>(renderer->drawWidth * renderer->scale.X);
+        auto renderHeight = static_cast<int>(renderer->drawHeight * renderer->scale.Y);
+        SDL_Rect destinationRect = {static_cast<int>(position.X - cameraPosition.X), static_cast<int>(position.Y - cameraPosition.Y), renderWidth, renderHeight};
         auto texture = m_store->getTextureFromId(renderer->textureId);
-        SDL_RenderCopyExF(m_renderer, texture, &sourceRect, &destinationRect, renderer->rotation, nullptr, renderer->flip);
+        SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, renderer->rotation, nullptr, renderer->flip);
     }
 
     void Render::drawMap()

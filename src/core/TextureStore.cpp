@@ -25,15 +25,8 @@ namespace Garden::Core
             std::cout << "[TEXTURE] [ERROR] file not exists: " << fileName << " | " << SDL_GetError() << std::endl;
             return false;
         }
-
-        SDL_Surface *surface = IMG_Load(fileName.c_str());
-        if (surface == nullptr)
-        {
-            std::cout << "[TEXTURE] [ERROR] can't load texture: " << fileName << " | " << SDL_GetError() << std::endl;
-            return false;
-        }
-
-        SDL_Texture *texture = SDL_CreateTextureFromSurface(m_renderer, surface);
+        
+        SDL_Texture *texture = IMG_LoadTexture(m_renderer, fileName.c_str());
         if (texture == nullptr)
         {
             std::cout << "[TEXTURE] [ERROR] can't create texture: " << fileName << " | " << SDL_GetError() << std::endl;

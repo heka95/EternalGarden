@@ -35,5 +35,5 @@
 /build
 /cMakeFiles
 CMakeCache.txt
-
-opp1_jungle_tiles
+cMakeFiles
+MakeFile
