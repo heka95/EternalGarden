@@ -35,11 +35,12 @@ namespace Garden::Core
             bottom_tile = m_row;
 
         bool isCollided{false};
-        for (int i = top_tile; i <= bottom_tile; ++i)
+        for (int row = top_tile; row <= bottom_tile; ++row)
         {
-            for (int j = left_tile; j <= right_tile; ++j)
+            int rowIndex = row * m_columns;
+            for (int column = left_tile; column <= right_tile; ++column)
             {
-                auto currentTile = m_layerTileMap->tiles[((i * m_columns) + j)];
+                auto currentTile = m_layerTileMap->tiles[rowIndex + column];
                 if (currentTile->TileId > 0)
                 {
                     currentTile->isCollided = true;

@@ -41,32 +41,33 @@ namespace Garden::Systems
         int renderPrecache = 2;
 
         auto cameraPosition = m_camera->position;
-        auto minI = static_cast<int>(cameraPosition.Y) / m_world->tileHeight;
-        auto maxI = (minI + (static_cast<int>(m_camera->viewBox.h) / m_world->tileHeight)) + renderPrecache;
-        if (maxI > m_world->rows)
-            maxI = m_world->rows;
-        if (minI < 0)
-            minI = 0;
+        auto minDrawingRow = static_cast<int>(cameraPosition.Y) / m_world->tileHeight;
+        auto maxDrawingRow = (minDrawingRow + (static_cast<int>(m_camera->viewBox.h) / m_world->tileHeight)) + renderPrecache;
+        if (maxDrawingRow > m_world->rows)
+            maxDrawingRow = m_world->rows;
+        if (minDrawingRow < 0)
+            minDrawingRow = 0;
 
-        auto minJ = static_cast<int>(cameraPosition.X) / m_world->tileWidth;
-        auto maxJ = (minJ + (static_cast<int>(m_camera->viewBox.w) / m_world->tileWidth)) + renderPrecache;
-        if (maxJ > m_world->columns)
-            maxJ = m_world->columns;
-        if (minJ < 0)
-            minJ = 0;
+        auto minDrawingColumn = static_cast<int>(cameraPosition.X) / m_world->tileWidth;
+        auto maxDrawingColumn = (minDrawingColumn + (static_cast<int>(m_camera->viewBox.w) / m_world->tileWidth)) + renderPrecache;
+        if (maxDrawingColumn > m_world->columns)
+            maxDrawingColumn = m_world->columns;
+        if (minDrawingColumn < 0)
+            minDrawingColumn = 0;
 
         int drawedTiles = 0;
 
-        for (auto &key : m_world->tileMapLayers)
+        for (auto &currentLayer : m_world->tileMapLayers)
         {
-            if(key->isCollider)
-            continue;
-            for (int i = minI; i < maxI; i++)
+            if (currentLayer->isCollider)
+                continue;
+            for (int row = minDrawingRow; row < maxDrawingRow; row++)
             {
-                for (int j = minJ; j < maxJ; j++)
+                int rowIndex = row * m_world->columns;
+                for (int column = minDrawingColumn; column < maxDrawingColumn; column++)
                 {
                     drawedTiles++;
-                    auto currentTile = key->tiles[(i * m_world->columns) + j];
+                    auto currentTile = currentLayer->tiles[rowIndex + column];
                     if (currentTile->TileId == m_world->emptyTile)
                     {
                         continue;
@@ -74,7 +75,6 @@ namespace Garden::Systems
                     int tileSetIndex = m_world->getTileSetIndexFromTileId(currentTile->TileId);
                     if (tileSetIndex == -1)
                     {
-                        //std::cerr << "Can't find tileset of tile Number " << tileId << std::endl;
                         continue;
                     }
                     auto relativeId = currentTile->TileId + m_world->tileSets[tileSetIndex].TileCount - m_world->tileSets[tileSetIndex].LastId;
@@ -89,7 +89,7 @@ namespace Garden::Systems
                     }
 
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
-                    SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
+                    SDL_Rect destinationRect = {static_cast<int>((column * tileSet.TileSize) - cameraPosition.X), static_cast<int>((row * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
                     SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile->flip);
                 }
@@ -99,11 +99,12 @@ namespace Garden::Systems
         if (m_world->debug)
         {
             auto colliderLayer = m_world->tileMapLayers[m_world->physicLayer];
-            for (int i = minI; i < maxI; i++)
+            for (int row = minDrawingRow; row < maxDrawingRow; row++)
             {
-                for (int j = minJ; j < maxJ; j++)
+                int rowIndex = row * m_world->columns;
+                for (int column = minDrawingColumn; column < maxDrawingColumn; column++)
                 {
-                    auto currentTile = colliderLayer->tiles[(i * m_world->columns) + j];
+                    auto currentTile = colliderLayer->tiles[rowIndex + column];
                     if (currentTile->TileId == m_world->emptyTile || !currentTile->isCollided)
                     {
                         continue;
@@ -124,7 +125,7 @@ namespace Garden::Systems
                         tileRow--;
                     }
 
-                    SDL_Rect destinationRect = {static_cast<int>((j * tileSet.TileSize) - cameraPosition.X), static_cast<int>((i * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
+                    SDL_Rect destinationRect = {static_cast<int>((column * tileSet.TileSize) - cameraPosition.X), static_cast<int>((row * tileSet.TileSize) - cameraPosition.Y), tileSet.TileSize, tileSet.TileSize};
                     SDL_SetRenderDrawColor(m_renderer, 0, 255, 0, 255);
                     SDL_RenderDrawRect(m_renderer, &destinationRect);
                 }
