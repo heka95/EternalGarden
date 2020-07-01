@@ -7,6 +7,10 @@ return {
         {
             Type = "entity",
             Name = "player"
+        },
+        {
+            Type = "entity",
+            Name = "skull"
         }
     }
 }

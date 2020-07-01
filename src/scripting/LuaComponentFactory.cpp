@@ -107,12 +107,15 @@ namespace Garden::Scripting
 
     sol::table LuaComponentFactory::hasElement(const sol::table &object, const std::string &property)
     {
-        sol::table element = object[property];
-        if (element != sol::nil && element.valid())
+        if (object[property].valid())
         {
-            return element;
+            sol::table element = object[property];
+            if (element != sol::nil && element.valid())
+            {
+                return element;
+            }
         }
-        return NULL;
+        return sol::lua_nil;
     }
 
     Entity LuaComponentFactory::buildEntity(Manager *manager, const sol::table &parentTable)

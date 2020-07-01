@@ -4,6 +4,7 @@ print("[LUA]    Lua start !")
 print("[LUA]    Load Libraries")
 require("utils/data-loader")
 require("templates/player")
+require("templates/skull")
 
 print("[LUA]    Generate C++ Accessor")
 function getobject(category, name)

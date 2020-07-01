@@ -3,6 +3,8 @@
 #include "components/Transformation.hpp"
 #include "components/SpriteAnimation.hpp"
 #include "components/SpriteRenderer.hpp"
+#include <algorithm>
+#include <iostream>
 
 namespace Garden::Systems
 {
@@ -24,11 +26,8 @@ namespace Garden::Systems
 
         // --- process X
         positionXSimulation += rigidBody->position.X;
-        // Check and fix if entity is into the world
-        if (positionXSimulation < 0)
-            positionXSimulation = 0;
-        if (positionXSimulation > m_camera->sceneWidth)
-            positionXSimulation = m_camera->sceneWidth;
+        positionXSimulation = std::max(positionXSimulation, 0.0f);
+        positionXSimulation = std::min(positionXSimulation, (m_camera->sceneWidth - renderer->drawWidth * 1.0f));
 
         rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
         
@@ -39,12 +38,8 @@ namespace Garden::Systems
 
         // --- process Y
         positionYSimulation += rigidBody->position.Y;
-        // Check and fix if entity is into the world
-        if (positionYSimulation < 0)
-            positionYSimulation = 0;
-            
-        if (positionYSimulation > m_camera->sceneHeight - renderer->drawHeight)
-            positionYSimulation = m_camera->sceneHeight - renderer->drawHeight;
+        positionYSimulation = std::max(positionYSimulation, 0.0f);
+        positionYSimulation = std::min(positionYSimulation, (m_camera->sceneHeight - renderer->drawHeight * 1.0f));
 
         rigidBody->collider(transform->Position.X, positionYSimulation, renderer->drawWidth, renderer->drawHeight);
         if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))

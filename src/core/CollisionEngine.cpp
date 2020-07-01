@@ -1,5 +1,6 @@
 #include "core/CollisionEngine.hpp"
 #include <iostream>
+#include <algorithm>
 
 namespace Garden::Core
 {
@@ -25,16 +26,14 @@ namespace Garden::Core
         int top_tile = a.y / m_tileSize;
         int bottom_tile = (a.y + a.h) / m_tileSize;
 
-        if (left_tile < 0)
-            left_tile = 0;
-        if (right_tile > m_columns)
-            right_tile = m_columns;
-        if (top_tile < 0)
-            top_tile = 0;
-        if (bottom_tile > m_row)
-            bottom_tile = m_row;
+        left_tile = std::max(left_tile, 0);
+        top_tile = std::max(top_tile, 0);
 
+        right_tile = std::min(right_tile, m_columns);
+        bottom_tile = std::min(bottom_tile, m_row);
+        
         bool isCollided{false};
+
         for (int row = top_tile; row <= bottom_tile; ++row)
         {
             int rowIndex = row * m_columns;

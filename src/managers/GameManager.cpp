@@ -49,8 +49,11 @@ namespace Garden::Managers
 
         for (auto &entity : m_definition->entities)
         {
-            auto player = m_lua->createObject(std::get<0>(entity), std::get<1>(entity));
-            m_camera->target = player;
+            auto entityId = m_lua->createObject(std::get<0>(entity), std::get<1>(entity));
+            if (std::get<0>(entity).compare("entity") == 0 && std::get<1>(entity).compare("player") == 0)
+            {
+                m_camera->target = entityId;
+            }
         }
     }
 } // namespace Garden::Managers
