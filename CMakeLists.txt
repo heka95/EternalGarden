@@ -77,6 +77,3 @@ endif()
 
 # SOL 2 (LUA C++ Binder)
 include_directories(${PROJECT_SOURCE_DIR}/external/sol2)
-
-# Json Library
-include_directories(${PROJECT_SOURCE_DIR}/external/json)
