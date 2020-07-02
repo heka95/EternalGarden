@@ -59,8 +59,6 @@ namespace Garden::Systems
 
         for (auto &currentLayer : m_world->tileMapLayers)
         {
-            if (currentLayer->isCollider)
-                continue;
             for (int row = minDrawingRow; row < maxDrawingRow; row++)
             {
                 int rowIndex = row * m_world->columns;

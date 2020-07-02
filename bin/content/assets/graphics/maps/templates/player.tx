@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <tileset firstgid="1" source="game_objects.tsx"/>
+ <object name="player" type="entity" gid="3" width="64" height="54">
+  <properties>
+   <property name="cameraTarget" type="bool" value="true"/>
+  </properties>
+ </object>
+</template>

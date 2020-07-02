@@ -4,7 +4,7 @@ data:extend({
         name = "player",
         SpawnPosition = {X = 10, Y = 20},
         Sprite = {
-            Width = 768,
+            Width = 64,
             Height = 58,
             XScale = 1,
             YScale = 1,

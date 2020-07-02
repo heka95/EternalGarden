@@ -29,7 +29,7 @@ namespace Garden::Core
             static_assert(!std::is_base_of<BaseComponent, Class>::value, "Please use RegisterComponent when you register a component");
             m_lua.new_usertype<Class>(name, sol::constructors<Class()>(), std::forward<Args>(args)...);
         }
-        Entity createObject(const std::string &category, const std::string &name);
+        Entity createObject(const std::string &category, const std::string &name, int spawnX, int spawnY);
         Garden::Components::World* loadWorld(const std::string &fileName);
         Garden::Core::LevelDefinition *loadLevel(const std::string &fileName);
     private:

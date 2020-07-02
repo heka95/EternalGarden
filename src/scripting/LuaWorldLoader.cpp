@@ -65,6 +65,32 @@ namespace Garden::Scripting
                         }
                     }
                 }
+                if (type == "objectgroup")
+                {
+                    sol::table objects = layerNode["objects"];
+                    if (objects != sol::nil && objects.valid())
+                    {
+                        for (const auto &entityPair : objects)
+                        {
+                            sol::table entityTable = entityPair.second;
+                            Garden::Core::WorldObjectDefinition definition{};
+                            definition.type = entityTable["type"];
+                            definition.name = entityTable["name"];
+                            definition.spawnX = entityTable["x"];
+                            definition.spawnY = entityTable["y"];
+                            auto properties = entityTable["properties"];
+                            if (properties != sol::nil && properties.valid())
+                            {
+                                auto cameraTarget = properties["cameraTarget"];
+                                if (cameraTarget != sol::nil && cameraTarget.valid())
+                                {
+                                    definition.isCameraTarget = properties["cameraTarget"];
+                                }
+                            }
+                            world->entities.push_back(definition);
+                        }
+                    }
+                }
             }
         }
 

@@ -4,7 +4,7 @@ data:extend({
         name = "skull",
         SpawnPosition = {X = 100, Y = 20},
         Sprite = {
-            Width = 768,
+            Width = 64,
             Height = 54,
             XScale = 1,
             YScale = 1,

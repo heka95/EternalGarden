@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "core/ECSTypes.hpp"
 #include "BaseComponent.hpp"
+#include "core/WorldObjectDefinition.hpp"
 
 namespace Garden::Components
 {
@@ -47,6 +48,7 @@ namespace Garden::Components
         int tileHeight = 0;
         std::vector<TileSet> tileSets;
         std::vector<Layer*> tileMapLayers;
+        std::vector<Garden::Core::WorldObjectDefinition> entities;
         int physicLayer = {-1};
         int emptyTile{0};
         bool debug{false};

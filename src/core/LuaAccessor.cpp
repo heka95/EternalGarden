@@ -4,6 +4,7 @@
 #include <utility>
 #include <string>
 #include <iostream>
+#include <algorithm>
 #include "core/ECSTypes.hpp"
 #include "components/BaseComponent.hpp"
 #include "Vector2D.hpp"
@@ -57,7 +58,7 @@ namespace Garden::Core
         return Garden::Scripting::LuaWorldLoader::loadWorld(m_manager, result, mapFolder);
     }
 
-    Entity LuaAccessor::createObject(const std::string &category, const std::string &name)
+    Entity LuaAccessor::createObject(const std::string &category, const std::string &name, int spawnX, int spawnY)
     {
         sol::table object = m_funcGetObject(category, name);
         if (object == sol::nil || !object.valid())
@@ -65,6 +66,9 @@ namespace Garden::Core
             std::cerr << "Object [" << category << "|" << name << "] not exists or registered on lua context !";
             return INVALID_ENTITY;
         }
+        object["SpawnPosition"]["X"] = spawnX;
+        int height = object["Sprite"]["Height"];
+        object["SpawnPosition"]["Y"] = spawnY - height;
         return Garden::Scripting::LuaComponentFactory::buildEntity(m_manager, object);
     }
 

@@ -6,6 +6,7 @@
 #include "systems/PhysicSystem.hpp"
 #include "systems/CameraSystem.hpp"
 #include "GraphicWindow.hpp"
+#include <algorithm>
 
 namespace Garden::Managers
 {
@@ -28,7 +29,7 @@ namespace Garden::Managers
     void GameManager::load(SDL_Renderer *sdlRenderer, std::string const &level)
     {
         m_lua = new Garden::Core::LuaAccessor(this);
-        m_definition = m_lua->loadLevel(level);
+        m_definition = m_lua->loadLevel(level); // obsolete ?
         m_world = m_lua->loadWorld(m_definition->mapFile);
         m_world->debug = m_definition->debugMode;
         m_camera->sceneWidth = (m_world->columns * m_world->tileWidth);
@@ -47,10 +48,10 @@ namespace Garden::Managers
         addSystem<Garden::Systems::AnimatorSystem>(5, this);
         initSystems();
 
-        for (auto &entity : m_definition->entities)
+        for (auto entity : m_world->entities)
         {
-            auto entityId = m_lua->createObject(std::get<0>(entity), std::get<1>(entity));
-            if (std::get<0>(entity).compare("entity") == 0 && std::get<1>(entity).compare("player") == 0)
+            auto entityId = m_lua->createObject(entity.type, entity.name, entity.spawnX, entity.spawnY);
+            if (entity.isCameraTarget)
             {
                 m_camera->target = entityId;
             }

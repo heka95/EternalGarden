@@ -11,6 +11,7 @@ namespace Garden::Scripting
         levelDefinition->debugMode = rootTable["World"]["Debug"];
         levelDefinition->mapFile = rootTable["World"]["File"];
 
+/* todo
         sol::table entitiesDefinitions = rootTable["Entities"];
         if (entitiesDefinitions != sol::nil && entitiesDefinitions.valid())
         {
@@ -22,6 +23,7 @@ namespace Garden::Scripting
                 levelDefinition->entities.push_back(std::make_tuple(type, name));
             }
         }
+        */
         return levelDefinition;
     }
 } // namespace Garden::Scripting

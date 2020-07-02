@@ -27,7 +27,7 @@ namespace Garden::Systems
         // --- process X
         positionXSimulation += rigidBody->position.X;
         positionXSimulation = std::max(positionXSimulation, 0.0f);
-        positionXSimulation = std::min(positionXSimulation, (m_camera->sceneWidth - renderer->drawWidth * 1.0f));
+        positionXSimulation = std::min(positionXSimulation, (m_camera->sceneWidth - renderer->drawWidth + 0.0f));
 
         rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
         
@@ -39,7 +39,7 @@ namespace Garden::Systems
         // --- process Y
         positionYSimulation += rigidBody->position.Y;
         positionYSimulation = std::max(positionYSimulation, 0.0f);
-        positionYSimulation = std::min(positionYSimulation, (m_camera->sceneHeight - renderer->drawHeight * 1.0f));
+        positionYSimulation = std::min(positionYSimulation, (m_camera->sceneHeight - renderer->drawHeight + 0.0f));
 
         rigidBody->collider(transform->Position.X, positionYSimulation, renderer->drawWidth, renderer->drawHeight);
         if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
