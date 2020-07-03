@@ -39,10 +39,10 @@ data:extend({
         },
         RigidBody =
         {
-            Mass = 65.0,
+            Mass = 6.5,
             Gravity = 9.807, -- Earth real gravity
-            RunSpeed = 450.0,
-            JumpForce = 1350.0,
+            RunSpeed = 45.0,
+            JumpForce = 135.0,
             JumpTime = 20.0,
             AttackTime = 20.0,
             ColliderBuffer =
