@@ -3,6 +3,7 @@
 #include <vector>
 #include "SDL.h"
 #include "SDL_image.h"
+#include "SDL_ttf.h"
 
 GraphicWindow::GraphicWindow() : m_sdlWindowPtr(nullptr),
                                  m_defaultDisplayIndex(0)
@@ -43,6 +44,12 @@ bool GraphicWindow::createContext(Garden::Configuration &configuration)
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         std::cout << "Could not initialize SDL: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    if (TTF_Init() < 0)
+    {
+        std::cout << "Could not initialize SDL TTF: " << SDL_GetError() << std::endl;
         return false;
     }
 

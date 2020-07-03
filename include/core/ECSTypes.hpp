@@ -10,6 +10,7 @@ namespace Garden
 
 #define INVALID_TYPE 0
 #define INVALID_ENTITY Entity{-1}
+#define ENGINE_UPDATE_SPEED 60.0f
 
     enum class EventStatus
     {

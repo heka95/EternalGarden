@@ -17,8 +17,8 @@ namespace Garden::Systems
         // update
         rigidBody->acceleration.X = (rigidBody->force.X + rigidBody->friction.X) / rigidBody->mass;
         rigidBody->acceleration.Y = rigidBody->gravity + rigidBody->force.Y / rigidBody->mass;
-        rigidBody->velocity = rigidBody->acceleration * deltaTime;
-        rigidBody->position = rigidBody->velocity * deltaTime;
+        rigidBody->velocity = rigidBody->acceleration * (deltaTime * ENGINE_UPDATE_SPEED);
+        rigidBody->position = rigidBody->velocity * (deltaTime * ENGINE_UPDATE_SPEED);
 
         // backup old position
         auto positionXSimulation = transform->Position.X;

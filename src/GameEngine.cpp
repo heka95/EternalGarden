@@ -37,7 +37,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
 {
     if (m_graphicWindow->createContext(configuration))
     {
-        m_renderer = SDL_CreateRenderer(m_graphicWindow->getWindow(), -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+        m_renderer = SDL_CreateRenderer(m_graphicWindow->getWindow(), -1, SDL_RENDERER_ACCELERATED);
         if (m_renderer != nullptr)
         {
             m_isRunning = true;
@@ -66,5 +66,6 @@ void GameEngine::release()
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();
     IMG_Quit();
+    TTF_Quit();
     SDL_Quit();
 }

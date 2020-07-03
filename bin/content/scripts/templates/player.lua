@@ -81,9 +81,9 @@ data:extend({
         {
             Mass = 6.5,
             Gravity = 9.807, -- Earth real gravity
-            RunSpeed = 45.0,
+            RunSpeed = 47.0,
             JumpForce = 135.0,
-            JumpTime = 20.0,
+            JumpTime = 0.4,
             AttackTime = 20.0,
             ColliderBuffer =
             {

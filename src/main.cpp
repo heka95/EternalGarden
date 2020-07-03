@@ -4,7 +4,7 @@
 #include <memory>
 #include "ConfigurationLoader.hpp"
 #include "GameEngine.hpp"
-#include "Timer.hpp"
+#include "core/GameTimer.hpp"
 
 using namespace std;
 
@@ -18,11 +18,17 @@ int main(int argc, char *argv[])
 
         gameEngine->configureAndInit(configuration);
         auto manager = gameEngine->getManager();
+        Garden::Core::GameTimer timer;
 
         while (gameEngine->isRunning())
         {
-            manager->updateSystems(Timer::getInstance().getDeltaTime());
-            Timer::getInstance().tick();
+            timer.update();
+            if (timer.deltaTimeSeconds() >= 1.0f / ENGINE_UPDATE_SPEED)
+            {
+                manager->updateSystems(timer.deltaTimeSeconds());
+                timer.reset();
+            }
+            SDL_Delay(1);
         }
 
         gameEngine->release();
