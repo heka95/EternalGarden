@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="19">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="22">
  <editorsettings>
   <export target="arena.lua" format="lua"/>
  </editorsettings>
@@ -347,8 +347,8 @@
 </data>
  </layer>
  <objectgroup color="#ff0000" id="5" name="entities">
-  <object id="1" template="templates/player.tx" x="160" y="2944"/>
+  <object id="1" template="templates/player.tx" x="64" y="3168"/>
   <object id="13" template="templates/skull.tx" x="320" y="3104"/>
-  <object id="14" template="templates/skull.tx" x="1042" y="2842"/>
+  <object id="14" template="templates/skull.tx" x="1056" y="2848"/>
  </objectgroup>
 </map>

@@ -42,7 +42,7 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
         {
             m_isRunning = true;
         }
-        SDL_RenderSetLogicalSize(m_renderer, 800, 600);
+        SDL_RenderSetLogicalSize(m_renderer, 1280, 720);
     }
 
     // Create ECS
