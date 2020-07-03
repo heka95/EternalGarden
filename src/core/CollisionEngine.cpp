@@ -29,8 +29,8 @@ namespace Garden::Core
         left_tile = std::max(left_tile, 0);
         top_tile = std::max(top_tile, 0);
 
-        right_tile = std::min(right_tile, m_columns);
-        bottom_tile = std::min(bottom_tile, m_row);
+        right_tile = std::min(right_tile, m_columns - 1);
+        bottom_tile = std::min(bottom_tile, m_row - 1);
         
         bool isCollided{false};
 

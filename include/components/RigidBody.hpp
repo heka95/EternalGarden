@@ -41,9 +41,9 @@ namespace Garden::Components
         {
             m_colliderBox = {
                 x + m_colliderBoxBuffer.x,
-                y - m_colliderBoxBuffer.y,
-                m_colliderBoxBuffer.h,
-                m_colliderBoxBuffer.w};
+                y + m_colliderBoxBuffer.y,
+                m_colliderBoxBuffer.w,
+                m_colliderBoxBuffer.h};
         }
         void setBuffer(int x, int y, int w, int h) { m_colliderBoxBuffer = {x, y, w, h}; }
 

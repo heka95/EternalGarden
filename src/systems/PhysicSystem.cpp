@@ -14,7 +14,9 @@ namespace Garden::Systems
         auto transform = getManager()->getComponent<Garden::Components::Transform>(e);
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);
 
-        // update
+        // update Collider
+        rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
+
         rigidBody->acceleration.X = (rigidBody->force.X + rigidBody->friction.X) / rigidBody->mass;
         rigidBody->acceleration.Y = rigidBody->gravity + rigidBody->force.Y / rigidBody->mass;
         rigidBody->velocity = rigidBody->acceleration * (deltaTime * ENGINE_UPDATE_SPEED);
