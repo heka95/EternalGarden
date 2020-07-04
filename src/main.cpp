@@ -19,16 +19,11 @@ int main(int argc, char *argv[])
         gameEngine->configureAndInit(configuration);
         auto manager = gameEngine->getManager();
         Garden::Core::GameTimer timer;
-
+        
         while (gameEngine->isRunning())
         {
+            manager->updateSystems(timer.deltaTimeSeconds());
             timer.update();
-            if (timer.deltaTimeSeconds() >= 1.0f / ENGINE_UPDATE_SPEED)
-            {
-                manager->updateSystems(timer.deltaTimeSeconds());
-                timer.reset();
-            }
-            SDL_Delay(1);
         }
 
         gameEngine->release();

@@ -12,5 +12,6 @@ namespace Garden::Scripting
         friend Garden::Core::LuaAccessor;
         static Garden::Components::World *loadWorld(Manager *manager, const sol::table &rootTable, const std::string &mapFolderName);
         static void loadLayer(Manager *manager, const sol::table &layerNode, Garden::Components::World *world);
+        static Garden::Components::TileSet extractTileSet(Manager *manager, const sol::table &tileSetNode, const std::string &mapFolderName);
     };
 } // namespace Garden::Scripting

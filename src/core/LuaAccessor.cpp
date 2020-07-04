@@ -60,16 +60,21 @@ namespace Garden::Core
 
     Entity LuaAccessor::createObject(const std::string &category, const std::string &name, int spawnX, int spawnY)
     {
-        sol::table object = m_funcGetObject(category, name);
-        if (object == sol::nil || !object.valid())
+        auto result = m_funcGetObject(category, name);
+        if (result.get_type() != sol::type::lua_nil)
         {
-            std::cerr << "Object [" << category << "|" << name << "] not exists or registered on lua context !";
-            return INVALID_ENTITY;
+            sol::table object = result;
+            if (object == sol::nil || !object.valid())
+            {
+                std::cerr << "Object [" << category << "|" << name << "] not exists or registered on lua context !";
+                return INVALID_ENTITY;
+            }
+            object["SpawnPosition"]["X"] = spawnX;
+            int height = object["Sprite"]["Height"];
+            object["SpawnPosition"]["Y"] = spawnY - height;
+            return Garden::Scripting::LuaComponentFactory::buildEntity(m_manager, object);
         }
-        object["SpawnPosition"]["X"] = spawnX;
-        int height = object["Sprite"]["Height"];
-        object["SpawnPosition"]["Y"] = spawnY - height;
-        return Garden::Scripting::LuaComponentFactory::buildEntity(m_manager, object);
+        return INVALID_ENTITY;
     }
 
     void LuaAccessor::addContentPackage(const std::string &folder)

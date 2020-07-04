@@ -24,8 +24,6 @@ namespace Garden::Systems
 
             camera->viewBox.y = std::max(camera->viewBox.y, 0);          
             camera->viewBox.y = std::min(camera->viewBox.y, (camera->sceneHeight - camera->viewBox.h));
-
-            camera->position = Garden::Vector2D(camera->viewBox.x, camera->viewBox.y);
         }
     }
 } // namespace Garden::Systems

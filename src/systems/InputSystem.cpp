@@ -78,6 +78,7 @@ namespace Garden::Systems
         rigidBody->force = Vector2D::zero();
         rigidBody->isCrouching = false;
         rigidBody->isRunning = false;
+        rigidBody->isAttacking = false;
 
         if (cCommand->isKeyMoveRight && !rigidBody->isAttacking)
         {

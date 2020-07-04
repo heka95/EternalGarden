@@ -20,24 +20,38 @@ namespace Garden::Scripting
             for (const auto &key_value_pair : tilesets)
             {
                 sol::table tileSetNode = key_value_pair.second;
-                auto tileSet = Garden::Components::TileSet{};
-                tileSet.Columns = tileSetNode["columns"];
-                tileSet.FirstId = tileSetNode["firstgid"];
-                tileSet.Name = tileSetNode["name"];
-                tileSet.Source = tileSetNode["image"];
-                tileSet.TileCount = tileSetNode["tilecount"];
-                tileSet.TileSize = tileSetNode["tilewidth"];
-                tileSet.LastId = (tileSet.FirstId + tileSet.TileCount) - 1;
-                if (tileSet.Columns > 0)
+
+                sol::table tiles = tileSetNode["tiles"];
+                if (tiles != sol::nil && tiles.valid() && !tiles.empty())
                 {
-                    tileSet.Rows = tileSet.TileCount / tileSet.Columns;
+                    for (const auto &tilePair : tiles)
+                    {
+                        sol::table singleTile = tilePair.second;
+                        auto tileSet = Garden::Components::TileSet{};
+                        tileSet.Columns = 1;
+                        int firstGuid = tileSetNode["firstgid"];
+                        int imageGuid = singleTile["id"];
+                        tileSet.FirstId = firstGuid + imageGuid;
+                        std::string name = tileSetNode["name"];
+                        std::string nameGid = singleTile["id"];
+                        tileSet.Name = name + "#" + nameGid;
+                        tileSet.Source = singleTile["image"];
+                        tileSet.TileCount = 1;
+                        tileSet.TileSize = 1;
+                        tileSet.LastId = tileSet.FirstId;
+                        if (!tileSet.Name.empty() && !tileSet.Source.empty())
+                        {
+                            auto filePath = mapFolderName + "/" + tileSet.Source;
+                            manager->textureStore()->load(tileSet.Name, filePath);
+                        }
+                        world->tileSets.push_back(tileSet);
+                    }
                 }
-                if (!tileSet.Name.empty() && !tileSet.Source.empty())
+                else
                 {
-                    auto filePath = mapFolderName + "/" + tileSet.Source;
-                    manager->textureStore()->load(tileSet.Name, filePath);
+                    auto tileSet = extractTileSet(manager, tileSetNode, mapFolderName);
+                    world->tileSets.push_back(tileSet);
                 }
-                world->tileSets.push_back(tileSet);
             }
         }
 
@@ -76,15 +90,27 @@ namespace Garden::Scripting
                             Garden::Core::WorldObjectDefinition definition{};
                             definition.type = entityTable["type"];
                             definition.name = entityTable["name"];
-                            definition.spawnX = entityTable["x"];
-                            definition.spawnY = entityTable["y"];
-                            auto properties = entityTable["properties"];
-                            if (properties != sol::nil && properties.valid())
+                            definition.spawnX = entityTable["x"].get_or(0);
+                            definition.spawnY = entityTable["y"].get_or(0);
+                            definition.width = entityTable["width"].get_or(0);
+                            definition.height = entityTable["height"].get_or(0);
+                            definition.rotation = entityTable["rotation"].get_or(0);
+                            if (definition.type == "background")
                             {
-                                auto cameraTarget = properties["cameraTarget"];
-                                if (cameraTarget != sol::nil && cameraTarget.valid())
+                                auto tileSetIndex = world->getTileSetIndexFromTileId(entityTable["gid"].get_or(0));
+                                auto tileSet = world->tileSets.at(tileSetIndex);
+                                definition.name = tileSet.Name;
+                            }
+                            else
+                            {
+                                auto properties = entityTable["properties"];
+                                if (properties != sol::nil && properties.valid())
                                 {
-                                    definition.isCameraTarget = properties["cameraTarget"];
+                                    auto cameraTarget = properties["cameraTarget"];
+                                    if (cameraTarget != sol::nil && cameraTarget.valid())
+                                    {
+                                        definition.isCameraTarget = properties["cameraTarget"];
+                                    }
                                 }
                             }
                             world->entities.push_back(definition);
@@ -95,6 +121,28 @@ namespace Garden::Scripting
         }
 
         return world;
+    }
+
+    Garden::Components::TileSet LuaWorldLoader::extractTileSet(Manager *manager, const sol::table &tileSetNode, const std::string &mapFolderName)
+    {
+        auto tileSet = Garden::Components::TileSet{};
+        tileSet.Columns = tileSetNode["columns"];
+        tileSet.FirstId = tileSetNode["firstgid"];
+        tileSet.Name = tileSetNode["name"];
+        tileSet.Source = tileSetNode["image"];
+        tileSet.TileCount = tileSetNode["tilecount"];
+        tileSet.TileSize = tileSetNode["tilewidth"];
+        tileSet.LastId = (tileSet.FirstId + tileSet.TileCount) - 1;
+        if (tileSet.Columns > 0)
+        {
+            tileSet.Rows = tileSet.TileCount / tileSet.Columns;
+        }
+        if (!tileSet.Name.empty() && !tileSet.Source.empty())
+        {
+            auto filePath = mapFolderName + "/" + tileSet.Source;
+            manager->textureStore()->load(tileSet.Name, filePath);
+        }
+        return tileSet;
     }
 
     void LuaWorldLoader::loadLayer(Manager *manager, const sol::table &layerNode, Garden::Components::World *world)

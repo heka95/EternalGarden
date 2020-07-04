@@ -47,6 +47,7 @@ namespace Garden::Components
         int tileWidth = 0;
         int tileHeight = 0;
         std::vector<TileSet> tileSets;
+        std::vector<Entity> backgrounds;
         std::vector<Layer*> tileMapLayers;
         std::vector<Garden::Core::WorldObjectDefinition> entities;
         int physicLayer = {-1};

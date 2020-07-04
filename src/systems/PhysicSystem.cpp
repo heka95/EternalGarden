@@ -19,8 +19,8 @@ namespace Garden::Systems
 
         rigidBody->acceleration.X = (rigidBody->force.X + rigidBody->friction.X) / rigidBody->mass;
         rigidBody->acceleration.Y = rigidBody->gravity + rigidBody->force.Y / rigidBody->mass;
-        rigidBody->velocity = rigidBody->acceleration * (deltaTime * ENGINE_UPDATE_SPEED);
-        rigidBody->position = rigidBody->velocity * (deltaTime * ENGINE_UPDATE_SPEED);
+        rigidBody->velocity = rigidBody->acceleration * deltaTime;
+        rigidBody->position = rigidBody->velocity * deltaTime;
 
         // backup old position
         auto positionXSimulation = transform->Position.X;
@@ -32,7 +32,7 @@ namespace Garden::Systems
         positionXSimulation = std::min(positionXSimulation, (m_camera->sceneWidth - renderer->drawWidth + 0.0f));
 
         rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
-        
+
         if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
         {
             transform->Position.X = positionXSimulation;
@@ -51,6 +51,7 @@ namespace Garden::Systems
         }
         else
         {
+            auto bufferY = rigidBody->buffer().y;
             rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
             rigidBody->isGrounded = true;
         }
@@ -69,13 +70,5 @@ namespace Garden::Systems
             animation->currentAnimation = Garden::Components::AnimationType::FALL;
         if (rigidBody->isAttacking)
             animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
-
-        if (m_world->debug)
-        {
-            auto cameraPosition = m_camera->position;
-            SDL_Rect box = {(rigidBody->collider().x - static_cast<int>(cameraPosition.X)), (rigidBody->collider().y - static_cast<int>(cameraPosition.Y)), rigidBody->collider().w, rigidBody->collider().h};
-            SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
-            SDL_RenderDrawRect(m_renderer, &box);
-        }
     }
 } // namespace Garden::Systems

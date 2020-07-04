@@ -50,10 +50,34 @@ namespace Garden::Managers
 
         for (auto entity : m_world->entities)
         {
-            auto entityId = m_lua->createObject(entity.type, entity.name, entity.spawnX, entity.spawnY);
-            if (entity.isCameraTarget)
+            if (entity.type == "entity")
             {
-                m_camera->target = entityId;
+                auto entityId = m_lua->createObject(entity.type, entity.name, entity.spawnX, entity.spawnY);
+                if (entity.isCameraTarget)
+                {
+                    m_camera->target = entityId;
+                }
+                continue;
+            }
+            if (entity.type == "background")
+            {
+                auto newEntity = this->createEntity();
+                auto transformation = new Garden::Components::Transform();
+                transformation->Position = Garden::Vector2D{entity.spawnX, entity.spawnY};
+                this->addComponent(newEntity, transformation);
+                auto renderer = new Garden::Components::SpriteRenderer();
+                renderer->width = entity.width;
+                renderer->height = entity.height;
+                renderer->drawHeight = renderer->height;
+                renderer->drawWidth = renderer->width;
+                renderer->scale = Garden::Vector2D{1.0f, 1.0f};
+                renderer->textureId = entity.name;
+                renderer->flip = SDL_RendererFlip::SDL_FLIP_NONE;
+                renderer->origin.X = renderer->width / 2;
+                renderer->origin.Y = renderer->height / 2;
+                this->addComponent(newEntity, renderer);
+                //this->subscribeEntity(newEntity);
+                m_world->backgrounds.push_back(newEntity);
             }
         }
     }

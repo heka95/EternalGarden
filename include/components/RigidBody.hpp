@@ -46,6 +46,7 @@ namespace Garden::Components
                 m_colliderBoxBuffer.h};
         }
         void setBuffer(int x, int y, int w, int h) { m_colliderBoxBuffer = {x, y, w, h}; }
+        SDL_Rect buffer() const { return m_colliderBoxBuffer; }
 
     private:
         SDL_Rect m_colliderBox{0, 0, 0, 0};

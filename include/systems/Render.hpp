@@ -22,15 +22,18 @@ namespace Garden::Systems
             m_world = world;
             m_camera = camera;
         }
+        virtual void update(float deltaTime) override;
         virtual void preUpdate(float delta) override;
         virtual void postUpdate(float delta) override;
         virtual void updateEntity(float deltaTime, Entity e) override;
 
     private:
         void drawMap();
+        void drawBackground();
         SDL_Renderer *m_renderer;
         Garden::Core::TextureStore *m_store;
         Garden::Components::World *m_world;
         Garden::Components::CameraComponent *m_camera;
+        int yPosition{0};
     };
 } // namespace Garden::Systems
