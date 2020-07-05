@@ -3,12 +3,28 @@
 #include "components/SpriteRenderer.hpp"
 #include "components/SpriteAnimation.hpp"
 #include "GameEngine.hpp"
-#include "Event.hpp"
 
 namespace Garden::Systems
 {
     void InputSystem::preUpdate(float deltaTime)
     {
+        if(!m_textConfigured)
+        {
+            m_textConfigured = true;
+            Garden::LoadFontEvent fontEvent{};
+            fontEvent.id = "pauseFont";
+            fontEvent.size = 48;
+            fontEvent.sourceFile = "content/assets/font/Retrow Mentho.ttf";
+            getManager()->triggerEvent(1, &fontEvent);
+
+            m_pauseTextDef.color = SDL_Color{145, 200, 255};
+            m_pauseTextDef.fontId = fontEvent.id;
+            m_pauseTextDef.draw = false;
+            m_pauseTextDef.message = "PAUSE";
+            m_pauseTextDef.positionX = 600;
+            m_pauseTextDef.positionY = 350;
+        }
+
         SDL_Event event;
         while (SDL_PollEvent(&event))
         {
@@ -30,6 +46,11 @@ namespace Garden::Systems
                     Garden::PauseEvent event{};
                     event.pause = true;
                     getManager()->triggerEvent(1, &event);
+                    m_pauseTextDef.draw = !m_pauseTextDef.draw;
+                    Garden::CreateTextEvent textEvent{};
+                    textEvent.textId = m_pauseEventTextKey;
+                    textEvent.definition = m_pauseTextDef;
+                    getManager()->triggerEvent(1, &textEvent);
                 }
                 if (getKeyDown(SDL_SCANCODE_F1))
                 {

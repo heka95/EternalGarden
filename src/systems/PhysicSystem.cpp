@@ -5,6 +5,7 @@
 #include "components/SpriteRenderer.hpp"
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 namespace Garden::Systems
 {
@@ -81,5 +82,21 @@ namespace Garden::Systems
             animation->currentAnimation = Garden::Components::AnimationType::FALL;
         if (rigidBody->isAttacking)
             animation->currentAnimation = Garden::Components::AnimationType::ATTACK;
+
+        // set player position
+        if (e == m_camera->target)
+        {
+            Garden::CreateTextEvent textEvent{};
+            textEvent.textId = "playerPosition";
+            textEvent.definition.color = SDL_Color{0, 0, 0};
+            textEvent.definition.fontId = "debugText";
+            std::stringstream buffer;
+            buffer << transform->Position;
+            textEvent.definition.message = buffer.str();
+            textEvent.definition.positionX = 0;
+            textEvent.definition.positionY = 0;
+            textEvent.definition.draw = m_world->debug;
+            getManager()->triggerEvent(1, &textEvent);
+        }
     }
 } // namespace Garden::Systems

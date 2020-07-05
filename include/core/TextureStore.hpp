@@ -3,6 +3,7 @@
 #include <string>
 #include <map>
 #include "SDL.h"
+#include "systems/TextSystem.hpp"
 
 namespace Garden::Core
 {
@@ -16,6 +17,7 @@ namespace Garden::Core
         SDL_Texture *getTextureFromId(const std::string id) { return m_textures[id]; }
 
         private:
+        friend class Garden::Systems::TextSystem;
         std::map<std::string, SDL_Texture *> m_textures;
         SDL_Renderer *m_renderer;
     };

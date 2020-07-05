@@ -26,9 +26,9 @@ namespace Garden::Systems
     {
         assert(type == Garden::SetVolumeEvent::type);
         auto eventData = static_cast<Garden::SetVolumeEvent *>(event);
-        auto newSoundsVolume = Mix_Volume(-1, eventData->volume);
-        auto newMusicVolume = Mix_VolumeMusic(eventData->volume);
-        std::cout << "New Sound Volume=" << newSoundsVolume << " | new Music Volume=" << newMusicVolume << std::endl;
+        Mix_Volume(-1, eventData->volume);
+        Mix_VolumeMusic(eventData->volume);
+        std::cout << "New Sound Volume=" << eventData->volume << " | new Music Volume=" << eventData->volume << std::endl;
 
         return Garden::EventStatus::KEEP_AFTER_CALL;
     }

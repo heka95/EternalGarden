@@ -27,7 +27,9 @@ namespace Garden
         PlayMusic = 5,
         PlaySound = 6,
         SetVolume = 7,
-        DebugToggle = 8
+        DebugToggle = 8,
+        LoadFont = 9,
+        CreateText = 10
     };
 
     enum Types : ComponentType

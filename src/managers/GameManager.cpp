@@ -6,6 +6,7 @@
 #include "systems/PhysicSystem.hpp"
 #include "systems/CameraSystem.hpp"
 #include "systems/SoundSystem.hpp"
+#include "systems/TextSystem.hpp"
 #include "GraphicWindow.hpp"
 #include <algorithm>
 
@@ -47,7 +48,8 @@ namespace Garden::Managers
         addSystem<Garden::Systems::InputSystem>(2, this, m_camera, m_graphicWindow);
         addSystem<Garden::Systems::PhysicSystem>(3, this, m_camera, m_world, sdlRenderer);
         addSystem<Garden::Systems::Render>(4, this, sdlRenderer, m_textureStore, m_world, m_camera);
-        addSystem<Garden::Systems::AnimatorSystem>(5, this);
+        addSystem<Garden::Systems::TextSystem>(5, this, sdlRenderer);
+        addSystem<Garden::Systems::AnimatorSystem>(6, this);
 
         initSystems();
 

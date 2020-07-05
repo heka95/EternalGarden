@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include "core/ECSTypes.hpp"
+#include "systems/TextDefinition.hpp"
 
 namespace Garden
 {
@@ -11,6 +12,33 @@ namespace Garden
 
     protected:
         EventType m_type = INVALID_TYPE;
+    };
+
+    class LoadFontEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::LoadFont;
+
+        LoadFontEvent()
+        {
+            m_type = type;
+        }
+        std::string id{""};
+        std::string sourceFile{""};
+        int size{10};
+    };
+
+    class CreateTextEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::CreateText;
+
+        CreateTextEvent()
+        {
+            m_type = type;
+        }
+        std::string textId{""};
+        Garden::Systems::TextDefinition definition;
     };
 
     class RegisterMusicEvent : public Event

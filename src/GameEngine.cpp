@@ -78,8 +78,14 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     getManager()->triggerEvent(1, &playMusic);
 
     Garden::SetVolumeEvent volumeEvent{};
-    volumeEvent.volume = 18;
+    volumeEvent.volume = 5;
     getManager()->triggerEvent(1, &volumeEvent);
+
+    Garden::LoadFontEvent fontEvent{};
+    fontEvent.id = "debugText";
+    fontEvent.size = 14;
+    fontEvent.sourceFile = "content/assets/font/Retrow Mentho.ttf";
+    getManager()->triggerEvent(1, &fontEvent);
 }
 
 Garden::EventStatus GameEngine::onPause(Garden::Entity source, Garden::EventType type, Garden::Event *event)

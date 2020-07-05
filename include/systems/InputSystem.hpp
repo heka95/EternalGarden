@@ -7,6 +7,9 @@
 #include "systems/System.hpp"
 #include "components/CameraComponent.hpp"
 #include "GraphicWindow.hpp"
+#include "systems/TextDefinition.hpp"
+#include "Event.hpp"
+#include "core/Manager.hpp"
 
 namespace Garden::Systems
 {
@@ -26,7 +29,7 @@ namespace Garden::Systems
         {
             m_graphicWindow = graphicWindow;
             m_camera = camera;
-            m_keyStates = SDL_GetKeyboardState(nullptr);
+            m_keyStates = SDL_GetKeyboardState(nullptr);            
         }
         virtual void updateEntity(float deltaTime, Entity e) override;
         virtual void preUpdate(float deltaTime) override;
@@ -40,5 +43,8 @@ namespace Garden::Systems
         int getAxisKey(Axis axis);
         const Uint8 *m_keyStates;
         GraphicWindow *m_graphicWindow;
+        Garden::Systems::TextDefinition m_pauseTextDef;
+        std::string m_pauseEventTextKey{"pauseText"};
+        bool m_textConfigured{false};
     };
 } // namespace Garden::Systems
