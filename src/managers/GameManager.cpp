@@ -51,6 +51,8 @@ namespace Garden::Managers
 
         initSystems();
 
+        registerHandler<Garden::DebugToggleEvent>(&GameManager::onDebugToggle, this);
+
         for (auto entity : m_world->entities)
         {
             if (entity.type == "entity")
@@ -83,5 +85,12 @@ namespace Garden::Managers
                 m_world->backgrounds.push_back(newEntity);
             }
         }
+    }
+
+    Garden::EventStatus GameManager::onDebugToggle(Garden::Entity source, Garden::EventType type, Garden::Event *event)
+    {
+        assert(type == Garden::DebugToggleEvent::type);
+        m_world->debug = !m_world->debug;
+        return Garden::EventStatus::KEEP_AFTER_CALL;
     }
 } // namespace Garden::Managers

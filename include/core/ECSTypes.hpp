@@ -25,7 +25,9 @@ namespace Garden
         RegisterMusic = 3,
         RegisterSound = 4,
         PlayMusic = 5,
-        PlaySound = 6
+        PlaySound = 6,
+        SetVolume = 7,
+        DebugToggle = 8
     };
 
     enum Types : ComponentType

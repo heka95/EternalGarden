@@ -51,6 +51,18 @@ namespace Garden
         std::string id{""};
     };
 
+    class SetVolumeEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::SetVolume;
+
+        SetVolumeEvent()
+        {
+            m_type = type;
+        }
+        int volume{128};
+    };
+
     class PlaySoundEvent : public Event
     {
     public:
@@ -73,6 +85,17 @@ namespace Garden
             m_type = type;
         }
         bool exitAsked{false};
+    };
+
+    class DebugToggleEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::DebugToggle;
+
+        DebugToggleEvent()
+        {
+            m_type = type;
+        }
     };
 
     class PauseEvent : public Event

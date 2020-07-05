@@ -31,6 +31,17 @@ namespace Garden::Systems
                     event.pause = true;
                     getManager()->triggerEvent(1, &event);
                 }
+                if (getKeyDown(SDL_SCANCODE_F1))
+                {
+                    Garden::DebugToggleEvent event{};
+                    getManager()->triggerEvent(1, &event);
+                }
+                if (getKeyDown(SDL_SCANCODE_ESCAPE))
+                {
+                    Garden::ExitEvent event{};
+                    event.exitAsked = true;
+                    getManager()->triggerEvent(1, &event);
+                }
             }
             break;
             case SDL_KEYUP:

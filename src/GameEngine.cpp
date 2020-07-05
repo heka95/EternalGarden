@@ -58,10 +58,6 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     loadMusic.sourceFile = "content/assets/audio/music/test_music.wav";
     getManager()->triggerEvent(1, &loadMusic);
 
-    Garden::PlayMusicEvent playMusic{};
-    playMusic.id = "mainMusic";
-    getManager()->triggerEvent(1, &playMusic);
-
     Garden::RegisterSoundEvent loadAttack{};
     loadAttack.id = "attack";
     loadAttack.sourceFile = "content/assets/audio/sound/attack.wav";
@@ -76,6 +72,14 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     loadCrouch.id = "grounded";
     loadCrouch.sourceFile = "content/assets/audio/sound/grounded.wav";
     getManager()->triggerEvent(1, &loadCrouch);
+
+    Garden::PlayMusicEvent playMusic{};
+    playMusic.id = "mainMusic";
+    getManager()->triggerEvent(1, &playMusic);
+
+    Garden::SetVolumeEvent volumeEvent{};
+    volumeEvent.volume = 18;
+    getManager()->triggerEvent(1, &volumeEvent);
 }
 
 Garden::EventStatus GameEngine::onPause(Garden::Entity source, Garden::EventType type, Garden::Event *event)

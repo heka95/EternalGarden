@@ -30,6 +30,7 @@ namespace Garden::Systems
         Garden::EventStatus onRegisterSound(Garden::Entity source, Garden::EventType type, Garden::Event *event);
         Garden::EventStatus onPlayMusic(Garden::Entity source, Garden::EventType type, Garden::Event *event);
         Garden::EventStatus onPlaySound(Garden::Entity source, Garden::EventType type, Garden::Event *event);
+        Garden::EventStatus onChangeSound(Garden::Entity source, Garden::EventType type, Garden::Event *event);
         mapMusics m_musicsMap;
         mapSounds m_soundsMap;
     };

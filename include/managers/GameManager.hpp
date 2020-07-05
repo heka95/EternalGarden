@@ -17,6 +17,7 @@ namespace Garden::Managers
         void load(SDL_Renderer *sdlRenderer, std::string const &level);
         bool enable() const { return m_isEnable; }
         void enable(const bool &enable) { m_isEnable = enable; }
+        Garden::EventStatus onDebugToggle(Garden::Entity source, Garden::EventType type, Garden::Event *event);
 
     private:
         bool m_isEnable = false;

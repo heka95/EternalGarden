@@ -18,7 +18,19 @@ namespace Garden::Systems
             manager->registerHandler<Garden::RegisterSoundEvent>(&SoundSystem::onRegisterSound, this);
             manager->registerHandler<Garden::PlayMusicEvent>(&SoundSystem::onPlayMusic, this);
             manager->registerHandler<Garden::PlaySoundEvent>(&SoundSystem::onPlaySound, this);
+            manager->registerHandler<Garden::SetVolumeEvent>(&SoundSystem::onChangeSound, this);
         }
+    }
+
+    Garden::EventStatus SoundSystem::onChangeSound(Garden::Entity source, Garden::EventType type, Garden::Event *event)
+    {
+        assert(type == Garden::SetVolumeEvent::type);
+        auto eventData = static_cast<Garden::SetVolumeEvent *>(event);
+        auto newSoundsVolume = Mix_Volume(-1, eventData->volume);
+        auto newMusicVolume = Mix_VolumeMusic(eventData->volume);
+        std::cout << "New Sound Volume=" << newSoundsVolume << " | new Music Volume=" << newMusicVolume << std::endl;
+
+        return Garden::EventStatus::KEEP_AFTER_CALL;
     }
 
     Garden::EventStatus SoundSystem::onRegisterMusic(Garden::Entity source, Garden::EventType type, Garden::Event *event)
