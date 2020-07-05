@@ -50,6 +50,15 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     m_manager = new Garden::Managers::GameManager(m_renderer, viewbox, "content/scripts/levels/00_level_arena.lua", m_graphicWindow.get());
     m_manager->initSystems();
     m_manager->registerHandler<Garden::ExitEvent>(&GameEngine::onExitGame, this);
+    m_manager->registerHandler<Garden::PauseEvent>(&GameEngine::onPause, this);
+}
+
+Garden::EventStatus GameEngine::onPause(Garden::Entity source, Garden::EventType type, Garden::Event *event)
+{
+    assert(type == Garden::PauseEvent::type);
+    auto pause = static_cast<Garden::PauseEvent *>(event)->pause;
+    m_manager->isActive = !m_manager->isActive;
+    return Garden::EventStatus::KEEP_AFTER_CALL;
 }
 
 Garden::EventStatus GameEngine::onExitGame(Garden::Entity source, Garden::EventType type, Garden::Event *event)

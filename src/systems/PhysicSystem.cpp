@@ -10,6 +10,11 @@ namespace Garden::Systems
 {
     void PhysicSystem::updateEntity(float deltaTime, Entity e)
     {
+        if(!getManager()->isActive)
+        {
+            return;
+        }
+
         auto rigidBody = getManager()->getComponent<Garden::Components::RigidBody>(e);
         auto transform = getManager()->getComponent<Garden::Components::Transform>(e);
         auto renderer = getManager()->getComponent<Garden::Components::SpriteRenderer>(e);

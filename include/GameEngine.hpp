@@ -22,6 +22,7 @@ public:
     SDL_Rect getWindowSize() { return m_windowSize; }
     Garden::Manager *getManager() { return m_manager; }
     Garden::EventStatus onExitGame(Garden::Entity source, Garden::EventType type, Garden::Event *event);
+    Garden::EventStatus onPause(Garden::Entity source, Garden::EventType type, Garden::Event *event);
 
 private:
     std::unique_ptr<GraphicWindow> m_graphicWindow;

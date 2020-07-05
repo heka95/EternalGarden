@@ -20,7 +20,8 @@ namespace Garden
 
     enum EventTypes : EventType
     {
-        ExitGame = 1
+        ExitGame = 1,
+        Pause = 2
     };
 
     enum Types : ComponentType

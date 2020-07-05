@@ -23,8 +23,16 @@ namespace Garden::Systems
             }
             break;
             case SDL_KEYDOWN:
+            {
                 m_keyStates = SDL_GetKeyboardState(nullptr);
-                break;
+                if (getKeyDown(SDL_SCANCODE_P))
+                {
+                    Garden::PauseEvent event{};
+                    event.pause = true;
+                    getManager()->triggerEvent(1, &event);
+                }
+            }
+            break;
             case SDL_KEYUP:
                 m_keyStates = SDL_GetKeyboardState(nullptr);
                 break;

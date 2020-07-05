@@ -90,6 +90,7 @@ namespace Garden
             triggerEvent(origin, E::type, event);
         }
         Garden::Core::TextureStore *textureStore() { return m_textureStore; }
+        bool isActive{true};
 
     protected:
         Garden::Core::TextureStore *m_textureStore;
