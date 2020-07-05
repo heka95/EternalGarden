@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="left-up" width="42" height="25" tilewidth="64" tileheight="64" infinite="0" nextlayerid="5" nextobjectid="11">
+<map version="1.4" tiledversion="1.4.1" orientation="orthogonal" renderorder="left-up" width="42" height="25" tilewidth="64" tileheight="64" infinite="0" nextlayerid="6" nextobjectid="17">
  <editorsettings>
   <export target="arena_64.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" name="arena_64" tilewidth="64" tileheight="64" tilecount="676" columns="26">
   <image source="res/arena_64.png" width="1664" height="1664"/>
+ </tileset>
+ <tileset firstgid="677" name="parralax_bg" tilewidth="1920" tileheight="1080" tilecount="8" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="1920" height="1080" source="res/layer_01_1920 x 1080.png"/>
+  </tile>
+  <tile id="1">
+   <image width="1920" height="1080" source="res/layer_02_1920 x 1080.png"/>
+  </tile>
+  <tile id="2">
+   <image width="1920" height="1080" source="res/layer_03_1920 x 1080.png"/>
+  </tile>
+  <tile id="3">
+   <image width="1920" height="1080" source="res/layer_04_1920 x 1080.png"/>
+  </tile>
+  <tile id="4">
+   <image width="1920" height="1080" source="res/layer_05_1920 x 1080.png"/>
+  </tile>
+  <tile id="5">
+   <image width="1920" height="1080" source="res/layer_06_1920 x 1080.png"/>
+  </tile>
+  <tile id="6">
+   <image width="1920" height="1080" source="res/layer_07_1920 x 1080.png"/>
+  </tile>
+  <tile id="7">
+   <image width="1920" height="1080" source="res/layer_08_1920 x 1080.png"/>
+  </tile>
  </tileset>
  <layer id="4" name="deco" width="42" height="25">
   <data encoding="csv">
@@ -35,6 +62,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup draworder="index" id="5" name="background">
+  <object id="16" name="sky" type="background" gid="684" x="0" y="1600" width="1920" height="1080"/>
+  <object id="15" name="cloud" type="background" gid="683" x="0" y="1600" width="1920" height="1080"/>
+  <object id="14" name="city" type="background" gid="680" x="0" y="1600" width="1920" height="1080"/>
+  <object id="13" name="tree" type="background" gid="678" x="0" y="1600" width="1920" height="1080"/>
+  <object id="12" name="ground" type="background" gid="677" x="0" y="1600" width="1920" height="1080"/>
+ </objectgroup>
  <layer id="1" name="ground" width="42" height="25">
   <properties>
    <property name="collider" type="bool" value="true"/>

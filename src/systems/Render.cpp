@@ -75,9 +75,9 @@ namespace Garden::Systems
 
             // Change default bottom-left draw to top-left drawing
             auto imageYZeroTop = position.Y - renderer->height;
-            auto drawPosition = (imageYZeroTop - cameraViewBox.y);
+            auto drawPosition = (imageYZeroTop - cameraViewBox.h);
 
-            destinationRect = {static_cast<int>(position.X - cameraViewBox.x), static_cast<int>(drawPosition), renderWidth, renderHeight};
+            destinationRect = {static_cast<int>(position.X), static_cast<int>(drawPosition), renderWidth, renderHeight};
             auto texture = m_store->getTextureFromId(renderer->textureId);
             SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, renderer->rotation, nullptr, renderer->flip);
         }

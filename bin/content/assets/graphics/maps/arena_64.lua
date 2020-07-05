@@ -8,8 +8,8 @@ return {
   height = 25,
   tilewidth = 64,
   tileheight = 64,
-  nextlayerid = 5,
-  nextobjectid = 11,
+  nextlayerid = 6,
+  nextobjectid = 17,
   properties = {},
   tilesets = {
     {
@@ -37,6 +37,78 @@ return {
       terrains = {},
       tilecount = 676,
       tiles = {}
+    },
+    {
+      name = "parralax_bg",
+      firstgid = 677,
+      tilewidth = 1920,
+      tileheight = 1080,
+      spacing = 0,
+      margin = 0,
+      columns = 0,
+      objectalignment = "unspecified",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 1,
+        height = 1
+      },
+      properties = {},
+      terrains = {},
+      tilecount = 8,
+      tiles = {
+        {
+          id = 0,
+          image = "res/layer_01_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 1,
+          image = "res/layer_02_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 2,
+          image = "res/layer_03_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 3,
+          image = "res/layer_04_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 4,
+          image = "res/layer_05_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 5,
+          image = "res/layer_06_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 6,
+          image = "res/layer_07_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        },
+        {
+          id = 7,
+          image = "res/layer_08_1920 x 1080.png",
+          width = 1920,
+          height = 1080
+        }
+      }
     }
   },
   layers = {
@@ -80,6 +152,89 @@ return {
         0, 371, 0, 0, 373, 505, 547, 369, 0, 467, 0, 0, 0, 0, 0, 371, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+      }
+    },
+    {
+      type = "objectgroup",
+      draworder = "index",
+      id = 5,
+      name = "background",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      objects = {
+        {
+          id = 16,
+          name = "sky",
+          type = "background",
+          shape = "rectangle",
+          x = 0,
+          y = 1600,
+          width = 1920,
+          height = 1080,
+          rotation = 0,
+          gid = 684,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 15,
+          name = "cloud",
+          type = "background",
+          shape = "rectangle",
+          x = 0,
+          y = 1600,
+          width = 1920,
+          height = 1080,
+          rotation = 0,
+          gid = 683,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 14,
+          name = "city",
+          type = "background",
+          shape = "rectangle",
+          x = 0,
+          y = 1600,
+          width = 1920,
+          height = 1080,
+          rotation = 0,
+          gid = 680,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 13,
+          name = "tree",
+          type = "background",
+          shape = "rectangle",
+          x = 0,
+          y = 1600,
+          width = 1920,
+          height = 1080,
+          rotation = 0,
+          gid = 678,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 12,
+          name = "ground",
+          type = "background",
+          shape = "rectangle",
+          x = 0,
+          y = 1600,
+          width = 1920,
+          height = 1080,
+          rotation = 0,
+          gid = 677,
+          visible = true,
+          properties = {}
+        }
       }
     },
     {
