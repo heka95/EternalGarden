@@ -5,6 +5,7 @@
 #include "systems/AnimatorSystem.hpp"
 #include "systems/PhysicSystem.hpp"
 #include "systems/CameraSystem.hpp"
+#include "systems/SoundSystem.hpp"
 #include "GraphicWindow.hpp"
 #include <algorithm>
 
@@ -41,11 +42,13 @@ namespace Garden::Managers
         createStoreFor(Garden::Types::PlayerCommandType);
         createStoreFor(Garden::Types::RigidBodyType);
 
+        addSystem<Garden::Systems::SoundSystem>(0, this);
         addSystem<Garden::Systems::CameraSystem>(1, this, m_camera);
         addSystem<Garden::Systems::InputSystem>(2, this, m_camera, m_graphicWindow);
         addSystem<Garden::Systems::PhysicSystem>(3, this, m_camera, m_world, sdlRenderer);
         addSystem<Garden::Systems::Render>(4, this, sdlRenderer, m_textureStore, m_world, m_camera);
         addSystem<Garden::Systems::AnimatorSystem>(5, this);
+
         initSystems();
 
         for (auto entity : m_world->entities)
@@ -63,7 +66,7 @@ namespace Garden::Managers
             {
                 auto newEntity = this->createEntity();
                 auto transformation = new Garden::Components::Transform();
-                transformation->Position = Garden::Vector2D{entity.spawnX, entity.spawnY};
+                transformation->Position = Garden::Vector2D{(float)entity.spawnX, (float)entity.spawnY};
                 this->addComponent(newEntity, transformation);
                 auto renderer = new Garden::Components::SpriteRenderer();
                 renderer->width = entity.width;

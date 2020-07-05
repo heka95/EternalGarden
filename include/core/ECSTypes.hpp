@@ -21,7 +21,11 @@ namespace Garden
     enum EventTypes : EventType
     {
         ExitGame = 1,
-        Pause = 2
+        Pause = 2,
+        RegisterMusic = 3,
+        RegisterSound = 4,
+        PlayMusic = 5,
+        PlaySound = 6
     };
 
     enum Types : ComponentType

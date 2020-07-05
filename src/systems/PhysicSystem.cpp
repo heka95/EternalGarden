@@ -10,7 +10,7 @@ namespace Garden::Systems
 {
     void PhysicSystem::updateEntity(float deltaTime, Entity e)
     {
-        if(!getManager()->isActive)
+        if (!getManager()->isActive)
         {
             return;
         }
@@ -56,6 +56,12 @@ namespace Garden::Systems
         }
         else
         {
+            if (rigidBody->isGrounded == false)
+            {
+                Garden::PlaySoundEvent jumpSoundEvent{};
+                jumpSoundEvent.id = "grounded";
+                getManager()->triggerEvent(1, &jumpSoundEvent);
+            }
             auto bufferY = rigidBody->buffer().y;
             rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
             rigidBody->isGrounded = true;

@@ -13,6 +13,56 @@ namespace Garden
         EventType m_type = INVALID_TYPE;
     };
 
+    class RegisterMusicEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::RegisterMusic;
+
+        RegisterMusicEvent()
+        {
+            m_type = type;
+        }
+        std::string id{""};
+        std::string sourceFile{""};
+    };
+
+    class RegisterSoundEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::RegisterSound;
+
+        RegisterSoundEvent()
+        {
+            m_type = type;
+        }
+        std::string id{""};
+        std::string sourceFile{""};
+    };
+
+    class PlayMusicEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::PlayMusic;
+
+        PlayMusicEvent()
+        {
+            m_type = type;
+        }
+        std::string id{""};
+    };
+
+    class PlaySoundEvent : public Event
+    {
+    public:
+        static const EventType type = EventTypes::PlaySound;
+
+        PlaySoundEvent()
+        {
+            m_type = type;
+        }
+        std::string id{""};
+    };
+
     class ExitEvent : public Event
     {
     public:

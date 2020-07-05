@@ -39,3 +39,4 @@ cMakeFiles
 MakeFile
 bin/content/assets/graphics/maps/maps.tiled-session
 bin/content/assets/audio/music/*.*
+*.wav

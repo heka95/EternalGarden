@@ -49,15 +49,39 @@ void GameEngine::configureAndInit(Garden::Configuration &configuration)
     // Create ECS
     auto viewbox = SDL_Rect{0, 0, m_graphicWindow->getWindowSize().width, m_graphicWindow->getWindowSize().height};
     m_manager = new Garden::Managers::GameManager(m_renderer, viewbox, "content/scripts/levels/00_level_arena.lua", m_graphicWindow.get());
-    m_manager->initSystems();
     m_manager->registerHandler<Garden::ExitEvent>(&GameEngine::onExitGame, this);
     m_manager->registerHandler<Garden::PauseEvent>(&GameEngine::onPause, this);
+
+    // load music
+    Garden::RegisterMusicEvent loadMusic{};
+    loadMusic.id = "mainMusic";
+    loadMusic.sourceFile = "content/assets/audio/music/test_music.wav";
+    getManager()->triggerEvent(1, &loadMusic);
+
+    Garden::PlayMusicEvent playMusic{};
+    playMusic.id = "mainMusic";
+    getManager()->triggerEvent(1, &playMusic);
+
+    Garden::RegisterSoundEvent loadAttack{};
+    loadAttack.id = "attack";
+    loadAttack.sourceFile = "content/assets/audio/sound/attack.wav";
+    getManager()->triggerEvent(1, &loadAttack);
+
+    Garden::RegisterSoundEvent loadJump{};
+    loadJump.id = "jump";
+    loadJump.sourceFile = "content/assets/audio/sound/jump.wav";
+    getManager()->triggerEvent(1, &loadJump);
+
+    Garden::RegisterSoundEvent loadCrouch{};
+    loadCrouch.id = "grounded";
+    loadCrouch.sourceFile = "content/assets/audio/sound/grounded.wav";
+    getManager()->triggerEvent(1, &loadCrouch);
 }
 
 Garden::EventStatus GameEngine::onPause(Garden::Entity source, Garden::EventType type, Garden::Event *event)
 {
     assert(type == Garden::PauseEvent::type);
-    auto pause = static_cast<Garden::PauseEvent *>(event)->pause;
+    //auto pause = static_cast<Garden::PauseEvent *>(event)->pause;
     m_manager->isActive = !m_manager->isActive;
     return Garden::EventStatus::KEEP_AFTER_CALL;
 }

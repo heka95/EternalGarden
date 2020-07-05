@@ -115,6 +115,9 @@ namespace Garden::Systems
             rigidBody->force.Y = -rigidBody->jumpForce;
             rigidBody->isJumping = true;
             rigidBody->isGrounded = false;
+            Garden::PlaySoundEvent jumpSoundEvent{};
+            jumpSoundEvent.id = "jump";
+            getManager()->triggerEvent(1, &jumpSoundEvent);
         }
         if (cCommand->isKeyJump && rigidBody->isJumping && rigidBody->jumpRemainingTime > 0)
         {
@@ -129,6 +132,12 @@ namespace Garden::Systems
 
         rigidBody->isFalling = (rigidBody->velocity.Y > 0 && !rigidBody->isGrounded);
 
+        if (rigidBody->isAttacking && rigidBody->attackRemainingTime == rigidBody->attackTime)
+        {
+            Garden::PlaySoundEvent attackSoundEvent{};
+            attackSoundEvent.id = "attack";
+            getManager()->triggerEvent(1, &attackSoundEvent);
+        }
         if (rigidBody->isAttacking && rigidBody->attackRemainingTime > 0)
         {
             rigidBody->attackRemainingTime -= deltaTime;
