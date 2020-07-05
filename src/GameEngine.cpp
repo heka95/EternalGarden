@@ -2,6 +2,7 @@
 #include <algorithm>
 #include "SDL_ttf.h"
 #include "SDL_image.h"
+#include "SDL_mixer.h"
 #include "GameEngine.hpp"
 #include "managers/GameManager.hpp"
 #include "Event.hpp"
@@ -74,6 +75,7 @@ void GameEngine::release()
     delete m_manager;
     SDL_DestroyRenderer(m_renderer);
     m_graphicWindow.release();
+    Mix_Quit();
     IMG_Quit();
     TTF_Quit();
     SDL_Quit();

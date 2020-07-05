@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 
 GraphicWindow::GraphicWindow() : m_sdlWindowPtr(nullptr),
                                  m_defaultDisplayIndex(0)
@@ -56,6 +57,12 @@ bool GraphicWindow::createContext(Garden::Configuration &configuration)
     if (IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG) < 0)
     {
         std::cout << "Could not initialize SDL IMAGE: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    if (Mix_Init(MIX_INIT_OGG) < 0)
+    {
+        std::cout << "Could not initialize SDL MIXER: " << SDL_GetError() << std::endl;
         return false;
     }
 

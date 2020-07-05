@@ -39,24 +39,31 @@ if (WIN32)
     set(SDL2_PATH ${PROJECT_SOURCE_DIR}/external/SDL2)
     set(SDL2_IMAGE_PATH ${PROJECT_SOURCE_DIR}/external/SDL2)
     set(SDL2_TTF_PATH ${PROJECT_SOURCE_DIR}/external/SDL2)
+    set(SDL2_MIXER_PATH ${PROJECT_SOURCE_DIR}/external/SDL2)
 endif (WIN32)
 set(SDL2CONSOLE ON) # Use console to show LUA/APP outputs
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
 if(NOT SDL2_FOUND)
     message(FATAL_ERROR "SDL2 is needed to build the project. Please install it correctly.")
+endif()
+if(NOT SDL2_MIXER_FOUND)
+    message(FATAL_ERROR "SDL2 Mixer is needed to build the project. Please install it correctly.")
 endif()
 
 include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIR})
 message("SDL2 linker :" ${SDL2_LIBRARY})
 message("SDL2-Image linker :" ${SDL2_IMAGE_LIBRARIES})
 message("SDL2-TTF linker :" ${SDL2_TTF_LIBRARIES})
+message("SDL2-Mixer linker :" ${SDL2_MIXER_LIBRARIES})
 
 target_link_libraries (${PROJECT_NAME} ${SDL2_LIBRARY})
 target_link_libraries (${PROJECT_NAME} ${SDL2_IMAGE_LIBRARIES})
 target_link_libraries (${PROJECT_NAME} ${SDL2_TTF_LIBRARIES})
+target_link_libraries (${PROJECT_NAME} ${SDL2_MIXER_LIBRARIES})
 
 # LUA
 if (WIN32)
