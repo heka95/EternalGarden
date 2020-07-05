@@ -28,6 +28,7 @@ namespace Garden::Components
         int TileId{0};
         SDL_RendererFlip flip{SDL_RendererFlip::SDL_FLIP_NONE};
         bool isCollided{false};
+        int rotation{0};
     };
 
     class Layer
@@ -58,7 +59,7 @@ namespace Garden::Components
         {
             if (tileSets.size() == 1)
             {
-                return tileId;
+                return 0;
             }
             if (tileSets.size() > 1)
             {

@@ -4,8 +4,8 @@ data:extend({
         name = "skull",
         SpawnPosition = {X = 100, Y = 20},
         Sprite = {
-            Width = 64,
-            Height = 54,
+            Width = 128,
+            Height = 108,
             XScale = 1,
             YScale = 1,
             TextureId = "skull",
@@ -18,8 +18,8 @@ data:extend({
                     Type = AnimationType.IDLE,
                     Source = "content/assets/graphics/ennemis/skull/idle.png",
                     TextureId = "skull",
-                    FrameWidth = 64,
-                    FrameHeight = 54,
+                    FrameWidth = 128,
+                    FrameHeight = 108,
                     SpriteRowIndex = 1,
                     FrameCount = 12,
                     Speed = 100,
@@ -28,8 +28,8 @@ data:extend({
                     Type = AnimationType.RUN,
                     Source = "content/assets/graphics/ennemis/skull/walk.png",
                     TextureId = "skull_run",
-                    FrameWidth = 64,
-                    FrameHeight = 54,
+                    FrameWidth = 128,
+                    FrameHeight = 108,
                     SpriteRowIndex = 1,
                     FrameCount = 8,
                     Speed = 100,
@@ -47,10 +47,10 @@ data:extend({
             AttackTime = 20.0,
             ColliderBuffer =
             {
-                X = 17,
-                Y = 0,
-                Width = 44,
-                Height = 41
+                X = 50,
+                Y = 15,
+                Width = 40,
+                Height = 75
             }
         }
     }

@@ -136,8 +136,7 @@ namespace Garden::Systems
                     SDL_Rect sourceRect = {tileSet.TileSize * tileColumn, tileSet.TileSize * tileRow, tileSet.TileSize, tileSet.TileSize};
                     SDL_Rect destinationRect = {((column * tileSet.TileSize) - cameraViewBox.x), ((row * tileSet.TileSize) - cameraViewBox.y), tileSet.TileSize, tileSet.TileSize};
                     auto texture = m_store->getTextureFromId(tileSet.Name);
-                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, 0, nullptr, currentTile->flip);
-                    SDL_RenderDrawPoint(m_renderer, destinationRect.x, destinationRect.y);
+                    SDL_RenderCopyEx(m_renderer, texture, &sourceRect, &destinationRect, currentTile->rotation, nullptr, currentTile->flip);
                 }
             }
         }

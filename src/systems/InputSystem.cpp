@@ -80,13 +80,13 @@ namespace Garden::Systems
         rigidBody->isRunning = false;
         rigidBody->isAttacking = false;
 
-        if (cCommand->isKeyMoveRight && !rigidBody->isAttacking)
+        if (cCommand->isKeyMoveRight)
         {
             rigidBody->force.X = (1 * rigidBody->runSpeed);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_NONE;
             rigidBody->isRunning = true;
         }
-        if (cCommand->isKeyMoveLeft && !rigidBody->isAttacking)
+        if (cCommand->isKeyMoveLeft)
         {
             rigidBody->force.X = (-1 * rigidBody->runSpeed);
             renderer->flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
@@ -99,7 +99,7 @@ namespace Garden::Systems
         }
         if (cCommand->isKeyAttack)
         {
-            rigidBody->force = Vector2D::zero();
+            //rigidBody->force = Vector2D::zero();
             rigidBody->isAttacking = true;
         }
         if (cCommand->isKeyJump && rigidBody->isGrounded)

@@ -163,7 +163,7 @@ namespace Garden::Scripting
         {
             bool flipped_horizontally = (tile_index & FLIPPED_HORIZONTALLY_FLAG);
             bool flipped_vertically = (tile_index & FLIPPED_VERTICALLY_FLAG);
-            //bool flipped_diagonally = (tile_index & FLIPPED_DIAGONALLY_FLAG);
+            bool flipped_diagonally = (tile_index & FLIPPED_DIAGONALLY_FLAG);
             tile_index &= ~(FLIPPED_HORIZONTALLY_FLAG |
                             FLIPPED_VERTICALLY_FLAG |
                             FLIPPED_DIAGONALLY_FLAG);
@@ -178,6 +178,19 @@ namespace Garden::Scripting
             {
                 auto flip = (SDL_RendererFlip::SDL_FLIP_HORIZONTAL | SDL_RendererFlip::SDL_FLIP_VERTICAL);
                 tile->flip = (SDL_RendererFlip)flip;
+            }
+            if (flipped_diagonally)
+            {
+                if (flipped_horizontally && !flipped_vertically)
+                {
+                    tile->flip = SDL_RendererFlip::SDL_FLIP_NONE;
+                    tile->rotation = 90;
+                }
+                if (!flipped_horizontally && flipped_vertically)
+                {
+                    tile->flip = SDL_RendererFlip::SDL_FLIP_NONE;
+                    tile->rotation = -90;
+                }
             }
             layer->tiles.push_back(tile);
         }
