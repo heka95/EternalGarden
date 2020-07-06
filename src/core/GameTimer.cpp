@@ -22,7 +22,7 @@ namespace Garden::Core
             SDL_Delay(m_frameTime - m_deltaTime);
             m_deltaTime = (SDL_GetTicks() - m_lastTime);
         }
-        m_deltaTime *= m_factor;
+        //m_deltaTime *= m_factor;
 
         m_lastTime = SDL_GetTicks();
     }

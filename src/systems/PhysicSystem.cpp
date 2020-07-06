@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include <cmath>
 
 namespace Garden::Systems
 {
@@ -24,9 +25,18 @@ namespace Garden::Systems
         rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
 
         rigidBody->acceleration.X = (rigidBody->force.X + rigidBody->friction.X) / rigidBody->mass;
-        rigidBody->acceleration.Y = rigidBody->gravity + rigidBody->force.Y / rigidBody->mass;
-        rigidBody->velocity = rigidBody->acceleration * deltaTime;
-        rigidBody->position = rigidBody->velocity * deltaTime;
+        rigidBody->velocity.X = rigidBody->acceleration.X;
+        rigidBody->position.X = rigidBody->velocity.X * deltaTime;
+
+        if (rigidBody->force.Y == 0)
+        {
+            rigidBody->force.Y = rigidBody->jumpForce;
+        }
+
+        rigidBody->acceleration.Y += rigidBody->gravity + (rigidBody->force.Y / rigidBody->mass);
+        rigidBody->acceleration.Y = std::min(rigidBody->force.Y / rigidBody->mass * 10, rigidBody->acceleration.Y);
+        rigidBody->velocity.Y = rigidBody->acceleration.Y;
+        rigidBody->position.Y = rigidBody->velocity.Y * deltaTime;
 
         // backup old position
         auto positionXSimulation = transform->Position.X;
@@ -36,6 +46,7 @@ namespace Garden::Systems
         positionXSimulation += rigidBody->position.X;
         positionXSimulation = std::max(positionXSimulation, 0.0f);
         positionXSimulation = std::min(positionXSimulation, (m_camera->sceneWidth - renderer->drawWidth + 0.0f));
+        positionXSimulation = positionXSimulation;
 
         rigidBody->collider(positionXSimulation, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
 
@@ -48,6 +59,7 @@ namespace Garden::Systems
         positionYSimulation += rigidBody->position.Y;
         positionYSimulation = std::max(positionYSimulation, 0.0f);
         positionYSimulation = std::min(positionYSimulation, (m_camera->sceneHeight - renderer->drawHeight + 0.0f));
+        positionYSimulation = positionYSimulation;
 
         rigidBody->collider(transform->Position.X, positionYSimulation, renderer->drawWidth, renderer->drawHeight);
         if (!m_collisionEngine.get()->worldCollision(rigidBody->collider()))
@@ -62,10 +74,13 @@ namespace Garden::Systems
                 Garden::PlaySoundEvent jumpSoundEvent{};
                 jumpSoundEvent.id = "grounded";
                 getManager()->triggerEvent(1, &jumpSoundEvent);
+
+                auto bufferY = rigidBody->buffer().y;
+                rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
+                rigidBody->isGrounded = true;
             }
-            auto bufferY = rigidBody->buffer().y;
-            rigidBody->collider(transform->Position.X, transform->Position.Y, renderer->drawWidth, renderer->drawHeight);
-            rigidBody->isGrounded = true;
+
+            //rigidBody->acceleration.Y = 1.0f;
         }
 
         // maybe better...

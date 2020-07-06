@@ -65,6 +65,7 @@ namespace Garden::Systems
         }
         auto texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
         SDL_FreeSurface(textSurface);
+        SDL_DestroyTexture(m_textures[textId]);
         m_textures[textId] = texture;
         m_definitions[textId] = definition;
     }

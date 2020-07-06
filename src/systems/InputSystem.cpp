@@ -8,7 +8,7 @@ namespace Garden::Systems
 {
     void InputSystem::preUpdate(float deltaTime)
     {
-        if(!m_textConfigured)
+        if (!m_textConfigured)
         {
             m_textConfigured = true;
             Garden::LoadFontEvent fontEvent{};
@@ -142,7 +142,7 @@ namespace Garden::Systems
             //rigidBody->force = Vector2D::zero();
             rigidBody->isAttacking = true;
         }
-        if (cCommand->isKeyJump && rigidBody->isGrounded)
+        if (cCommand->isKeyJump && rigidBody->isGrounded && !rigidBody->isJumping)
         {
             rigidBody->force.Y = -rigidBody->jumpForce;
             rigidBody->isJumping = true;
@@ -154,7 +154,8 @@ namespace Garden::Systems
         if (cCommand->isKeyJump && rigidBody->isJumping && rigidBody->jumpRemainingTime > 0)
         {
             rigidBody->jumpRemainingTime -= deltaTime;
-            rigidBody->force.Y = -rigidBody->jumpForce;
+            auto jumpRatio = rigidBody->jumpRemainingTime / rigidBody->jumpTime;
+            rigidBody->force.Y = -(rigidBody->jumpForce * (jumpRatio * jumpRatio));
         }
         else
         {

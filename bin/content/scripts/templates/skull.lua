@@ -50,7 +50,7 @@ data:extend({
                 X = 50,
                 Y = 15,
                 Width = 40,
-                Height = 75
+                Height = 70
             }
         }
     }

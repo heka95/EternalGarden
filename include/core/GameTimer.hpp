@@ -8,8 +8,8 @@ namespace Garden::Core
     public:
         GameTimer();
         void update();
-        float deltaTimeSeconds() const { return m_deltaTime; }
-        float deltaTimeMS() const { return m_deltaTime * 1000.0f; }
+        float deltaTimeSeconds() const { return m_deltaTime / 1000.0f; }
+        float deltaTimeMS() const { return m_deltaTime; }
 
     private:
         float m_factor = (ENGINE_UPDATE_SPEED / 1000.0f);
