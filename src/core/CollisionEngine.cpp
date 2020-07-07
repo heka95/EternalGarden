@@ -14,40 +14,76 @@ namespace Garden::Core
 
     bool CollisionEngine::checkCollision(SDL_Rect a, SDL_Rect b)
     {
-        bool isXIntersect = (a.x < b.x + b.w) && (a.x + a.w > b.x);
-        bool isYIntersect = (a.y < b.y + b.h) && (a.y + a.h > b.y);
+        bool isXIntersect = checkXCollision(a, b);
+        bool isYIntersect = checkYCollision(a, b);
         return (isXIntersect && isYIntersect);
     }
 
-    bool CollisionEngine::worldCollision(SDL_Rect a)
+    bool CollisionEngine::checkXCollision(SDL_Rect a, SDL_Rect b)
     {
-        int left_tile = a.x / m_tileSize;
-        int right_tile = (a.x + a.w) / m_tileSize;
-        int top_tile = a.y / m_tileSize;
-        int bottom_tile = (a.y + a.h) / m_tileSize;
+        return (a.x < b.x + b.w) && (a.x + a.w > b.x);
+    }
 
-        left_tile = std::max(left_tile, 0);
-        top_tile = std::max(top_tile, 0);
+    bool CollisionEngine::checkYCollision(SDL_Rect a, SDL_Rect b)
+    {
+        return (a.y < b.y + b.h) && (a.y + a.h > b.y);
+    }
 
-        right_tile = std::min(right_tile, m_columns - 1);
-        bottom_tile = std::min(bottom_tile, m_row - 1);
-        
-        bool isCollided{false};
+    PointMapPosition CollisionEngine::mapPositionFromPoint(int x, int y)
+    {
+        PointMapPosition position;
+        position.column = x / m_tileSize;
+        position.row = y / m_tileSize;
+        position.absolute = (position.row * m_columns) + position.column;
+        return position;
+    }
 
-        for (int row = top_tile; row <= bottom_tile; ++row)
+    TestingPoints CollisionEngine::mapTestingPointsFromCollider(SDL_Rect a)
+    {
+        TestingPoints test;
+        test.topLeft = mapPositionFromPoint(a.x, a.y);
+        test.topRight = mapPositionFromPoint(a.x + a.w, a.y);
+        test.topCenter = mapPositionFromPoint(a.x + (a.w / 2), a.y);
+
+        test.bottomLeft = mapPositionFromPoint(a.x, a.y + a.h);
+        test.bottomRight = mapPositionFromPoint(a.x + a.w, a.y + a.h);
+        test.bottomCenter = mapPositionFromPoint(a.x + (a.w / 2), a.y + a.h);
+
+        test.centerLeft = mapPositionFromPoint(a.x, a.y + (a.h / 2));
+        test.centerRight = mapPositionFromPoint(a.x + a.w, a.y + (a.h / 2));
+        return test;
+    }
+
+    WorldCollisionResult CollisionEngine::worldCollision(SDL_Rect a)
+    {
+        WorldCollisionResult result;
+        auto test = mapTestingPointsFromCollider(a);
+
+        for (int row = test.topCenter.row; row <= test.bottomCenter.row; ++row)
         {
             int rowIndex = row * m_columns;
-            for (int column = left_tile; column <= right_tile; ++column)
+            for (int column = test.centerLeft.column; column <= test.centerRight.column; ++column)
             {
-                auto currentTile = m_layerTileMap->tiles[rowIndex + column];
-                if (currentTile->TileId > 0)
+                int absolute = rowIndex + column;
+                auto testTile = m_layerTileMap->tiles[absolute];
+                if (testTile->TileId != 0)
                 {
-                    currentTile->isCollided = true;
-                    isCollided = true;
+                    testTile->isCollided = true;
+                    result.topLeft = !result.topLeft ? (test.topLeft.absolute == absolute) : true;
+                    result.topCenter = !result.topCenter ? (test.topCenter.absolute == absolute) : true;
+                    result.topRight = !result.topRight ? (test.topRight.absolute == absolute) : true;
+
+                    result.bottomRight = !result.bottomRight ? (test.bottomRight.absolute == absolute) : true;
+                    result.bottomCenter = !result.bottomCenter ? (test.bottomCenter.absolute == absolute) : true;
+                    result.bottomLeft = !result.bottomLeft ? (test.bottomLeft.absolute == absolute) : true;
+
+                    result.centerLeft = !result.centerLeft ? (test.centerLeft.absolute == absolute) : true;
+                    result.centerRight = !result.centerRight ? (test.centerRight.absolute == absolute) : true;
                 }
             }
         }
-        return isCollided;
-    }
+
+        return result;
+    } // namespace Garden::Core
 
 } // namespace Garden::Core

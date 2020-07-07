@@ -39,6 +39,8 @@ namespace Garden::Components
         bool isCollider{false};
     };
 
+    #define EMPTY_TILE 0
+
     class World
     {
     public:

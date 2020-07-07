@@ -81,7 +81,7 @@ data:extend({
         {
             Mass = 60.0,
             Gravity = 9.81,
-            RunSpeed = 25000.0,
+            RunSpeed = 20000.0,
             JumpForce = 4000.0,
             JumpTime = 0.35,
             AttackTime = 20.0,

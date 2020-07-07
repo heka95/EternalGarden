@@ -107,9 +107,5 @@
   <object id="2" name="switch" gid="317" x="1472" y="768" width="64" height="64"/>
   <object id="3" name="key" gid="288" x="1600" y="1024" width="64" height="64"/>
   <object id="5" template="templates/player.tx" x="128" y="1472"/>
-  <object id="7" template="templates/skull.tx" x="448" y="832"/>
-  <object id="8" template="templates/skull.tx" x="320" y="1152"/>
-  <object id="9" template="templates/skull.tx" x="2112" y="640"/>
-  <object id="10" template="templates/skull.tx" x="1920" y="1408"/>
  </objectgroup>
 </map>

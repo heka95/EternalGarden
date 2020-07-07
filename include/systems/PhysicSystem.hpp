@@ -21,6 +21,7 @@ namespace Garden::Systems
             m_collisionEngine.reset(new Garden::Core::CollisionEngine{m_world});
         }
         virtual void updateEntity(float deltaTime, Entity e) override;
+        virtual void postUpdate(float delta) override;
 
     private:
         Garden::Components::CameraComponent *m_camera;

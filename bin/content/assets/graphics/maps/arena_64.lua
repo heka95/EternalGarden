@@ -363,62 +363,6 @@ return {
           properties = {
             ["cameraTarget"] = true
           }
-        },
-        {
-          id = 7,
-          name = "skull",
-          type = "entity",
-          shape = "rectangle",
-          x = 448,
-          y = 832,
-          width = 64,
-          height = 54,
-          rotation = 0,
-          gid = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 8,
-          name = "skull",
-          type = "entity",
-          shape = "rectangle",
-          x = 320,
-          y = 1152,
-          width = 64,
-          height = 54,
-          rotation = 0,
-          gid = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 9,
-          name = "skull",
-          type = "entity",
-          shape = "rectangle",
-          x = 2112,
-          y = 640,
-          width = 64,
-          height = 54,
-          rotation = 0,
-          gid = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 10,
-          name = "skull",
-          type = "entity",
-          shape = "rectangle",
-          x = 1920,
-          y = 1408,
-          width = 64,
-          height = 54,
-          rotation = 0,
-          gid = 0,
-          visible = true,
-          properties = {}
         }
       }
     }
